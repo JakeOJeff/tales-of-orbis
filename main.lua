@@ -1,5 +1,9 @@
 -- [[ IMPORTING SCENES ]]
 
+-- [INITIALIZING SCENERY]
+local SceneryInit = require("libs.scenery")
+local scenery = SceneryInit(...)
+scenery:hook(love)
 
 
 function love.load()
