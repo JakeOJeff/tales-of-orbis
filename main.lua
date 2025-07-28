@@ -1,11 +1,17 @@
 -- [[ IMPORTING SCENES ]]
 
 -- [INITIALIZING SCENERY]
-local SceneryInit = require("libs.scenery")
+local SceneryInit = require("src.libs.scenery")
 local scenery = SceneryInit(
-    {path = "scenes.loading", key = "loading", default = true},
-    {path = "scenes.cutscene", key = "cutscene"},
-    {path = "scenes.game", key = "game"}
+    {path = "src.loading", key = "loading", default = true},
+    {path = "src.cutscene", key = "cutscene"},
+    {path = "src.game", key = "game"}
 )
+
 scenery:hook(love)
+
+
+-- [DECLARING GLOBAL VARIABLES]
+wW = love.graphics:getWidth()
+wH = love.graphics:getHeight()
 
