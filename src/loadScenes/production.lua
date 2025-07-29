@@ -41,22 +41,21 @@ function production:update(dt)
     else
         self.text = "loading."
     end
-    if self.loaded > 120 then
+    if self.loaded > 60 then
         self.alpha = self.alpha - (.5 * dt)
 
     end
 
-    if self.loaded > 200 then
+    if self.loaded > 100 then
         self.setScene("game")
-    elseif self.loaded > 100 then
-        self.text = "loaded."
     end
 end
 
 function production:draw()
     love.graphics.setColor(1, 1, 1, self.alpha)
-    love.graphics.draw(self.imgs[1], 0, 0)
-
+    love.graphics.setScissor(wW/2 - self.imgs[1]:getWidth()/2, wH/2 - self.imgs[1]:getHeight()/2, wW, self.loaded / 100 * wH, self.imgs[1]:getWidth(), 232)
+    love.graphics.draw(self.imgs[1], wW/2 - self.imgs[1]:getWidth()/2, wH/2 - self.imgs[1]:getHeight()/2)
+    love.graphics.setScissor()
     -- love.graphics.setColor(1,1,1, self.alpha)
     -- love.graphics.setScissor(0, 0, wW, self.loaded / 100 * wH)
     -- love.graphics.draw(self.imgs[2], 0, 0)
@@ -67,4 +66,4 @@ function production:draw()
 
 end
 
-return loading
+return production
