@@ -1,4 +1,7 @@
 -- [[ IMPORTING SCENES ]]
+-- [DECLARING GLOBAL VARIABLES]
+wW = love.graphics:getWidth()
+wH = love.graphics:getHeight()
 
 -- [INITIALIZING SCENERY]
 local SceneryInit = require("src.libs.scenery")
@@ -11,7 +14,5 @@ local scenery = SceneryInit(
 scenery:hook(love)
 
 
--- [DECLARING GLOBAL VARIABLES]
-wW = love.graphics:getWidth()
-wH = love.graphics:getHeight()
+
 
