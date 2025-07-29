@@ -4,7 +4,7 @@ wW = love.graphics:getWidth()
 wH = love.graphics:getHeight()
 
 -- [FONT DECLARATION]
-heading = love.graphics.newFont("assets/fonts/nihonium.ttf", 32)
+heading = love.graphics.newFont("assets/fonts/nihonium.ttf", 64)
 
 -- [INITIALIZING SCENERY]
 local SceneryInit = require("src.libs.scenery")
