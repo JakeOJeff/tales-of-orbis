@@ -1,5 +1,5 @@
-local loading = {
-    imgs = {love.graphics.newImage("assets/vfx/loading/light_load.png"),
+local production = {
+    imgs = {love.graphics.newImage("assets/vfx/loading/intro.png"),
             love.graphics.newImage("assets/vfx/loading/night_load.png")},
     loaded = 0, -- In percentages
     time = 0, -- text loading 
@@ -9,7 +9,7 @@ local loading = {
     text = "loading." -- loading text
 }
 
-function loading:load()
+function production:load()
     self.loaded = 0 -- In percentages
     self.time = 0 -- text loading 
     self.speed = 10
@@ -28,7 +28,7 @@ function loading:load()
     -- end
 end
 
-function loading:update(dt)
+function production:update(dt)
 
     self.loaded = self.loaded + (self.speed * dt)
     self.time = self.time + (1 * dt)
@@ -47,26 +47,23 @@ function loading:update(dt)
     end
 
     if self.loaded > 200 then
-        self.setScene("production")
+        self.setScene("game")
     elseif self.loaded > 100 then
         self.text = "loaded."
     end
 end
 
-function loading:draw()
+function production:draw()
     love.graphics.setColor(1, 1, 1, self.alpha)
     love.graphics.draw(self.imgs[1], 0, 0)
-    love.graphics.setColor(0.79, 0.5, 0.19, self.alpha)
-    love.graphics.setFont(heading)
-    love.graphics.print(self.text, wW / 2 - heading:getWidth(self.text) / 2, wH / 2 - heading:getHeight() / 2)
 
-    love.graphics.setColor(1,1,1, self.alpha)
-    love.graphics.setScissor(0, 0, wW, self.loaded / 100 * wH)
-    love.graphics.draw(self.imgs[2], 0, 0)
-    love.graphics.setColor(1,1,1, 0.5)
-    love.graphics.setFont(heading)
-    love.graphics.print(self.text, wW / 2 - heading:getWidth(self.text) / 2, wH / 2 - heading:getHeight() / 2)
-    love.graphics.setScissor()
+    -- love.graphics.setColor(1,1,1, self.alpha)
+    -- love.graphics.setScissor(0, 0, wW, self.loaded / 100 * wH)
+    -- love.graphics.draw(self.imgs[2], 0, 0)
+    -- love.graphics.setColor(1,1,1, 0.5)
+    -- love.graphics.setFont(heading)
+    -- love.graphics.print(self.text, wW / 2 - heading:getWidth(self.text) / 2, wH / 2 - heading:getHeight() / 2)
+    -- love.graphics.setScissor()
 
 end
 
