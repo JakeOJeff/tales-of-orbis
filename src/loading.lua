@@ -2,8 +2,9 @@ local loading = {
     imgs = {love.graphics.newImage("assets/vfx/loading/light_load.png"),
             love.graphics.newImage("assets/vfx/loading/night_load.png")},
     loaded = 0, -- In percentages
-    time = 0,
-    text = "loading."
+    time = 0, -- text loading 
+    speed = 5,
+    text = "loading." -- loading text
 }
 
 function loading:load()
@@ -13,11 +14,11 @@ end
 function loading:update(dt)
     print("dt:", dt, "loaded:", self.loaded)
 
-    self.loaded = self.loaded + (5 * dt)
+    self.loaded = self.loaded + (self.speed * dt)
     self.time = self.time + (1 * dt)
 
     if (self.text ~= "loading....")then
-        if self.time > 2 then
+        if self.time > self.speed/self.loaded then
             self.text = self.text .. "."
             self.time = 0
         end
