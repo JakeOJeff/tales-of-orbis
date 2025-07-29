@@ -3,14 +3,21 @@ local loading = {
             love.graphics.newImage("assets/vfx/loading/night_load.png")},
     loaded = 0, -- In percentages
     time = 0, -- text loading 
-    speed = 5,
+    speed = 10,
     assets = 0,
+    alpha = 1,
     text = "loading." -- loading text
 }
 
 function loading:load()
+    self.loaded = 0 -- In percentages
+    self.time = 0 -- text loading 
+    self.speed = 10
+    self.assets = 0
+    self.alpha = 1
+    self.text = "loading." -- loading text
     -- TO DO LATER : ASSET COUNTING 
-    
+
     -- local files = love.filesystem.getDirectoryItems("assets/vfx/loading")
     -- print(#files)
     -- for _, file in ipairs(files) do
@@ -19,23 +26,27 @@ function loading:load()
     --         print(self.assets)
     --     end
     -- end
-end 
+end
 
 function loading:update(dt)
 
     self.loaded = self.loaded + (self.speed * dt)
     self.time = self.time + (1 * dt)
 
-    if (self.text ~= "loading....")then
-        if self.time > self.speed/self.loaded then
+    if (self.text ~= "loading....") then
+        if self.time > self.speed / self.loaded then
             self.text = self.text .. "."
             self.time = 0
         end
     else
         self.text = "loading."
     end
+    if self.loaded > 120 then
+        self.alpha = self.alpha - (.5 * dt)
 
-    if self.loaded > 125 then
+    end
+
+    if self.loaded > 200 then
         self.setScene("game")
     elseif self.loaded > 100 then
         self.text = "loaded."
@@ -43,14 +54,20 @@ function loading:update(dt)
 end
 
 function loading:draw()
+    love.graphics.setColor(1, 1, 1, self.alpha)
     love.graphics.draw(self.imgs[1], 0, 0)
+    love.graphics.setColor(0.79, 0.5, 0.19, self.alpha)
+    love.graphics.setFont(heading)
+    love.graphics.print(self.text, wW / 2 - heading:getWidth(self.text) / 2, wH / 2 - heading:getHeight() / 2)
 
+    love.graphics.setColor(1,1,1, self.alpha)
     love.graphics.setScissor(0, 0, wW, self.loaded / 100 * wH)
     love.graphics.draw(self.imgs[2], 0, 0)
+    love.graphics.setColor(1,1,1, 0.5)
+    love.graphics.setFont(heading)
+    love.graphics.print(self.text, wW / 2 - heading:getWidth(self.text) / 2, wH / 2 - heading:getHeight() / 2)
     love.graphics.setScissor()
 
-    love.graphics.setFont(heading)
-    love.graphics.print(self.text, wW/2 - heading:getWidth(self.text)/2, wH/2 - heading:getHeight()/2)
 end
 
 return loading
