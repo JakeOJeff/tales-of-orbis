@@ -4,15 +4,24 @@ local loading = {
     loaded = 0, -- In percentages
     time = 0, -- text loading 
     speed = 5,
+    assets = 0,
     text = "loading." -- loading text
 }
 
 function loading:load()
-
-end
+    -- TO DO LATER : ASSET COUNTING 
+    
+    -- local files = love.filesystem.getDirectoryItems("assets/vfx/loading")
+    -- print(#files)
+    -- for _, file in ipairs(files) do
+    --     if file:match("%.png") or file:match("%.jpeg") or file:match("%.jpg") or file:match("%.ttf") then
+    --         self.assets = self.assets + 1
+    --         print(self.assets)
+    --     end
+    -- end
+end 
 
 function loading:update(dt)
-    print("dt:", dt, "loaded:", self.loaded)
 
     self.loaded = self.loaded + (self.speed * dt)
     self.time = self.time + (1 * dt)
