@@ -43,6 +43,7 @@ function loading:update(dt)
         spawnParticle(self.particles)
     end
 
+
     -- Update all particles
     for i = #self.particles, 1, -1 do
         local p = self.particles[i]
@@ -98,24 +99,22 @@ function loading:draw()
 end
 
 function spawnParticle(particles)
-    local angle = math.random() * math.pi * 2
-    local speed = math.random(20, 60)
-    local vx = math.cos(angle) * speed
-    local vy = math.sin(angle) * speed
+    local y = loading.loaded / 100 * wH  -- fixed emission line (you can change to any Y)
 
-    for i = 1, wW do
+    for x = 0, wW, 4 do  -- emit a particle every 4 pixels for performance
+        local speed = math.random(30, 80)
         local particle = {
-            x = i,
-            y = loading.loaded / 100 * wH,
-            vx = vx,
-            vy = vy,
+            x = x,
+            y = y,
+            vx = 0, -- no horizontal movement
+            vy = -speed, -- move upward
             life = 1.5,
             maxLife = 1.5
         }
 
         table.insert(particles, particle)
     end
-
 end
+
 
 return loading
