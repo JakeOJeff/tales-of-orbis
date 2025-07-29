@@ -6,7 +6,10 @@ local loading = {
     speed = 10,
     assets = 0,
     alpha = 1,
-    text = "loading." -- loading text
+    text = "loading.", -- loading text
+    particles = {},
+    emissionRate = 50,
+    timeSinceLastEmit = 0
 }
 
 function loading:load()
@@ -32,6 +35,24 @@ function loading:update(dt)
 
     self.loaded = self.loaded + (self.speed * dt)
     self.time = self.time + (1 * dt)
+    self.timeSinceLastEmit = self.timeSinceLastEmit + dt
+    local particlesToEmit = math.floor(self.timeSinceLastEmit * self.emissionRate)
+    self.timeSinceLastEmit = self.timeSinceLastEmit - particlesToEmit / self.emissionRate
+
+    for i = 1, particlesToEmit do
+        spawnParticle(self.particles)
+    end
+
+    -- Update all particles
+    for i = #self.particles, 1, -1 do
+        local p = self.particles[i]
+        p.x = p.x + p.vx * dt
+        p.y = p.y + p.vy * dt
+        p.life = p.life - dt
+        if p.life <= 0 then
+            table.remove(self.particles, i)
+        end
+    end
 
     if (self.text ~= "loading....") then
         if self.time > self.speed / self.loaded then
@@ -60,13 +81,40 @@ function loading:draw()
     love.graphics.setFont(heading)
     love.graphics.print(self.text, wW / 2 - heading:getWidth(self.text) / 2, wH / 2 - heading:getHeight() / 2)
 
-    love.graphics.setColor(1,1,1, self.alpha)
+    love.graphics.setColor(1, 1, 1, self.alpha)
     love.graphics.setScissor(0, 0, wW, self.loaded / 100 * wH)
     love.graphics.draw(self.imgs[2], 0, 0)
-    love.graphics.setColor(1,1,1, 0.5)
+    love.graphics.setColor(1, 1, 1, 0.5)
     love.graphics.setFont(heading)
     love.graphics.print(self.text, wW / 2 - heading:getWidth(self.text) / 2, wH / 2 - heading:getHeight() / 2)
     love.graphics.setScissor()
+
+    for _, p in ipairs(self.particles) do
+        local alpha = p.life / p.maxLife
+        love.graphics.setColor(1, 1, 1, alpha)
+        love.graphics.circle("fill", p.x, p.y, 3)
+    end
+
+end
+
+function spawnParticle(particles)
+    local angle = math.random() * math.pi * 2
+    local speed = math.random(20, 60)
+    local vx = math.cos(angle) * speed
+    local vy = math.sin(angle) * speed
+
+    for i = 1, wW do
+        local particle = {
+            x = i,
+            y = loading.loaded / 100 * wH,
+            vx = vx,
+            vy = vy,
+            life = 1.5,
+            maxLife = 1.5
+        }
+
+        table.insert(particles, particle)
+    end
 
 end
 
