@@ -24,9 +24,6 @@ local scenery = SceneryInit({
     path = "src.cutscenes.intro",
     key = "intro"
     
-},{
-    path = "src.cutscene",
-    key = "cutscene"
 }, {
     path = "src.game",
     key = "game"

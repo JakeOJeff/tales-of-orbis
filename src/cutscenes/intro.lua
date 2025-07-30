@@ -15,7 +15,6 @@ local intro = {
     }
 }
 
-
 function intro:load()
     for i = 1, 8 do
         self.scenes = love.graphics.newImage("frame"..i..".png")
