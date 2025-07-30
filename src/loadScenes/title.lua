@@ -1,4 +1,4 @@
-local intro = {
+local title = {
     imgs = {
         love.graphics.newImage("assets/vfx/loading/titles/background.png"),
         love.graphics.newImage("assets/vfx/loading/titles/tales-of-text.png"),
@@ -18,24 +18,24 @@ local intro = {
     hover_play = love.graphics.newImage("assets/vfx/loading/titles/play-hover.png"),
 }
 
-function intro:load()
+function title:load()
     self.startTime = love.timer.getTime()
 end
 
-function intro:update(dt)
+function title:update(dt)
     self.timer = love.timer.getTime() - self.startTime
     local mx, my = love.mouse.getPosition()
     if mx > self.play_x and mx < self.play_x + self.play_width and my > self.play_y and my < self.play_y + self.play_height then
         self.imgs[5] = self.hover_play
         if love.mouse.isDown(1) then
-            intro.setScene("game")
+            title.setScene("intro")
         end
     else
         self.imgs[5] = self.normal_play
     end
 end
 
-function intro:draw()
+function title:draw()
     for i, img in ipairs(self.imgs) do
         local appearTime = (i - 1) * self.delayBetween
         local t = self.timer - appearTime
@@ -51,4 +51,4 @@ function intro:draw()
     love.graphics.setColor(1, 1, 1, 1)
 end
 
-return intro
+return title

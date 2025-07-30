@@ -26,7 +26,7 @@ local intro = {
 
 function intro:load()
     for i = 1, 8 do
-        self.scenes = love.graphics.newImage("frame"..i..".png")
+        self.scenes = love.graphics.newImage("assets/vfx/cutscenes/frame"..i..".png")
     end
 end
 
@@ -37,10 +37,26 @@ function intro:update(dt)
         {wW - subheading:getWidth(self.sceneTexts[self.currentIndex]) - 20, 20},
         {wW - subheading:getWidth(self.sceneTexts[self.currentIndex]) - 20, wH - subheading:getHeight() - 20}
     }
+    self.timer = self.timer + (1 * dt)
+    if self.fadeTimer < 1 then
+    self.fadeTimer = self.fadeTimer + (0.1 * dt)
+    end
 end
 
 function intro:draw()
+    love.graphics.setColor(1,1,1,self.fadeTimer)
+    if self.scenes[self.currentIndex] ~= nil then
+        love.graphics.draw(self.scenes[self.currentIndex],0,0)
+    end
+    
+end
 
+function intro:keypressed(key)
+    if key == "return" then
+        self.currentIndex = self.currentIndex + 1
+        self.timer = 0
+        self.fadeTimer = 0
+    end
 end
 
 return intro
