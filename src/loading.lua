@@ -108,8 +108,8 @@ function spawnParticle(particles)
             y = y,
             vx = 0, -- no horizontal movement
             vy = -speed, -- move upward
-            life = 1.5,
-            maxLife = 1.5
+            life = 1,
+            maxLife = 1
         }
 
         table.insert(particles, particle)
