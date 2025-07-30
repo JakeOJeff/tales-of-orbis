@@ -12,7 +12,16 @@ local intro = {
         "Orbis, the last light! The only hope left.",
         "Escape the Void. Reach the Core. Don't fight it, RUN!"
     
-    }
+    },
+    currentIndex = 1,
+    textPos = {
+        {20, 20},
+        {20, wH - subheading:getHeight() - 20},
+        {wW - subheading:getWidth("") - 20, 20},
+        {wW - subheading:getWidth("") - 20, wH - subheading:getHeight() - 20}
+    },
+    timer = 0,
+    fadeTimer = 0,
 }
 
 function intro:load()
@@ -22,7 +31,12 @@ function intro:load()
 end
 
 function intro:update(dt)
-
+    self.textPos = {
+        {20, 20},
+        {20, wH - subheading:getHeight() - 20},
+        {wW - subheading:getWidth(self.sceneTexts[self.currentIndex]) - 20, 20},
+        {wW - subheading:getWidth(self.sceneTexts[self.currentIndex]) - 20, wH - subheading:getHeight() - 20}
+    }
 end
 
 function intro:draw()

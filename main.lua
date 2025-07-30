@@ -5,6 +5,8 @@ wH = love.graphics:getHeight()
 
 -- [FONT DECLARATION]
 heading = love.graphics.newFont("assets/fonts/nihonium.ttf", 100)
+subheading = love.graphics.newFont("assets/fonts/nihonium.ttf", 64)
+paragraph = love.graphics.newFont("assets/fonts/nihonium.ttf", 48)
 
 -- [INITIALIZING SCENERY]
 local SceneryInit = require("src.libs.scenery")
