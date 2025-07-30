@@ -1,7 +1,5 @@
 local intro = {
-    scenes = {
-
-    },
+    scenes = {},
     sceneTexts = {
         "Long ago, the gods danced among the stars",
         "They shaped the worlds with light, laughter... and law",
@@ -11,51 +9,55 @@ local intro = {
         "And from their ashes, one spark remained",
         "Orbis, the last light! The only hope left.",
         "Escape the Void. Reach the Core. Don't fight it, RUN!"
-    
     },
     currentIndex = 1,
-    textPos = {
-        {20, 20},
-        {20, wH - subheading:getHeight() - 20},
-        {wW - subheading:getWidth("") - 20, 20},
-        {wW - subheading:getWidth("") - 20, wH - subheading:getHeight() - 20}
-    },
     timer = 0,
     fadeTimer = 0,
 }
 
+
 function intro:load()
+
     for i = 1, 8 do
-        self.scenes = love.graphics.newImage("assets/vfx/cutscenes/frame"..i..".png")
+        self.scenes[i] = love.graphics.newImage("assets/vfx/cutscenes/frame" .. i .. ".png")
     end
 end
 
 function intro:update(dt)
-    self.textPos = {
-        {20, 20},
-        {20, wH - subheading:getHeight() - 20},
-        {wW - subheading:getWidth(self.sceneTexts[self.currentIndex]) - 20, 20},
-        {wW - subheading:getWidth(self.sceneTexts[self.currentIndex]) - 20, wH - subheading:getHeight() - 20}
-    }
-    self.timer = self.timer + (1 * dt)
+    self.timer = self.timer + dt
     if self.fadeTimer < 1 then
-    self.fadeTimer = self.fadeTimer + (0.1 * dt)
+        self.fadeTimer = self.fadeTimer + (0.5 * dt)
     end
 end
 
 function intro:draw()
-    love.graphics.setColor(1,1,1,self.fadeTimer)
-    if self.scenes[self.currentIndex] ~= nil then
-        love.graphics.draw(self.scenes[self.currentIndex],0,0)
+    love.graphics.setColor(1, 1, 1, self.fadeTimer)
+    if self.scenes[self.currentIndex] then
+        love.graphics.draw(self.scenes[self.currentIndex], 0, 0)
     end
+
+    -- Draw text
+    local text = self.sceneTexts[self.currentIndex]
+    local textWidth = subheading:getWidth(text)
+    local textHeight = subheading:getHeight()
     
+    love.graphics.setFont(subheading)
+    love.graphics.setColor(1, 1, 1, self.fadeTimer)
+    
+    -- Position text at bottom center
+    love.graphics.print(text, (wW - textWidth) / 2, wH - textHeight - 30)
 end
 
 function intro:keypressed(key)
     if key == "return" then
-        self.currentIndex = self.currentIndex + 1
-        self.timer = 0
-        self.fadeTimer = 0
+        if self.currentIndex < #self.sceneTexts then
+            self.currentIndex = self.currentIndex + 1
+            self.timer = 0
+            self.fadeTimer = 0
+        else
+            -- Transition to next game state here
+            print("End of intro")
+        end
     end
 end
 
