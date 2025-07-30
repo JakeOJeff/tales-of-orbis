@@ -10,15 +10,15 @@ heading = love.graphics.newFont("assets/fonts/nihonium.ttf", 100)
 local SceneryInit = require("src.libs.scenery")
 local scenery = SceneryInit({
     path = "src.loading",
-    key = "loading",
-    default = true
+    key = "loading"
 }, {
     path = "src.loadScenes.production",
     key = "production"
     
 },  {
     path = "src.loadScenes.intro",
-    key = "intro"
+    key = "intro",
+    default = true
     
 },{
     path = "src.cutscene",
@@ -30,3 +30,9 @@ local scenery = SceneryInit({
 
 scenery:hook(love)
 
+-- [GLOBAL FUNCTIONS]
+
+function dist(x1, y1, x2, y2)
+    return math.sqrt( (x2 - x1)^2 - (y2 - y1)^2)
+    
+end
