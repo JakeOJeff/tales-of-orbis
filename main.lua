@@ -17,7 +17,11 @@ local scenery = SceneryInit({
     key = "production"
     
 },  {
-    path = "src.loadScenes.intro",
+    path = "src.loadScenes.title",
+    key = "title"
+    
+},  {
+    path = "src.cutscenes.intro",
     key = "intro"
     
 },{

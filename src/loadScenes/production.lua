@@ -47,7 +47,7 @@ function production:update(dt)
     end
 
     if self.loaded > 100 then
-        self.setScene("intro")
+        self.setScene("title")
     end
 end
 
