@@ -10,15 +10,15 @@ heading = love.graphics.newFont("assets/fonts/nihonium.ttf", 100)
 local SceneryInit = require("src.libs.scenery")
 local scenery = SceneryInit({
     path = "src.loading",
-    key = "loading"
+    key = "loading",
+    default = true
 }, {
     path = "src.loadScenes.production",
     key = "production"
     
 },  {
     path = "src.loadScenes.intro",
-    key = "intro",
-    default = true
+    key = "intro"
     
 },{
     path = "src.cutscene",

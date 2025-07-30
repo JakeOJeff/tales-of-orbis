@@ -7,8 +7,8 @@ local intro = {
         love.graphics.newImage("assets/vfx/loading/titles/play.png"),
     },
     timer = 0,
-    fadeTime = 0.5, -- seconds for fade in
-    delayBetween = .5, -- seconds between each image's start time
+    fadeTime = 1, -- seconds for fade in
+    delayBetween = 3, -- seconds between each image's start time
     startTime = nil,
     play_x = 527,
     play_y = 340,
@@ -27,6 +27,9 @@ function intro:update(dt)
     local mx, my = love.mouse.getPosition()
     if mx > self.play_x and mx < self.play_x + self.play_width and my > self.play_y and my < self.play_y + self.play_height then
         self.imgs[5] = self.hover_play
+        if love.mouse.isDown(1) then
+            intro.setScene("game")
+        end
     else
         self.imgs[5] = self.normal_play
     end
