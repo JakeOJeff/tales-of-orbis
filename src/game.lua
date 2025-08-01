@@ -9,8 +9,10 @@ joysticks = love.joystick.getJoysticks( )
 Joystick = joysticks[1] or nil
 jAxes = {}
 if Joystick then
-    jAxes[1], jAxes[2], jAxes[3], jAxes[4] = Joystick:getAxes() -- lH, lV, rH, rV
+    local lH, lV, rH, rV = Joystick:getAxes()
+    jAxes = { lH, lV, rH, rV }
 end
+
 
 function game:load()
     Map = STI("assets/map/1.lua", {"box2d"})
