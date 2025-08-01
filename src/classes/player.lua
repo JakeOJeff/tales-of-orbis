@@ -48,13 +48,26 @@ function Player:move(dt)
         end
 
     else
-        if self.xVel > 0 then
-            self.xVel = self.xVel - self.friction
-        end
+        self:applyFriction()
     end
 
 end
 
+function Player:applyFriction(dt)
+    if self.xVel > 0 then
+        if self.xVel - self.friction * dt > 0 then
+            self.xVel = self.xVel - self.friction * dt
+        else
+            self.xVel = 0
+        end
+    elseif self.xVel < 0 then 
+        if self.xVel + self.friction * dt < 0 then
+            self.xVel = self.xVel + self.friction * dt
+        else 
+            self.xVel = 0
+        end
+    end
+end
 function Player:syncPhysics()
     self.x, self.y = self.physics.body:getPosition()
     self.physics.body:setLinearVelocity(self.xVel, self.yVel)
