@@ -23,13 +23,16 @@ function Player:load()
 end
 function Player:update(dt)
     self:syncPhysics()
+    Player:move(dt)
 end
 
 function Player:move(dt)
 
-    print(lH) -- useful for debugging joystick movement
+    if Joystick then
+        print(jAxes[1])
+    end
 
-    if love.keyboard.isDown("d", "right") or lH > 0.2 then -- small deadzone
+    if love.keyboard.isDown("d", "right") or jAxes[1] > 0.2 then -- small deadzone
         local incrementVal = self.xVel + self.acceleration * dt
         if incrementVal < self.maxSpeed then
             self.xVel = incrementVal
