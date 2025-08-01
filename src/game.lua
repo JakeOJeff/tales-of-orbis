@@ -6,6 +6,7 @@ function game:load()
     Map = STI("assets/map/1.lua", {"box2d"})
     World = love.physics.newWorld(0, 0)
     Map:box2d_init(World)
+    Map.layers.solid.visible = false
 end
 
 
