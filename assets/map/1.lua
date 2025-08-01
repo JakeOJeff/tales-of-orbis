@@ -9,8 +9,8 @@ return {
   height = 12,
   tilewidth = 32,
   tileheight = 32,
-  nextlayerid = 2,
-  nextobjectid = 1,
+  nextlayerid = 3,
+  nextobjectid = 2,
   properties = {},
   tilesets = {
     {
@@ -74,6 +74,37 @@ return {
         9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 8, 8, 0, 0, 0, 0, 0,
         10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 10, 10, 10, 10, 8, 0, 0, 0, 0, 0,
         11, 11, 11, 11, 11, 11, 11, 11, 11, 10, 10, 10, 10, 10, 8, 0, 0, 0, 0, 0
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 2,
+      name = "solid",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {
+        ["collidable"] = true
+      },
+      objects = {
+        {
+          id = 1,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 0,
+          y = 256,
+          width = 220.5,
+          height = 127.5,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        }
       }
     }
   }
