@@ -6,7 +6,7 @@
  <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32" tilecount="14" columns="7">
   <image source="../../vfx/tilesets/tiles.png" width="224" height="64"/>
  </tileset>
- <layer id="1" name="Tile Layer 1" width="20" height="12">
+ <layer id="1" name="Base" width="20" height="12">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

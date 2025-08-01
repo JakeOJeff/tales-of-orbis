@@ -1,4 +1,3 @@
-
 local game = {}
 local STI = require("src.libs.sti")
 
@@ -14,9 +13,8 @@ function game:load()
     Player:load()
 end
 
-
-
 function game:update(dt)
+    World:update(dt)
 
     Player:update(dt)
 end
