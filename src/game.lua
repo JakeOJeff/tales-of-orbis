@@ -5,13 +5,11 @@ local STI = require("src.libs.sti")
 require("src.classes.player")
 
 -- Input Connections 
-joysticks = love.joystick.getJoysticks( )
+joysticks = love.joystick.getJoysticks()
 Joystick = joysticks[1] or nil
-jAxes = {}
-if Joystick then
-    local lH, lV, rH, rV = Joystick:getAxes()
-    jAxes = { lH, lV, rH, rV }
-end
+jAxes = {
+    0, 0, 0, 0
+}
 
 
 function game:load()
@@ -24,7 +22,9 @@ function game:load()
 end
 
 function game:update(dt)
-
+    if Joystick then
+        jAxes[1], jAxes[2], jAxes[3], jAxes[4] = Joystick:getAxes() -- lH, lV, rH, rV
+    end
     World:update(dt)
     Player:update(dt)
 
