@@ -35,9 +35,11 @@ function intro:draw()
     local textHeight = subheading:getHeight()
 
     love.graphics.setFont(subheading)
-    love.graphics.setColor(1, 1, 1, self.fadeTimer)
 
-    -- Position text at bottom center
+    love.graphics.setColor(.5, .5, .5, self.fadeTimer)
+    love.graphics.print(text, ((wW - textWidth) / 2) + 3,( wH - textHeight - 30) + 3)
+
+    love.graphics.setColor(1, 1, 1, self.fadeTimer)
     love.graphics.print(text, (wW - textWidth) / 2, wH - textHeight - 30)
 end
 
