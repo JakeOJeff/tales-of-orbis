@@ -25,11 +25,24 @@ function Player:update(dt)
     self:syncPhysics()
 end
 
+function Player:move(dt)
+
+    if love.keyboard.isDown("d", "right")  then
+        local incrementVal = self.xVel + self.acceleration * dt
+        if incrementVal  < self.maxSpeed then
+            self.xVel = incrementVal
+        else
+            self.xVel = self.maxSpeed
+        end
+    end
+
+end
+
 function Player:syncPhysics()
     self.x, self.y = self.physics.body:getPosition()
     print(self.xVel, self.yVel)
     self.physics.body:setLinearVelocity(self.xVel, self.yVel)
 end
 function  Player:draw()
-    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+    love.graphics.rectangle("fill", self.x - self.width/2, self.y - self.height/2, self.width, self.height)
 end
