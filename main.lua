@@ -12,8 +12,7 @@ paragraph = love.graphics.newFont("assets/fonts/nihonium.ttf", 48)
 local SceneryInit = require("src.libs.scenery")
 local scenery = SceneryInit({
     path = "src.loading",
-    key = "loading",
-    default = true
+    key = "loading"
 }, {
     path = "src.loadScenes.production",
     key = "production"
@@ -24,7 +23,8 @@ local scenery = SceneryInit({
     
 },  {
     path = "src.cutscenes.intro",
-    key = "intro"
+    key = "intro",
+    default = true
     
 }, {
     path = "src.game",
