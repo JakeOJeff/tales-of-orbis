@@ -12,6 +12,7 @@ function Player:load()
     self.friction = 3500
     
     self.gravity = 1500
+    self.grounded = false
 
     self.maxSpeed = 200 -- 200/4000 = 0.05 seconds
 
@@ -56,7 +57,10 @@ function Player:move(dt)
 
 end
 function Player:applyGravity(dt)
-    self.yVel = self.yVel + self.gravity * dt
+    if not self.grounded then
+        self.yVel = self.yVel + self.gravity * dt    
+    end
+    
 end
 function Player:applyFriction(dt)
     if self.xVel > 0 then
@@ -72,6 +76,21 @@ function Player:applyFriction(dt)
             self.xVel = 0
         end
     end
+end
+
+function Player:beginContact(a, b, collision)
+    if self.grounded then return end
+    local nx, ny = collision:getNormal()
+    if a == self.physics.fixture or b == self.physics.fixture then
+        if ny > 0 then
+            self:land()
+        end
+    end
+end
+
+function Player:land()
+    self.yVel = 0
+    self.grounded = true
 end
 function Player:syncPhysics()
     self.x, self.y = self.physics.body:getPosition()
