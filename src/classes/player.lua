@@ -14,7 +14,8 @@ function Player:load()
     self.gravity = 1500
     self.grounded = false
     self.jumpAmount = -500
-
+    self.currentGroundCollision = nil
+    
     self.maxSpeed = 200 -- 200/4000 = 0.05 seconds
 
     self.physics = {}
@@ -114,7 +115,16 @@ function Player:beginContact(a, b, collision)
     end
 end
 
+function Player:endContact(a, b, collision)
+    if a == self.physics.fixture or b == self.physics.fixture then
+        if self.currentGroundCollision == collision then
+            self.grounded = false
+        end
+    end
+end
+
 function Player:land(collision)
+    self.currentGroundCollision = collision
     self.yVel = 0
     self.grounded = true
 end
