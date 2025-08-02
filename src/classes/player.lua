@@ -10,6 +10,8 @@ function Player:load()
     self.maxSpeed = 200
     self.acceleration = 4000
     self.friction = 3500
+    
+    self.gravity = 1500
 
     self.maxSpeed = 200 -- 200/4000 = 0.05 seconds
 
@@ -22,7 +24,8 @@ end
 function Player:update(dt)
 
     self:syncPhysics()
-    Player:move(dt)
+    self:applyGravity(dt)
+    self:move(dt)
 end
 
 function Player:move(dt)
@@ -52,7 +55,9 @@ function Player:move(dt)
     end
 
 end
-
+function Player:applyGravity(dt)
+    self.yVel = self.yVel + self.gravity * dt
+end
 function Player:applyFriction(dt)
     if self.xVel > 0 then
         if self.xVel - self.friction * dt > 0 then
