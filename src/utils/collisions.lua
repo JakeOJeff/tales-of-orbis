@@ -1,11 +1,11 @@
-local collision = {}
+local collisions = {}
 
-function collision:beginContact(a, b, collision) 
+function collisions:beginContact(a, b, collision) 
     Player:beginContact(a, b, collision)
 end
 
-function collision:endContact(a, b, collision) 
+function collisions:endContact(a, b, collision) 
 
 end
 
-return collision
+return collisions

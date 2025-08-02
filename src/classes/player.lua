@@ -30,7 +30,7 @@ function Player:update(dt)
 end
 
 function Player:move(dt)
-
+    print(jAxes[1])
     if love.keyboard.isDown("d", "right") or jAxes[1] > 0.2 then -- small deadzone
         local incrementVal = self.xVel + self.acceleration * dt
         if self.xVel < self.maxSpeed then
@@ -78,11 +78,26 @@ function Player:applyFriction(dt)
     end
 end
 
+function Player:keyboardInput(key)
+    if key == "space" then
+        
+    end
+end
+
+function Player:jump()
+    
+
+end
+
 function Player:beginContact(a, b, collision)
     if self.grounded then return end
     local nx, ny = collision:getNormal()
-    if a == self.physics.fixture or b == self.physics.fixture then
+    if a == self.physics.fixture then
         if ny > 0 then
+            self:land()
+        end
+    elseif b == self.physics.fixture then
+        if ny < 0 then
             self:land()
         end
     end
