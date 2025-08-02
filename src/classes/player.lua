@@ -10,9 +10,10 @@ function Player:load()
     self.maxSpeed = 200
     self.acceleration = 4000
     self.friction = 3500
-    
+
     self.gravity = 1500
     self.grounded = false
+    self.jumpAmount = -500
 
     self.maxSpeed = 200 -- 200/4000 = 0.05 seconds
 
@@ -58,9 +59,9 @@ function Player:move(dt)
 end
 function Player:applyGravity(dt)
     if not self.grounded then
-        self.yVel = self.yVel + self.gravity * dt    
+        self.yVel = self.yVel + self.gravity * dt
     end
-    
+
 end
 function Player:applyFriction(dt)
     if self.xVel > 0 then
@@ -69,10 +70,10 @@ function Player:applyFriction(dt)
         else
             self.xVel = 0
         end
-    elseif self.xVel < 0 then 
+    elseif self.xVel < 0 then
         if self.xVel + self.friction * dt < 0 then
             self.xVel = self.xVel + self.friction * dt
-        else 
+        else
             self.xVel = 0
         end
     end
@@ -80,7 +81,7 @@ end
 
 function Player:keyboardInput(key)
     if key == "space" or key == "w" or key == "up" then
-        self:jump()     
+        self:jump()
     end
 end
 
@@ -90,25 +91,30 @@ function Player:gamepadInput(button)
     end
 end
 function Player:jump()
-    
+    if self.grounded then
+        self.yVel = self.jumpAmount
+        self.grounded = false
+    end
 
 end
 
 function Player:beginContact(a, b, collision)
-    if self.grounded then return end
+    if self.grounded then
+        return
+    end
     local nx, ny = collision:getNormal()
     if a == self.physics.fixture then
         if ny > 0 then
-            self:land()
+            self:land(collision)
         end
     elseif b == self.physics.fixture then
         if ny < 0 then
-            self:land()
+            self:land(collision)
         end
     end
 end
 
-function Player:land()
+function Player:land(collision)
     self.yVel = 0
     self.grounded = true
 end
