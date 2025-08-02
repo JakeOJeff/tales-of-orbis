@@ -48,7 +48,7 @@ function Player:move(dt)
         end
 
     else
-        self:applyFriction()
+        self:applyFriction(dt)
     end
 
 end
