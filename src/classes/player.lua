@@ -28,9 +28,9 @@ function Player:load()
         idle = anim8.newAnimation(self.grid('1-8', 1), 0.15)
     }
 
-    self.trail = {}
-    self.trailTimer = 0
-    self.trailInterval = 0.02 -- how often to spawn trail particles
+    self.particles = {}
+    self.emissionRate = 100 -- particles per second
+    self.timeSinceLastEmit = 0
 
     self.physics = {}
     self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
@@ -41,7 +41,7 @@ end
 function Player:update(dt)
 
     self.animations.idle:update(dt)
-        self:updateTrail(dt)
+    self:updateTrail(dt)
 
     self:syncPhysics()
     self:applyGravity(dt)
@@ -109,26 +109,6 @@ function Player:keyboardInput(key)
         self:jump()
     end
 end
-function Player:updateTrail(dt)
-    self.trailTimer = self.trailTimer + dt
-    if self.trailTimer >= self.trailInterval then
-        self.trailTimer = 0
-        table.insert(self.trail, {
-            x = self.x,
-            y = self.y,
-            alpha = 1.0,
-        })
-    end
-
-    -- Fade out and remove old trail parts
-    for i = #self.trail, 1, -1 do
-        local t = self.trail[i]
-        t.alpha = t.alpha - dt * 2 -- fade speed
-        if t.alpha <= 0 then
-            table.remove(self.trail, i)
-        end
-    end
-end
 
 function Player:gamepadInput(button)
     if button == "a" then
@@ -166,6 +146,48 @@ function Player:endContact(a, b, collision)
         end
     end
 end
+function Player:updateTrail(dt)
+    self.timeSinceLastEmit = self.timeSinceLastEmit + dt
+    local particlesToEmit = math.floor(self.timeSinceLastEmit * self.emissionRate)
+    self.timeSinceLastEmit = self.timeSinceLastEmit - particlesToEmit / self.emissionRate
+
+    for i = 1, particlesToEmit do
+        self:spawnTrailParticles()
+    end
+
+    for i = #self.particles, 1, -1 do
+        local p = self.particles[i]
+        p.x = p.x + p.vx * dt
+        p.y = p.y + p.vy * dt
+        p.life = p.life - dt
+        if p.life <= 0 then
+            table.remove(self.particles, i)
+        end
+    end
+end
+
+function Player:spawnTrailParticles()
+    for i = 1, 5 do -- emit 5 particles at once for a chunkier trail
+        local angle = love.math.random() * 2 * math.pi
+        local radius = love.math.random() * 10 -- controls how far from center the particles spawn
+        local speed = love.math.random(20, 50)
+
+        local dx = math.cos(angle) * radius
+        local dy = math.sin(angle) * radius
+
+        local particle = {
+            x = self.x + dx,
+            y = self.y + dy,
+            vx = math.cos(angle) * speed,
+            vy = math.sin(angle) * speed,
+            life = 0.3 + love.math.random() * 0.2,
+            maxLife = 1
+        }
+
+        table.insert(self.particles, particle)
+    end
+end
+
 
 function Player:land(collision)
     self.currentGroundCollision = collision
@@ -178,12 +200,13 @@ function Player:syncPhysics()
     self.physics.body:setLinearVelocity(self.xVel, self.yVel)
 end
 function Player:draw()
-        for _, t in ipairs(self.trail) do
-        love.graphics.setColor(1, 1, 1, t.alpha) -- white, with alpha fade
-        love.graphics.color( t.x - 2, t.y + self.height/4, 4, 4)
+    for _, p in ipairs(self.particles) do
+        local alpha = p.life / p.maxLife
+        love.graphics.setColor(0.79, 0.5, 0.19, alpha)
+        love.graphics.rectangle("fill", p.x, p.y, 2, 2)
     end
-    love.graphics.setColor(1, 1, 1, 1) -- reset color
 
+    love.graphics.setColor(1, 1, 1, 1) -- reset color
     -- love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
     self.animations.idle:draw(self.spritesheet, self.x - 32 / 2, self.y - 50 / 2)
 end
