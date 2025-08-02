@@ -27,7 +27,7 @@ function Player:load()
     }
 
     self.particles = {}
-    self.emissionRate = 300 -- particles per second
+    self.emissionRate = 130 -- particles per second
     self.timeSinceLastEmit = 0
 
     self.physics = {}
@@ -157,6 +157,7 @@ function Player:updateTrail(dt)
         local p = self.particles[i]
         p.x = p.x + p.vx * dt
         p.y = p.y + p.vy * dt
+        p.size = p.size * (1 - (p.life / p.maxLife))
         p.life = p.life - dt
         if p.life <= 0 then
             table.remove(self.particles, i)
@@ -176,10 +177,11 @@ function Player:spawnTrailParticles()
         local particle = {
             x = self.x + dx,
             y = self.y + dy,
+            size = 10,
             vx = math.cos(angle) * speed,
             vy = math.sin(angle) * speed,
             life = 0.3 + love.math.random() * 0.2,
-            maxLife = 2
+            maxLife = 10
         }
 
         table.insert(self.particles, particle)
@@ -200,8 +202,10 @@ end
 function Player:draw()
     for _, p in ipairs(self.particles) do
         local alpha = p.life / p.maxLife
-        love.graphics.setColor(0.79, 0.5, 0.19, alpha)
-        love.graphics.rectangle("fill", p.x, p.y, 2, 2)
+        --love.graphics.setColor(0.79, 0.5, 0.19, alpha)
+                love.graphics.setColor(0.56, 0.23, 0.11, alpha)
+
+        love.graphics.circle("fill", p.x, p.y, p.size)
     end
 
     love.graphics.setColor(1, 1, 1, 1) -- reset color
