@@ -7,19 +7,17 @@ function Player:load()
     self.height = 60
     self.xVel = 0
     self.yVel = 100
-    self.maxSpeed = 200
-    self.acceleration = 4000
-    self.friction = 3500
+    self.maxSpeed = 100 -- 200/4000 = 0.05 seconds
+    self.acceleration = 2000
+    self.friction = 2000
 
-    self.gravity = 800
+    self.gravity = 200
     self.grounded = false
-    self.jumpAmount = -500
+    self.jumpAmount = -200
     self.currentGroundCollision = nil
 
     self.graceTime = 0
-    self.graceDuration = 0
-
-    self.maxSpeed = 200 -- 200/4000 = 0.05 seconds
+    self.graceDuration = 2
 
     self.spritesheet = love.graphics.newImage('assets/vfx/tilesets/player.png')
     self.grid = anim8.newGrid(32, 50, self.spritesheet:getWidth(), self.spritesheet:getHeight())
@@ -29,7 +27,7 @@ function Player:load()
     }
 
     self.particles = {}
-    self.emissionRate = 100 -- particles per second
+    self.emissionRate = 300 -- particles per second
     self.timeSinceLastEmit = 0
 
     self.physics = {}
@@ -181,7 +179,7 @@ function Player:spawnTrailParticles()
             vx = math.cos(angle) * speed,
             vy = math.sin(angle) * speed,
             life = 0.3 + love.math.random() * 0.2,
-            maxLife = 1
+            maxLife = 2
         }
 
         table.insert(self.particles, particle)
