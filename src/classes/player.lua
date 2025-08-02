@@ -18,15 +18,19 @@ function Player:load()
 
     self.graceTime = 0
     self.graceDuration = 0
-    
+
     self.maxSpeed = 200 -- 200/4000 = 0.05 seconds
 
     self.spritesheet = love.graphics.newImage('assets/vfx/tilesets/player.png')
     self.grid = anim8.newGrid(32, 50, self.spritesheet:getWidth(), self.spritesheet:getHeight())
-    
+
     self.animations = {
         idle = anim8.newAnimation(self.grid('1-8', 1), 0.15)
     }
+
+    self.trail = {}
+    self.trailTimer = 0
+    self.trailInterval = 0.02 -- how often to spawn trail particles
 
     self.physics = {}
     self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
@@ -37,14 +41,15 @@ end
 function Player:update(dt)
 
     self.animations.idle:update(dt)
+        self:updateTrail(dt)
 
     self:syncPhysics()
     self:applyGravity(dt)
     self:move(dt)
-     self:decreaseGraceTime(dt)
+    self:decreaseGraceTime(dt)
 end
 
---function Player
+-- function Player
 function Player:move(dt)
     print(jAxes[1])
     if love.keyboard.isDown("d", "right") or jAxes[1] > 0.2 then -- small deadzone
@@ -73,7 +78,7 @@ function Player:move(dt)
 
 end
 function Player:applyGravity(dt)
-    if not self.grounded  then
+    if not self.grounded then
         self.yVel = self.yVel + self.gravity * dt
     end
 
@@ -102,6 +107,26 @@ end
 function Player:keyboardInput(key)
     if key == "space" or key == "w" or key == "up" then
         self:jump()
+    end
+end
+function Player:updateTrail(dt)
+    self.trailTimer = self.trailTimer + dt
+    if self.trailTimer >= self.trailInterval then
+        self.trailTimer = 0
+        table.insert(self.trail, {
+            x = self.x,
+            y = self.y,
+            alpha = 1.0,
+        })
+    end
+
+    -- Fade out and remove old trail parts
+    for i = #self.trail, 1, -1 do
+        local t = self.trail[i]
+        t.alpha = t.alpha - dt * 2 -- fade speed
+        if t.alpha <= 0 then
+            table.remove(self.trail, i)
+        end
     end
 end
 
@@ -153,6 +178,12 @@ function Player:syncPhysics()
     self.physics.body:setLinearVelocity(self.xVel, self.yVel)
 end
 function Player:draw()
-    --love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
+        for _, t in ipairs(self.trail) do
+        love.graphics.setColor(1, 1, 1, t.alpha) -- white, with alpha fade
+        love.graphics.color( t.x - 2, t.y + self.height/4, 4, 4)
+    end
+    love.graphics.setColor(1, 1, 1, 1) -- reset color
+
+    -- love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
     self.animations.idle:draw(self.spritesheet, self.x - 32 / 2, self.y - 50 / 2)
 end
