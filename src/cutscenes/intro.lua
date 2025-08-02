@@ -31,10 +31,10 @@ function intro:draw()
 
     -- Draw text
     local text = self.sceneTexts[self.currentIndex]
-    local textWidth = subheading:getWidth(text)
-    local textHeight = subheading:getHeight()
+    local textWidth = paragraph:getWidth(text)
+    local textHeight = paragraph:getHeight()
 
-    love.graphics.setFont(subheading)
+    love.graphics.setFont(paragraph)
 
     love.graphics.setColor(.5, .5, .5, self.fadeTimer)
     love.graphics.print(text, ((wW - textWidth) / 2) + 3,( wH - textHeight - 30) + 3)

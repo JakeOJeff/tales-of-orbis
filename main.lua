@@ -23,12 +23,12 @@ local scenery = SceneryInit({
     
 },  {
     path = "src.cutscenes.intro",
-    key = "intro"
+    key = "intro",
+    default = true
     
 }, {
     path = "src.game",
-    key = "game",
-    default = true
+    key = "game"
 })
 
 scenery:hook(love)

@@ -35,6 +35,7 @@ function Player:update(dt)
      self:decreaseGraceTime(dt)
 end
 
+--function Player
 function Player:move(dt)
     print(jAxes[1])
     if love.keyboard.isDown("d", "right") or jAxes[1] > 0.2 then -- small deadzone
