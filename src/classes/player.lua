@@ -15,6 +15,9 @@ function Player:load()
     self.grounded = false
     self.jumpAmount = -500
     self.currentGroundCollision = nil
+
+    self.graceTime = 0
+    self.graceDuration = 0
     
     self.maxSpeed = 200 -- 200/4000 = 0.05 seconds
 
@@ -29,6 +32,7 @@ function Player:update(dt)
     self:syncPhysics()
     self:applyGravity(dt)
     self:move(dt)
+     self:decreaseGraceTime(dt)
 end
 
 function Player:move(dt)
@@ -59,7 +63,7 @@ function Player:move(dt)
 
 end
 function Player:applyGravity(dt)
-    if not self.grounded then
+    if not self.grounded  then
         self.yVel = self.yVel + self.gravity * dt
     end
 
@@ -80,6 +84,11 @@ function Player:applyFriction(dt)
     end
 end
 
+function Player:decreaseGraceTime(dt)
+    if not self.grounded then
+        self.graceTime = self.graceTime - dt
+    end
+end
 function Player:keyboardInput(key)
     if key == "space" or key == "w" or key == "up" then
         self:jump()
@@ -92,7 +101,7 @@ function Player:gamepadInput(button)
     end
 end
 function Player:jump()
-    if self.grounded then
+    if self.grounded or self.graceTime > 0 then
         self.yVel = self.jumpAmount
         self.grounded = false
     end
@@ -127,6 +136,7 @@ function Player:land(collision)
     self.currentGroundCollision = collision
     self.yVel = 0
     self.grounded = true
+    self.graceTime = self.graceDuration
 end
 function Player:syncPhysics()
     self.x, self.y = self.physics.body:getPosition()
