@@ -79,11 +79,16 @@ function Player:applyFriction(dt)
 end
 
 function Player:keyboardInput(key)
-    if key == "space" then
-        
+    if key == "space" or key == "w" or key == "up" then
+        self:jump()     
     end
 end
 
+function Player:gamepadInput(button)
+    if button == "a" then
+        self:jump()
+    end
+end
 function Player:jump()
     
 
