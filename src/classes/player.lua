@@ -27,7 +27,7 @@ function Player:load()
     }
 
     self.particles = {}
-    self.emissionRate = 130 -- particles per second
+    self.emissionRate = 1000 -- particles per second
     self.timeSinceLastEmit = 0
 
     self.physics = {}
@@ -157,7 +157,7 @@ function Player:updateTrail(dt)
         local p = self.particles[i]
         p.x = p.x + p.vx * dt
         p.y = p.y + p.vy * dt
-        p.size = p.size * (1 - (p.life / p.maxLife))
+        p.size = p.size * (1 - (p.life / p.maxLife)) - 0.1
         p.life = p.life - dt
         if p.life <= 0 then
             table.remove(self.particles, i)
@@ -168,8 +168,8 @@ end
 function Player:spawnTrailParticles()
     for i = 1, 5 do -- emit 5 particles at once for a chunkier trail
         local angle = love.math.random() * 2 * math.pi
-        local radius = love.math.random() * 10 -- controls how far from center the particles spawn
-        local speed = love.math.random(20, 50)
+        local radius = love.math.random() * 25 -- controls how far from center the particles spawn
+        local speed = love.math.random(5, 10)
 
         local dx = math.cos(angle) * radius
         local dy = math.sin(angle) * radius
@@ -177,11 +177,11 @@ function Player:spawnTrailParticles()
         local particle = {
             x = self.x + dx,
             y = self.y + dy,
-            size = 10,
+            size = 5,
             vx = math.cos(angle) * speed,
             vy = math.sin(angle) * speed,
             life = 0.3 + love.math.random() * 0.2,
-            maxLife = 10
+            maxLife = 10 -- less = higher density
         }
 
         table.insert(self.particles, particle)
