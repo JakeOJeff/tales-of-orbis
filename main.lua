@@ -1,5 +1,6 @@
 -- [[ IMPORTING SCENES ]]
 -- [DECLARING GLOBAL VARIABLES]
+love.graphics.setDefaultFilter("nearest", "nearest")
 wW = love.graphics:getWidth()
 wH = love.graphics:getHeight()
 
@@ -23,12 +24,12 @@ local scenery = SceneryInit({
     
 },  {
     path = "src.cutscenes.intro",
-    key = "intro",
-    default = true
+    key = "intro"
     
 }, {
     path = "src.game",
-    key = "game"
+    key = "game",
+    default = true
 })
 
 scenery:hook(love)

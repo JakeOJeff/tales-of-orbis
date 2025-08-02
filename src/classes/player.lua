@@ -11,7 +11,7 @@ function Player:load()
     self.acceleration = 4000
     self.friction = 3500
 
-    self.gravity = 1500
+    self.gravity = 800
     self.grounded = false
     self.jumpAmount = -500
     self.currentGroundCollision = nil
@@ -21,6 +21,13 @@ function Player:load()
     
     self.maxSpeed = 200 -- 200/4000 = 0.05 seconds
 
+    self.spritesheet = love.graphics.newImage('assets/vfx/tilesets/player.png')
+    self.grid = anim8.newGrid(32, 50, self.spritesheet:getWidth(), self.spritesheet:getHeight())
+    
+    self.animations = {
+        idle = anim8.newAnimation(self.grid('1-8', 1), 0.15)
+    }
+
     self.physics = {}
     self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
     self.physics.body:setFixedRotation(true)
@@ -28,6 +35,8 @@ function Player:load()
     self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
 end
 function Player:update(dt)
+
+    self.animations.idle:update(dt)
 
     self:syncPhysics()
     self:applyGravity(dt)
@@ -144,5 +153,6 @@ function Player:syncPhysics()
     self.physics.body:setLinearVelocity(self.xVel, self.yVel)
 end
 function Player:draw()
-    love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
+    --love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
+    self.animations.idle:draw(self.spritesheet, self.x - 32 / 2, self.y - 50 / 2)
 end
