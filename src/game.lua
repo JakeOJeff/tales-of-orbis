@@ -46,12 +46,15 @@ function game:draw()
 end
 
 function game:keypressed(key)
+    Player:keyboardInput(key)
     if key == "r" then
         print("LOADING")
         game.setScene("loading")
     end
 end
-
+function game:gamepadpressed(joystick, button)
+    Player:gamepadInput(button)
+end
 function beginContact(a, b, collision) 
     utils.collisions:beginContact(a, b, collision)
 end
