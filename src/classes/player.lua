@@ -23,7 +23,7 @@ function Player:load()
     self.grid = anim8.newGrid(32, 50, self.spritesheet:getWidth(), self.spritesheet:getHeight())
 
     self.animations = {
-        idle = anim8.newAnimation(self.grid('1-16', 1), .1)
+        idle = anim8.newAnimation(self.grid('1-3', 1), .1)
     }
 
     self.particles = {}
@@ -32,6 +32,9 @@ function Player:load()
     self.particleSize = 5
     self.emissionRate = 500 -- particles per second
     self.timeSinceLastEmit = 0
+
+    self.bobSpeed = 7
+    self.bobRange = 5
 
     self.physics = {}
     self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
@@ -203,6 +206,8 @@ function Player:draw()
     end
 
     love.graphics.setColor(1, 1, 1, 1) -- reset color
+    local pX = self.x - 32/2
+    local pY = (self.y - 50/2) + (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed))
     -- love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
-    self.animations.idle:draw(self.spritesheet, self.x - 32 / 2, self.y - 50 / 2)
+    self.animations.idle:draw(self.spritesheet, pX, pY)
 end

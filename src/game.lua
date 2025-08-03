@@ -6,7 +6,7 @@ local STI = require("src.libs.sti")
 anim8 = require 'src.libs.anim8'
 -- REQUIRE CLASSES
 require("src.classes.player")
-require("src.classes.coin")
+require("src.classes.fire")
 
 -- REQUIRE UTILS
 local utils = {}
@@ -24,7 +24,7 @@ function game:load()
     Map:box2d_init(World)
     Map.layers.solid.visible = false
 
-    coin1 = Coin.new(300, 300)
+    fire1 = Fire.new(300, 300)
 
     Player:load()
 end
@@ -35,6 +35,7 @@ function game:update(dt)
     end
     World:update(dt)
     Player:update(dt)
+    Fire.updateAll(dt)
 
 end
 
@@ -45,7 +46,7 @@ function game:draw()
     love.graphics.scale(2, 2)
 
     Player:draw()
-    coin1:draw()
+    Fire.drawAll()
     love.graphics.pop()
 
 end
