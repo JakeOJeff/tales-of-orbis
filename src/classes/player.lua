@@ -99,7 +99,6 @@ function Player:resetTrails()
 end
 -- function Player
 function Player:move(dt)
-    print(jAxes[1])
     if love.keyboard.isDown("d", "right") or jAxes[1] > 0.2 then -- small deadzone
         self.xVel = math.min(self.xVel + self.acceleration * dt, self.maxSpeed)
     elseif love.keyboard.isDown("a", "left") or (jAxes[1] or 0) < -0.2 then
@@ -109,7 +108,14 @@ function Player:move(dt)
         self:applyFriction(dt)
     end
 
-    if love.keyboard.isDown("lshift", "lctrl") and self.boost > 0 then
+    local isBoostKeyDown = love.keyboard.isDown("lshift", "lctrl")
+    local isJoystickBoost = false
+
+    if Joystick then
+        isJoystickBoost = Joystick:isDown("leftstick")
+    end
+
+    if (isBoostKeyDown or isJoystickBoost) and self.boost > 0 then
         self.boost = math.max(0, self.boost - 5 * dt)
         self.isBoosting = true
         print(self.boost)
@@ -147,6 +153,7 @@ function Player:gamepadInput(button)
     if button == "a" then
         self:jump()
     end
+
 end
 function Player:jump()
     if self.grounded or self.graceTime > 0 then
