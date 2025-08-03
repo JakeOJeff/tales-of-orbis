@@ -34,7 +34,7 @@ function Player:load()
     self.timeSinceLastEmit = 0
 
     self.bobSpeed = 7
-    self.bobRange = 5
+    self.bobRange = 10
 
     self.physics = {}
     self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
@@ -174,7 +174,7 @@ function Player:spawnTrailParticles()
 
         local particle = {
             x = self.x + dx,
-            y = self.y + dy,
+            y = self.y  + (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed)) + dy,
             size = self.particleSize,
             vx = math.cos(angle) * speed,
             vy = math.sin(angle) * speed,

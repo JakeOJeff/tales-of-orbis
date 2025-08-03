@@ -1,5 +1,6 @@
 local game = {
-    background = love.graphics.newImage("assets/vfx/loading/background.png")
+    background = love.graphics.newImage("assets/vfx/loading/background.png"),
+    scale = 3
 }
 local STI = require("src.libs.sti")
 -- REQUIRE LIBRARIES
@@ -41,9 +42,9 @@ end
 
 function game:draw()
     love.graphics.draw(self.background, 0, 0)
-    Map:draw(0, 0,2, 2)
+    Map:draw(0, 0,self.scale, self.scale)
     love.graphics.push()
-    love.graphics.scale(2, 2)
+    love.graphics.scale(self.scale, self.scale)
 
     Player:draw()
     Fire.drawAll()
