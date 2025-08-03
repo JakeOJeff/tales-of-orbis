@@ -3,6 +3,8 @@ Player = {}
 function Player:load()
     self.x = 100
     self.y = 0
+    self.checkpointX = self.x
+    self.checkpointY = self.y
     self.width = 20
     self.height = 60
     self.xVel = 0
@@ -24,6 +26,7 @@ function Player:load()
         current = 0,
         max = 100
     }
+    self.alive = true
 
     self.graceTime = 0
     self.graceDuration = 2
@@ -83,7 +86,7 @@ function Player:update(dt)
 
     self.animations.idle:update(dt)
     self:updateTrail(dt)
-
+    self:respawn()
     self:syncPhysics()
     self:applyGravity(dt)
     self:move(dt)
@@ -101,7 +104,16 @@ function Player:takeDamange(amount)
 end
 
 function Player:die()
+    self.alive = false
     print("player died")
+end
+
+function Player:respawn()
+    if not self.alive then
+        self.physics.body:setPosition(self.checkpointX, self.checkpointY)
+        self.health.current = self.health.max
+        self.alive = true
+    end
 end
 function Player:resetTrails()
 

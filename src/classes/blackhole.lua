@@ -44,7 +44,7 @@ function Blackhole.beginContact(a, b, collision)
     for i, v in ipairs(ActiveHoles) do
         if a == v.physics.fixture or b == v.physics.fixture then
             if a == Player.physics.fixture or b == Player.physics.fixture then
-                v.toBeRemoved = true
+                Player:takeDamange(instance.damage)
                 return true
             end
         end
