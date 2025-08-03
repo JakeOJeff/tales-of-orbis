@@ -11,14 +11,19 @@ function Player:load()
     self.acceleration = 2000
     self.friction = 2000
 
-    self.gravity = 200
+    self.gravity = 100
     self.grounded = false
-    self.jumpAmount = -200
+    self.jumpAmount = -175
     self.currentGroundCollision = nil
 
-    self.maxBoost = 10
+    self.maxBoost = 50
     self.boost = self.maxBoost
     self.isBoosting = false
+
+    self.health = {
+        current = 0,
+        max = 100
+    }
 
     self.graceTime = 0
     self.graceDuration = 2
@@ -85,6 +90,19 @@ function Player:update(dt)
     self:decreaseGraceTime(dt)
 end
 
+function Player:takeDamange(amount)
+    if self.health.current - amount > 0 then
+        self.health.current = self.health.current - amount
+    else
+        self.health.current = 0
+        self:die()
+    end
+    print("Health : "..self.health.current)
+end
+
+function Player:die()
+    print("player died")
+end
 function Player:resetTrails()
 
     self.particleMaxLife = 1
@@ -115,7 +133,7 @@ function Player:move(dt)
         isJoystickBoost = Joystick:isGamepadDown("leftstick")
     end
 
-    if (isBoostKeyDown or isJoystickBoost) and self.boost > 0 then
+    if (isBoostKeyDown or isJoystickBoost) and self.boost > 0 and self.xVel ~= 0 then
         self.boost = math.max(0, self.boost - 5 * dt)
         self.isBoosting = true
         print(self.boost)

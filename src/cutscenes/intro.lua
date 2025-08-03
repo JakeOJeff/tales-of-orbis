@@ -36,13 +36,13 @@ function intro:draw()
 
     love.graphics.setFont(paragraph)
 
-    love.graphics.setColor(0, 0, 0, self.fadeTimer)
+    love.graphics.setColor(0, 0, 0, (self.fadeTimer/0.6))
     love.graphics.print(text, ((wW - textWidth) / 2) + 4,( wH - textHeight - 30))
     love.graphics.print(text, ((wW - textWidth) / 2),( wH - textHeight - 30) + 4)
     love.graphics.print(text, ((wW - textWidth) / 2) - 4,( wH - textHeight - 30))
     love.graphics.print(text, ((wW - textWidth) / 2),( wH - textHeight - 30) - 4)
 
-    love.graphics.setColor(1, 1, 1, self.fadeTimer)
+    love.graphics.setColor(1, 1, 1, (self.fadeTimer/0.6))
     love.graphics.print(text, (wW - textWidth) / 2, wH - textHeight - 30)
 end
 
