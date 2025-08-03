@@ -16,6 +16,9 @@ function Player:load()
     self.jumpAmount = -200
     self.currentGroundCollision = nil
 
+    self.maxBoost = 100
+    self.boost = self.maxBoost
+
     self.graceTime = 0
     self.graceDuration = 2
 

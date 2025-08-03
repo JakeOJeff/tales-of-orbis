@@ -1,6 +1,9 @@
 local collisions = {}
 
 function collisions:beginContact(a, b, collision) 
+    if Fire.beginContact(a, b, collision) then
+        return
+    end
     Player:beginContact(a, b, collision)
 end
 
