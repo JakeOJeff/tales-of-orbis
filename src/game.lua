@@ -26,6 +26,7 @@ function game:load()
     World:setCallbacks(beginContact, endContact)
     Map:box2d_init(World)
     Map.layers.solid.visible = false
+    MapWidth = Map.layers.Base.width * 32
 
     fire1 = Fire.new(100, 100)
     Blackhole1 = Blackhole.new(200, 200)

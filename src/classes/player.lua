@@ -2,7 +2,7 @@ Player = {}
 
 function Player:load()
     self.x = 100
-    self.y = 0
+    self.y = 100
     self.checkpointX = self.x
     self.checkpointY = self.y
     self.width = 20
