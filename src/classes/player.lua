@@ -46,10 +46,14 @@ function Player:update(dt)
     if not self.grounded then
         self.particleMaxLife = 10
         self.particleSize = 8
+        -- self.bobRange = 3
+        -- self.bobSpeed = 2
         self.particleRadius = love.math.random() * 20
     else
         self.particleMaxLife = 1
         self.particleSize = 5
+        -- self.bobRange = 10
+        -- self.bobSpeed = 7
         self.particleRadius = love.math.random() * 15
     end
     self.animations.idle:update(dt)
