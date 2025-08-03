@@ -18,8 +18,8 @@ end
 
 function intro:update(dt)
     self.timer = self.timer + dt
-    if self.fadeTimer < 1 then
-        self.fadeTimer = self.fadeTimer + (0.5 * dt)
+    if self.fadeTimer < .6 then
+        self.fadeTimer = self.fadeTimer + (0.2 * dt)
     end
 end
 
@@ -36,8 +36,11 @@ function intro:draw()
 
     love.graphics.setFont(paragraph)
 
-    love.graphics.setColor(.5, .5, .5, self.fadeTimer)
-    love.graphics.print(text, ((wW - textWidth) / 2) + 3,( wH - textHeight - 30) + 3)
+    love.graphics.setColor(0, 0, 0, self.fadeTimer)
+    love.graphics.print(text, ((wW - textWidth) / 2) + 4,( wH - textHeight - 30))
+    love.graphics.print(text, ((wW - textWidth) / 2),( wH - textHeight - 30) + 4)
+    love.graphics.print(text, ((wW - textWidth) / 2) - 4,( wH - textHeight - 30))
+    love.graphics.print(text, ((wW - textWidth) / 2),( wH - textHeight - 30) - 4)
 
     love.graphics.setColor(1, 1, 1, self.fadeTimer)
     love.graphics.print(text, (wW - textWidth) / 2, wH - textHeight - 30)
