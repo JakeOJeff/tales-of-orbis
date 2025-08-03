@@ -1,6 +1,6 @@
 local game = {
     background = love.graphics.newImage("assets/vfx/loading/background.png"),
-    scale = 3
+    scale = 2
 }
 local STI = require("src.libs.sti")
 -- REQUIRE LIBRARIES

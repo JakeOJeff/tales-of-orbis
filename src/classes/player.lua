@@ -33,7 +33,7 @@ function Player:load()
     self.emissionRate = 500 -- particles per second
     self.timeSinceLastEmit = 0
 
-    self.bobSpeed = 7
+    self.bobSpeed = 4
     self.bobRange = 10
 
     self.physics = {}
@@ -44,8 +44,8 @@ function Player:load()
 end
 function Player:update(dt)
     if not self.grounded then
-        self.particleMaxLife = 10
-        self.particleSize = 8
+        self.particleMaxLife = 6
+        self.particleSize = 6
         -- self.bobRange = 3
         -- self.bobSpeed = 2
         self.particleRadius = love.math.random() * 20
@@ -110,7 +110,8 @@ function Player:gamepadInput(button)
 end
 function Player:jump()
     if self.grounded or self.graceTime > 0 then
-        self.particleMaxLife = .5
+        self.particleMaxLife = 2
+        self.particleSize = 10
         self.particleRadius = 5
         self.yVel = self.jumpAmount
         self.grounded = false
