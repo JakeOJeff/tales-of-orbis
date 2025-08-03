@@ -62,24 +62,9 @@ end
 function Player:move(dt)
     print(jAxes[1])
     if love.keyboard.isDown("d", "right") or jAxes[1] > 0.2 then -- small deadzone
-        local incrementVal = self.xVel + self.acceleration * dt
-        if self.xVel < self.maxSpeed then
-            if incrementVal < self.maxSpeed then
-                self.xVel = incrementVal
-            else
-                self.xVel = self.maxSpeed
-            end
-        end
-
+        self.xVel = math.min(self.xVel + self.acceleration * dt, self.maxSpeed)
     elseif love.keyboard.isDown("a", "left") or (jAxes[1] or 0) < -0.2 then
-        local incrementVal = self.xVel - self.acceleration * dt
-        if self.xVel > -self.maxSpeed then
-            if incrementVal < -self.maxSpeed then
-                self.xVel = -self.maxSpeed
-            else
-                self.xVel = incrementVal
-            end
-        end
+        self.xVel = math.max(self.xVel - self.acceleration * dt, -self.maxSpeed)
 
     else
         self:applyFriction(dt)
@@ -142,10 +127,14 @@ function Player:beginContact(a, b, collision)
     if a == self.physics.fixture then
         if ny > 0 then
             self:land(collision)
+        elseif ny < 0 then
+            self.yVel = 0
         end
     elseif b == self.physics.fixture then
         if ny < 0 then
             self:land(collision)
+        elseif ny > 0 then 
+            self.yVel = 0
         end
     end
 end
