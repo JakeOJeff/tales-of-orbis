@@ -112,7 +112,7 @@ function Player:move(dt)
     local isJoystickBoost = false
 
     if Joystick then
-        isJoystickBoost = Joystick:isDown("leftstick")
+        isJoystickBoost = Joystick:isGamepadDown("leftstick")
     end
 
     if (isBoostKeyDown or isJoystickBoost) and self.boost > 0 then
