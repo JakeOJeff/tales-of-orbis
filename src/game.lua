@@ -1,4 +1,6 @@
-local game = {}
+local game = {
+    background = love.graphics.newImage("assets/vfx/loading/background.png")
+}
 local STI = require("src.libs.sti")
 -- REQUIRE LIBRARIES
 anim8 = require 'src.libs.anim8'
@@ -34,6 +36,7 @@ function game:update(dt)
 end
 
 function game:draw()
+    love.graphics.draw(self.background, 0, 0)
     Map:draw(0, 0, 3, 3)
     love.graphics.push()
     love.graphics.scale(3, 3)

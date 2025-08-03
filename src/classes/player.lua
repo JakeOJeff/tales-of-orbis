@@ -23,11 +23,14 @@ function Player:load()
     self.grid = anim8.newGrid(32, 50, self.spritesheet:getWidth(), self.spritesheet:getHeight())
 
     self.animations = {
-        idle = anim8.newAnimation(self.grid('1-8', 1), 0.15)
+        idle = anim8.newAnimation(self.grid('1-16', 1), .1)
     }
 
     self.particles = {}
-    self.emissionRate = 1000 -- particles per second
+    self.particleRadius = love.math.random() * 25
+    self.particleMaxLife = 3
+    self.particleSize = 5
+    self.emissionRate = 500 -- particles per second
     self.timeSinceLastEmit = 0
 
     self.physics = {}
@@ -37,7 +40,15 @@ function Player:load()
     self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
 end
 function Player:update(dt)
-
+    if not self.grounded then
+        self.particleMaxLife = 10
+        self.particleSize = 8
+        self.particleRadius = love.math.random() * 20
+    else
+        self.particleMaxLife = 1
+        self.particleSize = 5
+        self.particleRadius = love.math.random() * 15
+    end
     self.animations.idle:update(dt)
     self:updateTrail(dt)
 
@@ -115,6 +126,8 @@ function Player:gamepadInput(button)
 end
 function Player:jump()
     if self.grounded or self.graceTime > 0 then
+        self.particleMaxLife = .5
+        self.particleRadius = 5
         self.yVel = self.jumpAmount
         self.grounded = false
     end
@@ -163,13 +176,14 @@ function Player:updateTrail(dt)
             table.remove(self.particles, i)
         end
     end
+
 end
 
 function Player:spawnTrailParticles()
     for i = 1, 5 do -- emit 5 particles at once for a chunkier trail
         local angle = love.math.random() * 2 * math.pi
-        local radius = love.math.random() * 25 -- controls how far from center the particles spawn
-        local speed = love.math.random(5, 10)
+        local radius = self.particleRadius -- controls how far from center the particles spawn
+        local speed = love.math.random(1, 2)
 
         local dx = math.cos(angle) * radius
         local dy = math.sin(angle) * radius
@@ -177,17 +191,16 @@ function Player:spawnTrailParticles()
         local particle = {
             x = self.x + dx,
             y = self.y + dy,
-            size = 5,
+            size = self.particleSize,
             vx = math.cos(angle) * speed,
             vy = math.sin(angle) * speed,
             life = 0.3 + love.math.random() * 0.2,
-            maxLife = 10 -- less = higher density
+            maxLife = self.particleMaxLife -- less = higher density
         }
 
         table.insert(self.particles, particle)
     end
 end
-
 
 function Player:land(collision)
     self.currentGroundCollision = collision
@@ -202,8 +215,8 @@ end
 function Player:draw()
     for _, p in ipairs(self.particles) do
         local alpha = p.life / p.maxLife
-        --love.graphics.setColor(0.79, 0.5, 0.19, alpha)
-                love.graphics.setColor(0.56, 0.23, 0.11, alpha)
+        -- love.graphics.setColor(0.79, 0.5, 0.19, alpha)
+        love.graphics.setColor(0.56, 0.23, 0.11, alpha)
 
         love.graphics.circle("fill", p.x, p.y, p.size)
     end
