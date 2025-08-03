@@ -5,8 +5,8 @@ function Player:load()
     self.y = 100
     self.checkpointX = self.x
     self.checkpointY = self.y
-    self.width = 20
-    self.height = 28
+    self.radius = 20
+    --self.height = 28
     self.xVel = 0
     self.yVel = 100
     self.maxSpeed = 100 -- 200/4000 = 0.05 seconds
@@ -51,7 +51,7 @@ function Player:load()
     self.physics = {}
     self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
     self.physics.body:setFixedRotation(true)
-    self.physics.shape = love.physics.newCircleShape(self.width)
+    self.physics.shape = love.physics.newCircleShape(self.radius)
     self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
 end
 function Player:update(dt)
@@ -293,5 +293,5 @@ function Player:draw()
     local pY = self.y + (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed))
     -- love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
     self.animations.idle:draw(self.spritesheet, pX - 16, pY - 25)
-    love.graphics.circle("line", self.x, self.y, self.width)
+    love.graphics.circle("line", self.x, self.y, self.radius)
 end
