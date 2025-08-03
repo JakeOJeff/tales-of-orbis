@@ -18,6 +18,7 @@ function Player:load()
 
     self.maxBoost = 100
     self.boost = self.maxBoost
+    self.isBoosting = false
 
     self.graceTime = 0
     self.graceDuration = 2
@@ -46,19 +47,35 @@ function Player:load()
     self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
 end
 function Player:update(dt)
-    if not self.grounded then
-        self.particleMaxLife = 6
-        self.particleSize = 6
-        -- self.bobRange = 3
-        -- self.bobSpeed = 2
+    local airborne = not self.grounded
+    local boosting = self.isBoosting
+
+    if airborne or boosting then
+        -- Particle properties
+        self.particleMaxLife = airborne and 6 or 4
+        self.particleSize = airborne and 6 or 4
         self.particleRadius = love.math.random() * 20
+
+        -- Boosting overrides acceleration/friction
+        if boosting then
+            self.emissionRate = 1000
+            self.acceleration = 4500
+            self.friction = 1000
+            self.maxSpeed = 250
+        else
+            -- Restore normal movement if not boosting
+            self.acceleration = 2000
+            self.friction = 2000
+            self.maxSpeed = 100 -- 200/4000 = 0.05 seconds
+        end
     else
-        self.particleMaxLife = 1
-        self.particleSize = 5
-        -- self.bobRange = 10
-        -- self.bobSpeed = 7
-        self.particleRadius = love.math.random() * 15
+        -- Neither airborne nor boosting: reset everything
+        self:resetTrails()
+        self.acceleration = 2000
+        self.friction = 2000
+        self.maxSpeed = 100 -- 200/4000 = 0.05 seconds
     end
+
     self.animations.idle:update(dt)
     self:updateTrail(dt)
 
@@ -68,6 +85,18 @@ function Player:update(dt)
     self:decreaseGraceTime(dt)
 end
 
+function Player:resetTrails()
+
+    self.particleMaxLife = 1
+    self.particleSize = 5
+    -- self.bobRange = 10
+    -- self.bobSpeed = 7
+    self.particleRadius = love.math.random() * 15
+    self.emissionRate = 500
+    self.acceleration = 2000
+    self.friction = 2000
+    self.maxSpeed = 100 -- 200/4000 = 0.05 seconds
+end
 -- function Player
 function Player:move(dt)
     print(jAxes[1])
@@ -78,6 +107,14 @@ function Player:move(dt)
 
     else
         self:applyFriction(dt)
+    end
+
+    if love.keyboard.isDown("lshift", "lctrl") and self.boost > 0 then
+        self.boost = math.max(0, self.boost - 5 * dt)
+        self.isBoosting = true
+        print(self.boost)
+    else
+        self.isBoosting = false
     end
 
 end
@@ -136,7 +173,7 @@ function Player:beginContact(a, b, collision)
     elseif b == self.physics.fixture then
         if ny < 0 then
             self:land(collision)
-        elseif ny > 0 then 
+        elseif ny > 0 then
             self.yVel = 0
         end
     end
@@ -182,7 +219,7 @@ function Player:spawnTrailParticles()
 
         local particle = {
             x = self.x + dx,
-            y = self.y  + (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed)) + dy,
+            y = self.y + (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed)) + dy,
             size = self.particleSize,
             vx = math.cos(angle) * speed,
             vy = math.sin(angle) * speed,
@@ -212,10 +249,17 @@ function Player:draw()
 
         love.graphics.circle("fill", p.x, p.y, p.size)
     end
+    if self.isBoosting then
+        love.graphics.setColor(0, 0, 0)
+        love.graphics.rectangle("fill", 100, 100, 100 * (self.maxBoost / 100), 10)
+        love.graphics.setColor(1, 0, 0)
+        love.graphics.rectangle("fill", 100, 100, 100 * (self.boost / 100), 10)
+        print("YES")
+    end
 
     love.graphics.setColor(1, 1, 1, 1) -- reset color
-    local pX = self.x - 32/2
-    local pY = (self.y - 50/2) + (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed))
+    local pX = self.x - 32 / 2
+    local pY = (self.y - 50 / 2) + (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed))
     -- love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
     self.animations.idle:draw(self.spritesheet, pX, pY)
 end

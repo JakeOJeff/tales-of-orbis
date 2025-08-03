@@ -1,6 +1,6 @@
 local game = {
     background = love.graphics.newImage("assets/vfx/loading/background.png"),
-    scale = 5
+    scale = 2
 }
 local STI = require("src.libs.sti")
 -- REQUIRE LIBRARIES
@@ -26,6 +26,7 @@ function game:load()
     Map.layers.solid.visible = false
 
     fire1 = Fire.new(100, 100)
+    fire2 = Fire.new(200, 200)
 
     Player:load()
 end

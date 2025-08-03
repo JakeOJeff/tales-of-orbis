@@ -33,6 +33,7 @@ function Fire:remove()
         if v == self then
             self.physics.body:destroy()
             table.remove(ActiveFire, i)
+            Player.boost = Player.maxBoost
         end
     end
 end
