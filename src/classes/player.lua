@@ -286,13 +286,7 @@ function Player:draw()
 
         love.graphics.circle("fill", p.x, p.y, p.size)
     end
-    if self.isBoosting then
-        love.graphics.setColor(0, 0, 0)
-        love.graphics.rectangle("fill", 100, 100, 100 * (self.maxBoost / 100), 10)
-        love.graphics.setColor(1, 0, 0)
-        love.graphics.rectangle("fill", 100, 100, 100 * (self.boost / 100), 10)
-        print("YES")
-    end
+
 
     love.graphics.setColor(1, 1, 1, 1) -- reset color
     local pX = self.x - 32 / 2

@@ -14,6 +14,7 @@ require("src.classes.blackhole")
 -- REQUIRE UTILS
 local utils = {}
 utils.collisions = require("src.utils.collisions")
+require("src.utils.gui")
 
 -- Input Connections 
 joysticks = love.joystick.getJoysticks()
@@ -54,7 +55,7 @@ function game:draw()
     Fire.drawAll()
     Blackhole.drawAll()
     Camera:clear()
-
+    GUI:draw()
 end
 
 function game:keypressed(key)
