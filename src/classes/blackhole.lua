@@ -10,6 +10,8 @@ function Blackhole.new(x, y)
     instance.width = instance.img:getWidth()
     instance.height = instance.img:getHeight()
 
+    instance.damage = 1
+
     instance.physics = {}
     instance.physics.body = love.physics.newBody(World, instance.x, instance.y, "static")
     instance.physics.shape = love.physics.newRectangleShape(instance.width, instance.height)
