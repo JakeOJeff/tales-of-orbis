@@ -1,5 +1,5 @@
 Blackhole = {}
-FiBlackholere.__index = Blackhole
+Blackhole.__index = Blackhole
 ActiveHoles = {}
 
 function Blackhole.new(x, y)
@@ -46,7 +46,7 @@ function Blackhole.beginContact(a, b, collision)
     for i, v in ipairs(ActiveHoles) do
         if a == v.physics.fixture or b == v.physics.fixture then
             if a == Player.physics.fixture or b == Player.physics.fixture then
-                Player:takeDamange(instance.damage)
+                Player:takeDamange(v.damage)
                 return true
             end
         end

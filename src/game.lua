@@ -5,9 +5,11 @@ local game = {
 local STI = require("src.libs.sti")
 -- REQUIRE LIBRARIES
 anim8 = require 'src.libs.anim8'
+Camera = require 'src.libs.camera'
 -- REQUIRE CLASSES
 require("src.classes.player")
 require("src.classes.fire")
+require("src.classes.blackhole")
 
 -- REQUIRE UTILS
 local utils = {}
@@ -26,7 +28,7 @@ function game:load()
     Map.layers.solid.visible = false
 
     fire1 = Fire.new(100, 100)
-    fire2 = Fire.new(200, 200)
+    Blackhole1 = Blackhole.new(200, 200)
 
     Player:load()
 end
@@ -36,20 +38,21 @@ function game:update(dt)
         jAxes[1], jAxes[2], jAxes[3], jAxes[4] = Joystick:getAxes() -- lH, lV, rH, rV
     end
     World:update(dt)
+    Camera:setPosition(Player.x, 0)
     Player:update(dt)
     Fire.updateAll(dt)
+    Blackhole.updateAll(dt)
 
 end
 
 function game:draw()
     love.graphics.draw(self.background, 0, 0)
-    Map:draw(0, 0,self.scale, self.scale)
-    love.graphics.push()
-    love.graphics.scale(self.scale, self.scale)
-
+    Map:draw(-Camera.x, -Camera.y, self.scale, self.scale)
+    Camera:apply()
     Player:draw()
     Fire.drawAll()
-    love.graphics.pop()
+    Blackhole.drawAll()
+    Camera:clear()
 
 end
 
