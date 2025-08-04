@@ -1,7 +1,7 @@
 local Camera = {
     x = 0,
     y = 0,
-    scale = 2
+    scale = scale + 1
 }
 
 function Camera:apply()
