@@ -18,7 +18,7 @@ function Player:load()
     self.jumpAmount = -175
     self.currentGroundCollision = nil
 
-    self.maxBoost = 50
+    self.maxBoost = 550
     self.boost = self.maxBoost
     self.isBoosting = false
 
