@@ -1,11 +1,9 @@
 local title = {
-    imgs = {
-        love.graphics.newImage("assets/vfx/loading/titles/background.png"),
-        love.graphics.newImage("assets/vfx/loading/titles/tales-of-text.png"),
-        love.graphics.newImage("assets/vfx/loading/titles/orb-light.png"),
-        love.graphics.newImage("assets/vfx/loading/titles/orb-text.png"),
-        love.graphics.newImage("assets/vfx/loading/titles/play.png"),
-    },
+    imgs = {love.graphics.newImage("assets/vfx/loading/titles/background.png"),
+            love.graphics.newImage("assets/vfx/loading/titles/tales-of-text.png"),
+            love.graphics.newImage("assets/vfx/loading/titles/orb-light.png"),
+            love.graphics.newImage("assets/vfx/loading/titles/orb-text.png"),
+            love.graphics.newImage("assets/vfx/loading/titles/play.png")},
     timer = 0,
     fadeTime = 1, -- seconds for fade in
     delayBetween = 3, -- seconds between each image's start time
@@ -15,7 +13,7 @@ local title = {
     play_width = 240,
     play_height = 90,
     normal_play = love.graphics.newImage("assets/vfx/loading/titles/play.png"),
-    hover_play = love.graphics.newImage("assets/vfx/loading/titles/play-hover.png"),
+    hover_play = love.graphics.newImage("assets/vfx/loading/titles/play-hover.png")
 }
 
 function title:load()
@@ -25,7 +23,8 @@ end
 function title:update(dt)
     self.timer = love.timer.getTime() - self.startTime
     local mx, my = love.mouse.getPosition()
-    if mx > self.play_x and mx < self.play_x + self.play_width and my > self.play_y and my < self.play_y + self.play_height then
+    local inPlay = distRect(mx, my, self.play_x, self.play_y, self.play_width, self.play_height)
+    if inPlay then
         self.imgs[5] = self.hover_play
         if love.mouse.isDown(1) then
             title.setScene("intro")
@@ -43,12 +42,35 @@ function title:draw()
         if t >= 0 then
             local alpha = math.min(t / self.fadeTime, 1)
             love.graphics.setColor(1, 1, 1, alpha)
-            
+
             love.graphics.draw(img, 0, 0)
         end
     end
 
     love.graphics.setColor(1, 1, 1, 1)
+end
+function title:keypressed(key)
+    if key == "return" then
+    end
+end
+
+function title:gamepadpressed(joystic, button)
+    isMobile = false
+    title.setScene("intro")
+
+end
+
+function title:touchpressed(id, x, y)
+    isMobile = true
+    local inPlay = distRect(x, y, self.play_x, self.play_y, self.play_width, self.play_height)
+    if inPlay then
+        self.imgs[5] = self.hover_play
+        if love.mouse.isDown(1) then
+            title.setScene("intro")
+        end
+    else
+        self.imgs[5] = self.normal_play
+    end
 end
 
 return title
