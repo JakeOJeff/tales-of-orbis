@@ -69,7 +69,12 @@ function game:keypressed(key)
     end
 end
 function game:gamepadpressed(joystick, button)
+    isMobile = false
     Player:gamepadInput(button)
+end
+
+function game:touchpressed(id, x, y, dx, dy, pressure)
+    isMobile = true
 end
 function beginContact(a, b, collision)
     utils.collisions:beginContact(a, b, collision)

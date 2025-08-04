@@ -145,6 +145,10 @@ function Player:move(dt)
         isJoystickBoost = Joystick:isGamepadDown("leftstick")
     end
 
+    if jAxes[1] ~= 0 or Joystick:isGamepadDown("leftstick") then
+        isMobile = false
+    end
+ 
     if (isBoostKeyDown or isJoystickBoost) and self.boost > 0 and self.xVel ~= 0 then
         self.boost = math.max(0, self.boost - 5 * dt)
         self.isBoosting = true

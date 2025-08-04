@@ -13,7 +13,7 @@ joysticks = love.joystick.getJoysticks()
 Joystick = joysticks[1] or nil
 jAxes = {0, 0, 0, 0}
 -- Android/Mobile 
-isAndroid = love.system.getOS() == "Android"
+isMobile = love.system.getOS() == "Android"
 
 -- [INITIALIZING SCENERY]
 local SceneryInit = require("src.libs.scenery")
