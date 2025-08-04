@@ -42,8 +42,10 @@ function title:draw()
         if t >= 0 then
             local alpha = math.min(t / self.fadeTime, 1)
             love.graphics.setColor(1, 1, 1, alpha)
-
-            love.graphics.draw(img, 0, 0)
+            love.graphics.push()
+            love.graphics.scale(scale, scale)
+            love.graphics.draw(img, cenW, cenH)
+            love.graphics.pop()
         end
     end
 
