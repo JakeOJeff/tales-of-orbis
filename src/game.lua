@@ -21,6 +21,9 @@ joysticks = love.joystick.getJoysticks()
 Joystick = joysticks[1] or nil
 jAxes = {0, 0, 0, 0}
 
+-- Soundss and Tracks
+track = love.audio.newSource("assets/sfx/bg.mp3", "stream")
+
 function game:load()
     Map = STI("assets/map/1.lua", {"box2d"})
     World = love.physics.newWorld(0, 0)
@@ -28,6 +31,7 @@ function game:load()
     Map:box2d_init(World)
     Map.layers.solid.visible = false
     MapWidth = Map.layers.Base.width * 32
+    track:play()
 
     fire1 = Fire.new(100, 100)
     Blackhole1 = Blackhole.new(200, 200)
