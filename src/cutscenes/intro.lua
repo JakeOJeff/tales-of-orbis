@@ -1,9 +1,10 @@
 local intro = {
     scenes = {},
-    sceneTexts = {"Long ago, the gods danced in basking glory", "They shaped the worlds with light, laughter... and law",
-                  "But from their order... came envy", "Null was born, the end... with no beginning",
-                  "The war was historic, the gods fought... and fell", "And from their ashes, one spark remained",
-                  "Orbis, the last light! The only hope left.", "Escape the Void. Reach the Core. Don't fight it, RUN!"},
+    sceneTexts = {"Long ago, the gods danced in basking glory",
+                  "They shaped the worlds with light, laughter... and law", "But from their order... came envy",
+                  "Null was born, the end... with no beginning", "The war was historic, the gods fought... and fell",
+                  "And from their ashes, one spark remained", "Orbis, the last light! The only hope left.",
+                  "Escape the Void. Reach the Core. Don't fight it, RUN!"},
     currentIndex = 1,
     timer = 0,
     fadeTimer = 0
@@ -26,7 +27,10 @@ end
 function intro:draw()
     love.graphics.setColor(1, 1, 1, self.fadeTimer)
     if self.scenes[self.currentIndex] then
-        love.graphics.draw(self.scenes[self.currentIndex], 0, 0)
+        love.graphics.push()
+        love.graphics.scale(scale, scale)
+        love.graphics.draw(self.scenes[self.currentIndex], cenW, cenH)
+        love.graphics.pop()
     end
 
     -- Draw text
@@ -36,14 +40,14 @@ function intro:draw()
 
     love.graphics.setFont(paragraph)
 
-    love.graphics.setColor(0, 0, 0, (self.fadeTimer/0.6))
-    love.graphics.print(text, ((wW - textWidth) / 2) + 4,( wH - textHeight - 30))
-    love.graphics.print(text, ((wW - textWidth) / 2),( wH - textHeight - 30) + 4)
-    love.graphics.print(text, ((wW - textWidth) / 2) - 4,( wH - textHeight - 30))
-    love.graphics.print(text, ((wW - textWidth) / 2),( wH - textHeight - 30) - 4)
+    love.graphics.setColor(0, 0, 0, (self.fadeTimer / 0.6))
+    love.graphics.print(text, ((wW - textWidth) / 2) + 4, (wH - textHeight - 50))
+    love.graphics.print(text, ((wW - textWidth) / 2), (wH - textHeight - 50) + 4)
+    love.graphics.print(text, ((wW - textWidth) / 2) - 4, (wH - textHeight - 50))
+    love.graphics.print(text, ((wW - textWidth) / 2), (wH - textHeight - 50) - 4)
 
-    love.graphics.setColor(1, 1, 1, (self.fadeTimer/0.6))
-    love.graphics.print(text, (wW - textWidth) / 2, wH - textHeight - 30)
+    love.graphics.setColor(1, 1, 1, (self.fadeTimer / 0.6))
+    love.graphics.print(text, (wW - textWidth) / 2, wH - textHeight - 50)
 end
 
 function intro:keypressed(key)
