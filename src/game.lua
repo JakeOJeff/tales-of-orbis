@@ -16,10 +16,6 @@ local utils = {}
 utils.collisions = require("src.utils.collisions")
 require("src.utils.gui")
 
-
-
-
-
 -- Soundss and Tracks
 track = love.audio.newSource("assets/sfx/bg.mp3", "stream")
 
@@ -34,7 +30,7 @@ function game:load()
 
     fire1 = Fire.new(100, 100)
     Blackhole1 = Blackhole.new(200, 200)
-
+    GUI:load()
     Player:load()
 end
 

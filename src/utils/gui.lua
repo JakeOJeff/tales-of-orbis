@@ -15,7 +15,7 @@ function GUI:load()
     }
     self.jumpButton = {
         x = love.graphics.getWidth() - 200,
-        y = love.graphics.getHeight() - 160,
+        y = love.graphics.getHeight() - 260,
         w = 80,
         h = 80
 
@@ -35,10 +35,11 @@ function GUI:draw()
         love.graphics.setColor(0, 0, 0, 0.6)
         local lB = self.leftButton
         local rB = self.rightButton
+        local jB = self.jumpButton
         love.graphics.rectangle("fill", lB.x, lB.y , lB.w, lB.h, 10, 10)
         love.graphics.rectangle("fill", rB.x, rB.y, rB.w, rB.h, 10, 10)
 
-       love.graphics.rectangle("fill", love.graphics.getWidth() - 200, love.graphics.getHeight() - 160, 20, 20, 10, 10)
+       love.graphics.rectangle("fill",jB.x, jB.y , jB.w, jB.h, 40, 40)
         love.graphics.setColor(1, 1, 1)
 
     end
