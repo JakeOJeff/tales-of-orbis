@@ -145,7 +145,7 @@ function Player:move(dt)
         isJoystickBoost = Joystick:isGamepadDown("leftstick")
     end
 
-    if jAxes[1] ~= 0 or Joystick:isGamepadDown("leftstick") then
+    if jAxes[1] ~= 0 then
         isMobile = false
     end
  
