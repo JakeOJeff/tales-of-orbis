@@ -56,6 +56,9 @@ end
 
 function title:gamepadpressed(joystic, button)
     isMobile = false
+    if button == "a" then
+        title.setScene("intro")
+    end
     title.setScene("intro")
 
 end
