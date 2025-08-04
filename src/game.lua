@@ -16,10 +16,9 @@ local utils = {}
 utils.collisions = require("src.utils.collisions")
 require("src.utils.gui")
 
--- Input Connections 
-joysticks = love.joystick.getJoysticks()
-Joystick = joysticks[1] or nil
-jAxes = {0, 0, 0, 0}
+
+
+
 
 -- Soundss and Tracks
 track = love.audio.newSource("assets/sfx/bg.mp3", "stream")

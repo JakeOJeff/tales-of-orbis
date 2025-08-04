@@ -8,6 +8,12 @@ wH = love.graphics:getHeight()
 heading = love.graphics.newFont("assets/fonts/nihonium.ttf", 100)
 subheading = love.graphics.newFont("assets/fonts/nihonium.ttf", 64)
 paragraph = love.graphics.newFont("assets/fonts/nihonium.ttf", 48)
+-- Input Connections 
+joysticks = love.joystick.getJoysticks()
+Joystick = joysticks[1] or nil
+jAxes = {0, 0, 0, 0}
+-- Android/Mobile 
+isAndroid = love.system.getOS() == "Android"
 
 -- [INITIALIZING SCENERY]
 local SceneryInit = require("src.libs.scenery")
