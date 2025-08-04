@@ -43,7 +43,6 @@ function loading:update(dt)
         spawnParticle(self.particles)
     end
 
-
     -- Update all particles
     for i = #self.particles, 1, -1 do
         local p = self.particles[i]
@@ -93,18 +92,22 @@ function loading:draw()
     love.graphics.setScissor()
     love.graphics.pop()
 
-    for _, p in ipairs(self.particles) do
-        local alpha = p.life / p.maxLife
-        love.graphics.setColor(1, 1, 1, alpha)
-        love.graphics.circle("fill", p.x, p.y, 3)
+    if love.system.getOS() ~= "Android" then
+
+        for _, p in ipairs(self.particles) do
+            local alpha = p.life / p.maxLife
+            love.graphics.setColor(1, 1, 1, alpha)
+            love.graphics.circle("fill", p.x, p.y, 3)
+        end
+
     end
 
 end
 
 function spawnParticle(particles)
-    local y = loading.loaded / 100 * wH  -- fixed emission line (you can change to any Y)
+    local y = loading.loaded / 100 * wH -- fixed emission line (you can change to any Y)
 
-    for x = 0, wW, 4 do  -- emit a particle every 4 pixels for performance
+    for x = 0, wW, 4 do -- emit a particle every 4 pixels for performance
         local speed = math.random(30, 80)
         local particle = {
             x = x,
@@ -118,6 +121,5 @@ function spawnParticle(particles)
         table.insert(particles, particle)
     end
 end
-
 
 return loading
