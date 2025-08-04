@@ -72,7 +72,7 @@ function intro:inputReceived()
         self.fadeTimer = 0
     else
         -- Transition to next game state here
-        print("End of intro")
+        intro.setScene("game")
     end
 end
 return intro
