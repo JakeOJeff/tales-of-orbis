@@ -59,6 +59,22 @@ local scenery = SceneryInit({
 
 scenery:hook(love)
 
+
+function love.resize(w, h)
+    wW = w
+    wH = h
+    scale = math.min(wW / baseW, wH / baseH)
+    scaledW = wW / scale
+    scaledH = wH / scale
+    cenW = (scaledW - baseW) / 2
+    cenH = (scaledH - baseH) / 2
+
+    -- Reload GUI elements if necessary
+    if GUI then
+        GUI:load()
+    end
+end
+
 -- [GLOBAL FUNCTIONS]
 
 function dist(x1, y1, x2, y2)
