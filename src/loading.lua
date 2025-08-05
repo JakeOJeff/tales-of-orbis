@@ -35,25 +35,28 @@ function loading:update(dt)
 
     self.loaded = self.loaded + (self.speed * dt)
     self.time = self.time + (1 * dt)
-    self.timeSinceLastEmit = self.timeSinceLastEmit + dt
-    local particlesToEmit = math.floor(self.timeSinceLastEmit * self.emissionRate)
-    self.timeSinceLastEmit = self.timeSinceLastEmit - particlesToEmit / self.emissionRate
+    if love.system.getOS() ~= "Android" then
 
-    for i = 1, particlesToEmit do
-        spawnParticle(self.particles)
-    end
+        self.timeSinceLastEmit = self.timeSinceLastEmit + dt
+        local particlesToEmit = math.floor(self.timeSinceLastEmit * self.emissionRate)
+        self.timeSinceLastEmit = self.timeSinceLastEmit - particlesToEmit / self.emissionRate
 
-    -- Update all particles
-    for i = #self.particles, 1, -1 do
-        local p = self.particles[i]
-        p.x = p.x + p.vx * dt
-        p.y = p.y + p.vy * dt
-        p.life = p.life - dt
-        if p.life <= 0 then
-            table.remove(self.particles, i)
+        for i = 1, particlesToEmit do
+            spawnParticle(self.particles)
         end
-    end
 
+        -- Update all particles
+        for i = #self.particles, 1, -1 do
+            local p = self.particles[i]
+            p.x = p.x + p.vx * dt
+            p.y = p.y + p.vy * dt
+            p.life = p.life - dt
+            if p.life <= 0 then
+                table.remove(self.particles, i)
+            end
+        end
+
+    end
     if (self.text ~= "loading....") then
         if self.time > self.speed / self.loaded then
             self.text = self.text .. "."

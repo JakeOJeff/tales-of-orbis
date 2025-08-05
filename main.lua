@@ -6,10 +6,10 @@ wH = love.graphics:getHeight()
 baseW = 1280
 baseH = 720
 scale = wW / baseW
-    local scaledW = wW / scale
-    local scaledH = wH / scale
-     cenW = (scaledW - baseW) / 2
-     cenH = (scaledH - baseH) / 2
+local scaledW = wW / scale
+local scaledH = wH / scale
+cenW = (scaledW - baseW) / 2
+cenH = (scaledH - baseH) / 2
 
 -- [FONT DECLARATION]
 heading = love.graphics.newFont("assets/fonts/nihonium.ttf", 100)
@@ -31,15 +31,15 @@ local scenery = SceneryInit({
 }, {
     path = "src.loadScenes.production",
     key = "production"
-    
-},  {
+
+}, {
     path = "src.loadScenes.title",
     key = "title"
-    
-},  {
+
+}, {
     path = "src.cutscenes.intro",
     key = "intro"
-    
+
 }, {
     path = "src.game",
     key = "game"
@@ -50,10 +50,10 @@ scenery:hook(love)
 -- [GLOBAL FUNCTIONS]
 
 function dist(x1, y1, x2, y2)
-    return math.sqrt( (x2 - x1)^2 - (y2 - y1)^2)
-    
+    return math.sqrt((x2 - x1) ^ 2 - (y2 - y1) ^ 2)
+
 end
 
 function distRect(mx, my, x, y, width, height)
-    return mx > x and mx < x + width and my > y and my < y + height 
+    return mx > x and mx < x + width and my > y and my < y + height
 end
