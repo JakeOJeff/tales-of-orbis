@@ -44,7 +44,8 @@ function title:draw()
             love.graphics.setColor(1, 1, 1, alpha)
             love.graphics.push()
             love.graphics.scale(scale, scale)
-            love.graphics.draw(img, cenW, cenH)
+            love.graphics.translate(cenW, cenH)
+            love.graphics.draw(img, 0, 0)
             love.graphics.pop()
         end
     end
