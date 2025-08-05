@@ -61,10 +61,11 @@ function intro:gamepadpressed(joystic, button)
     self:inputReceived()
 end
 
-function intro:touchpressed(id, x, y)
-    self:inputReceived()
-end
+-- function intro:touchpressed(id, x, y)
+--     self:inputReceived()
+-- end
 
+-- Using mouse input for phone as well
 function intro:mousepressed(x, y, button)
     self:inputReceived()
 end
