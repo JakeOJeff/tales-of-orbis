@@ -1,15 +1,24 @@
 -- [[ IMPORTING SCENES ]]
 -- [DECLARING GLOBAL VARIABLES]
 love.graphics.setDefaultFilter("nearest", "nearest")
-wW = love.graphics:getWidth()
-wH = love.graphics:getHeight()
+
 baseW = 1280
 baseH = 720
-scale = wW / baseW
+
+wW = love.graphics.getWidth()
+wH = love.graphics.getHeight()
+
+-- Use the minimum scale that fits the full base resolution in screen
+scale = math.min(wW / baseW, wH / baseH)
+
+-- Get the scaled screen dimensions
 local scaledW = wW / scale
 local scaledH = wH / scale
+
+-- Center the base resolution in the scaled screen
 cenW = (scaledW - baseW) / 2
 cenH = (scaledH - baseH) / 2
+
 
 -- [FONT DECLARATION]
 heading = love.graphics.newFont("assets/fonts/nihonium.ttf", 100)
