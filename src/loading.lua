@@ -80,29 +80,28 @@ end
 function loading:draw()
     love.graphics.push()
     love.graphics.scale(scale, scale)
-        love.graphics.translate(cenW, cenH)
+    love.graphics.translate(cenW, cenH)
 
     love.graphics.setColor(1, 1, 1, self.alpha)
     love.graphics.draw(self.imgs[1], 0, 0)
     love.graphics.setColor(0.79, 0.5, 0.19, self.alpha)
     love.graphics.setFont(heading)
-    love.graphics.print(self.text, (wW / scale) / 2 - heading:getWidth(self.text) / 2,
-        (wH / scale) / 2 - heading:getHeight() / 2)
+    love.graphics.print(self.text, baseW / 2 - heading:getWidth(self.text) / 2,
+    baseH / 2 - heading:getHeight() / 2)
 
     love.graphics.setColor(1, 1, 1, self.alpha)
-    love.graphics.setScissor(0, 0, wW / scale, (self.loaded / 100) * (wH / scale))
+love.graphics.setScissor(cenW, cenH, wW, (self.loaded / 100) * baseH * scale)
 
     love.graphics.draw(self.imgs[2], 0, 0)
     love.graphics.setColor(1, 1, 1, 0.5)
     love.graphics.setFont(heading)
-    love.graphics.print(self.text, (wW / scale) / 2 - heading:getWidth(self.text) / 2,
-        (wH / scale) / 2 - heading:getHeight() / 2)
+    love.graphics.print(self.text, baseW / 2 - heading:getWidth(self.text) / 2,
+    baseH / 2 - heading:getHeight() / 2)
 
     love.graphics.setScissor()
 
-    love.graphics.pop()
 
-    if love.system.getOS() ~= "Android" then
+    -- if love.system.getOS() ~= "Android" then
 
         for _, p in ipairs(self.particles) do
             local alpha = p.life / p.maxLife
@@ -110,20 +109,21 @@ function loading:draw()
             love.graphics.circle("fill", p.x, p.y, 3)
         end
 
-    end
+    -- end
 
+    love.graphics.pop()
 end
 
 function spawnParticle(particles)
-    local y = loading.loaded / 100 * wH -- fixed emission line (you can change to any Y)
+    local y = loading.loaded / 100 * baseH
 
-    for x = 0, wW, 4 do -- emit a particle every 4 pixels for performance
+    for x = 0, baseW, 4 do
         local speed = math.random(30, 80)
         local particle = {
             x = x,
             y = y,
-            vx = 0, -- no horizontal movement
-            vy = -speed, -- move upward
+            vx = 0,
+            vy = -speed,
             life = 1,
             maxLife = 1
         }
@@ -131,5 +131,6 @@ function spawnParticle(particles)
         table.insert(particles, particle)
     end
 end
+
 
 return loading

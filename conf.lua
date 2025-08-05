@@ -1,6 +1,6 @@
 function love.conf(t)
-    t.window.width = 1280
-    t.window.height = 720
+    t.window.width = 2340
+    t.window.height = 1080
     t.window.fullscreen = false
     t.console = false
     -- t.window.resizable = true
