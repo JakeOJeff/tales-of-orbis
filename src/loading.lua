@@ -35,7 +35,7 @@ function loading:update(dt)
 
     self.loaded = self.loaded + (self.speed * dt)
     self.time = self.time + (1 * dt)
-    if love.system.getOS() ~= "Android" then
+    -- if love.system.getOS() ~= "Android" then
 
         self.timeSinceLastEmit = self.timeSinceLastEmit + dt
         local particlesToEmit = math.floor(self.timeSinceLastEmit * self.emissionRate)
@@ -56,7 +56,7 @@ function loading:update(dt)
             end
         end
 
-    end
+    -- end
     if (self.text ~= "loading....") then
         if self.time > self.speed / self.loaded then
             self.text = self.text .. "."
@@ -117,7 +117,7 @@ end
 function spawnParticle(particles)
     local y = loading.loaded / 100 * baseH
 
-    for x = 0, baseW, 4 do
+    for x = 0, wW, 4 do
         local speed = math.random(30, 80)
         local particle = {
             x = x,
