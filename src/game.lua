@@ -47,6 +47,7 @@ function game:update(dt)
     Fire.updateAll(dt)
     Blackhole.updateAll(dt)
     GUI:update(dt)
+    collectgarbage("collect")
 end
 
 function game:draw()
