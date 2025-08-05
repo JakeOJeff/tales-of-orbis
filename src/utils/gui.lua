@@ -7,6 +7,10 @@ function GUI:load()
     local jumpW = 80 * scale
     local jumpH = 80 * scale
 
+
+    self.touches = {
+
+    }
     self.leftButton = {
         x = 100 * scale,
         y = wH - buttonH - 75 * scale, -- 40 is padding from bottom
@@ -69,16 +73,33 @@ function GUI:load()
 end
 
 function GUI:update(dt)
-    local mx, my = love.mouse.getPosition()
     local lB = self.leftButton
     local rB = self.rightButton
     local bB = self.boostButton
     local jB = self.jumpButton
 
-    lB.holding = love.mouse.isDown(1) and distRect(mx, my, lB.x, lB.y, lB.w, lB.h)
-    rB.holding = love.mouse.isDown(1) and distRect(mx, my, rB.x, rB.y, rB.w, rB.h)
-    bB.holding = love.mouse.isDown(1) and distRect(mx, my, bB.x, bB.y, bB.w, bB.h)
-    jB.holding = love.mouse.isDown(1) and distRect(mx, my, jB.x, jB.y, jB.w, jB.h)
+    -- Reset all holding states
+    lB.holding = false
+    rB.holding = false
+    bB.holding = false
+    jB.holding = false
+
+    -- Check each touch
+    for _, touch in pairs(touches) do
+        local x, y = touch.x, touch.y
+        if distRect(x, y, lB.x, lB.y, lB.w, lB.h) then
+            lB.holding = true
+        end
+        if distRect(x, y, rB.x, rB.y, rB.w, rB.h) then
+            rB.holding = true
+        end
+        if distRect(x, y, bB.x, bB.y, bB.w, bB.h) then
+            bB.holding = true
+        end
+        if distRect(x, y, jB.x, jB.y, jB.w, jB.h) then
+            jB.holding = true
+        end
+    end
 
 end
 
@@ -143,4 +164,18 @@ function GUI:drawButtonImage(button)
     local dx = button.x + (button.w - iw * scale) / 2
     local dy = button.y + (button.h - ih * scale) / 2
     love.graphics.draw(img, dx, dy, 0, scale, scale)
+end
+function GUI:touchpressed(id, x, y, dx, dy, pressure)
+    touches[id] = {x = x * wW, y = y * wH}
+end
+
+function GUI:touchreleased(id, x, y, dx, dy, pressure)
+    touches[id] = nil
+end
+
+function GUI:touchmoved(id, x, y, dx, dy, pressure)
+    if touches[id] then
+        touches[id].x = x * wW
+        touches[id].y = y * wH
+    end
 end
