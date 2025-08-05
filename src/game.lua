@@ -50,7 +50,7 @@ function game:update(dt)
 end
 
 function game:draw()
-    love.graphics.draw(self.background, 0, 0)
+    love.graphics.draw(self.background, 0, 0, 0, self.scale, self.scale)
     Map:draw(-Camera.x, -Camera.y, self.scale, self.scale)
     Camera:apply()
     Player:draw()
