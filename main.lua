@@ -12,9 +12,9 @@ wW = love.graphics.getWidth()
 wH = love.graphics.getHeight()
 
 -- Set fullscreen for mobile and trigger resize logic
--- if isMobile and not love.window.getFullscreen() then
---     love.window.setFullscreen(true, "exclusive")
--- end
+if isMobile and not love.window.getFullscreen() then
+    love.window.setFullscreen(true, "exclusive")
+end
 
 -- Use the minimum scale that fits the full base resolution in screen
 scale = math.min(wW / baseW, wH / baseH)
@@ -41,9 +41,9 @@ jAxes = {0, 0, 0, 0}
 -- end
 
 -- Manually call resize logic for correct GUI and canvas scaling
--- if love.resize then
---     love.resize(wW, wH)
--- end
+if love.resize then
+    love.resize(wW, wH)
+end
 
 -- [INITIALIZING SCENERY]
 local SceneryInit = require("src.libs.scenery")
@@ -69,11 +69,7 @@ local scenery = SceneryInit({
 })
 
 scenery:hook(love)
--- filepath: main.lua
-function love.draw()
-    love.graphics.setColor(1, 0, 0)
-    love.graphics.rectangle("fill", 100, 100, 200, 200)
-end
+
 function love.resize(w, h)
     wW = w
     wH = h

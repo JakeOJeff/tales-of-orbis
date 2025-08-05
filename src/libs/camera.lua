@@ -5,7 +5,7 @@ local Camera = {
 }
 
 if love.system.getOS() == "Android" then
-    game.scale = scale + 1.3
+    Camera.scale = scale + 1.3
 end
 
 function Camera:apply()
