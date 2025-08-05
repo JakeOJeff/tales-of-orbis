@@ -84,6 +84,10 @@ function Player:update(dt)
         self.maxSpeed = 100 -- 200/4000 = 0.05 seconds
     end
 
+    if GUI.jumpButton.holding then
+        self:jump()
+    end
+
     self.animations.idle:update(dt)
     self:updateTrail(dt)
     self:respawn()
