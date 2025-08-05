@@ -2,7 +2,7 @@ local game = {
     background = love.graphics.newImage("assets/vfx/loading/background.png"),
     scale = scale + 1
 }
-if love.system.getOS() == "Android" then
+if wW/wH > 2 then
     game.scale = scale + 1.3
 end
 local STI = require("src.libs.sti")
