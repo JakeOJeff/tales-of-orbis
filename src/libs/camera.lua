@@ -4,6 +4,10 @@ local Camera = {
     scale = scale + 1
 }
 
+if love.system.getOS() == "Android" then
+    game.scale = scale + 1.3
+end
+
 function Camera:apply()
     love.graphics.push()
 

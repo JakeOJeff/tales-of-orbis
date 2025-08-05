@@ -1,7 +1,10 @@
 local game = {
     background = love.graphics.newImage("assets/vfx/loading/background.png"),
-    scale = scale + 1.3
+    scale = scale + 1
 }
+if love.system.getOS() == "Android" then
+    game.scale = scale + 1.3
+end
 local STI = require("src.libs.sti")
 -- REQUIRE LIBRARIES
 anim8 = require 'src.libs.anim8'
