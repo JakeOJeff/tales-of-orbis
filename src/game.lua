@@ -46,7 +46,7 @@ function game:update(dt)
     Player:update(dt)
     Fire.updateAll(dt)
     Blackhole.updateAll(dt)
-
+    GUI:update(dt)
 end
 
 function game:draw()
@@ -76,15 +76,14 @@ function game:touchpressed(id, x, y, dx, dy, pressure)
     isMobile = true
 end
 
-
 function game:focus(f)
-  if f then
-    print("Window is focused.")
-    track:play()
-  else
-    print("Window is not focused.")
-    track:pause()
-  end
+    if f then
+        print("Window is focused.")
+        track:play()
+    else
+        print("Window is not focused.")
+        track:pause()
+    end
 end
 
 function beginContact(a, b, collision)

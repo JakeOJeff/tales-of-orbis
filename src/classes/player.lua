@@ -129,9 +129,9 @@ function Player:resetTrails()
 end
 -- function Player
 function Player:move(dt)
-    if love.keyboard.isDown("d", "right") or jAxes[1] > 0.2 then -- small deadzone
+    if love.keyboard.isDown("d", "right") or jAxes[1] > 0.2 or GUI.rightButton.holding then -- small deadzone
         self.xVel = math.min(self.xVel + self.acceleration * dt, self.maxSpeed)
-    elseif love.keyboard.isDown("a", "left") or (jAxes[1] or 0) < -0.2 then
+    elseif love.keyboard.isDown("a", "left") or (jAxes[1] or 0) < -0.2 or GUI.leftButton.holding then
         self.xVel = math.max(self.xVel - self.acceleration * dt, -self.maxSpeed)
 
     else
