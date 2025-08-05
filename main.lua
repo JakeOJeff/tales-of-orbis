@@ -5,8 +5,16 @@ love.graphics.setDefaultFilter("nearest", "nearest")
 baseW = 1280
 baseH = 720
 
+-- Android/Mobile 
+isMobile = love.system.getOS() == "Android"
+
 wW = love.graphics.getWidth()
 wH = love.graphics.getHeight()
+
+-- Set fullscreen for mobile and trigger resize logic
+if isMobile and not love.window.getFullscreen() then
+    love.window.setFullscreen(true, "exclusive")
+end
 
 -- Use the minimum scale that fits the full base resolution in screen
 scale = math.min(wW / baseW, wH / baseH)
@@ -19,7 +27,6 @@ local scaledH = wH / scale
 cenW = (scaledW - baseW) / 2
 cenH = (scaledH - baseH) / 2
 
-
 -- [FONT DECLARATION]
 heading = love.graphics.newFont("assets/fonts/nihonium.ttf", 100)
 subheading = love.graphics.newFont("assets/fonts/nihonium.ttf", 64)
@@ -28,10 +35,14 @@ paragraph = love.graphics.newFont("assets/fonts/nihonium.ttf", 48)
 joysticks = love.joystick.getJoysticks()
 Joystick = joysticks[1] or nil
 jAxes = {0, 0, 0, 0}
--- Android/Mobile 
-isMobile = love.system.getOS() == "Android"
-if isMobile then
-        love.window.setFullscreen(true)
+
+-- if isMobile then
+--         love.window.setFullscreen(true)
+-- end
+
+-- Manually call resize logic for correct GUI and canvas scaling
+if love.resize then
+    love.resize(wW, wH)
 end
 
 -- [INITIALIZING SCENERY]
@@ -58,7 +69,6 @@ local scenery = SceneryInit({
 })
 
 scenery:hook(love)
-
 
 function love.resize(w, h)
     wW = w
