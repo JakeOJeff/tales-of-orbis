@@ -37,8 +37,6 @@ function GUI:load()
         holding = false
     }
 
-
-
     self.boostButton = {
         x = wW - jumpW - 190 * scale, -- 80 is right-side padding
         y = wH - jumpH - 90 * scale, -- padding from bottom
@@ -49,7 +47,7 @@ function GUI:load()
             y = 0,
             w = imgW / scale,
             h = imgW / scale,
-            src = love.graphics.newImage("assets/vfx/icons/jump.png")
+            src = love.graphics.newImage("assets/vfx/icons/boost.png")
         },
         holding = false
     }
@@ -65,14 +63,9 @@ function GUI:load()
             h = imgW / scale,
             src = love.graphics.newImage("assets/vfx/icons/jump.png")
         },
-        clicked = false
+        holding = false
     }
-    self.leftButton.img.x = self.leftButton.x + self.leftButton.w / 2 - self.leftButton.img.w / 2
-    self.leftButton.img.y = self.leftButton.y + self.leftButton.h / 2 - self.leftButton.img.h / 2
-    self.rightButton.img.x = self.rightButton.x + self.rightButton.w / 2 - self.rightButton.img.w / 2
-    self.rightButton.img.y = self.rightButton.y + self.rightButton.h / 2 - self.rightButton.img.h / 2
-    self.jumpButton.img.x = self.jumpButton.x + self.jumpButton.w / 2 - self.jumpButton.img.w / 2
-    self.jumpButton.img.y = self.jumpButton.y + self.jumpButton.h / 2 - self.jumpButton.img.h / 2
+
 end
 
 function GUI:update(dt)
@@ -80,10 +73,13 @@ function GUI:update(dt)
     local lB = self.leftButton
     local rB = self.rightButton
     local bB = self.boostButton
+    local jB = self.jumpButton
 
     lB.holding = love.mouse.isDown(1) and distRect(mx, my, lB.x, lB.y, lB.w, lB.h)
     rB.holding = love.mouse.isDown(1) and distRect(mx, my, rB.x, rB.y, rB.w, rB.h)
     bB.holding = love.mouse.isDown(1) and distRect(mx, my, bB.x, bB.y, bB.w, bB.h)
+    jB.holding = love.mouse.isDown(1) and distRect(mx, my, jB.x, jB.y, jB.w, jB.h)
+
 end
 
 function GUI:draw()
@@ -127,7 +123,7 @@ function GUI:draw()
         self:drawButtonImage(bB)
         love.graphics.setColor(0, 0, 0, 0.6)
 
-        if jB.clicked then
+        if jB.holding then
             love.graphics.setColor(0.1, 0.1, 0.1, 0.6)
         end
         love.graphics.rectangle("fill", jB.x, jB.y, jB.w, jB.h, 40, 40)
@@ -135,20 +131,16 @@ function GUI:draw()
         self:drawButtonImage(jB)
         love.graphics.setColor(0, 0, 0, 0.6)
 
-    end
+        love.graphics.setColor(1, 1, 1)
 
+    end
 
 end
-    function GUI:drawButtonImage(button)
-        local img = button.img.src
-        local iw, ih = img:getWidth(), img:getHeight()
-        local scale = math.min(button.w / iw, button.h / ih)
-        local dx = button.x + (button.w - iw * scale) / 2
-        local dy = button.y + (button.h - ih * scale) / 2
-        love.graphics.draw(img, dx, dy, 0, scale, scale)
-    end
-
-    function GUI:mousepressed(x, y, button)
-        jB = self.jumpButton
-        jB.clicked = distRect(x, y, jB.x, jB.y, jB.w, jB.h)
-    end
+function GUI:drawButtonImage(button)
+    local img = button.img.src
+    local iw, ih = img:getWidth(), img:getHeight()
+    local scale = math.min(button.w / iw, button.h / ih)
+    local dx = button.x + (button.w - iw * scale) / 2
+    local dy = button.y + (button.h - ih * scale) / 2
+    love.graphics.draw(img, dx, dy, 0, scale, scale)
+end
