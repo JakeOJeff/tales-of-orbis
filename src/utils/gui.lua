@@ -10,14 +10,16 @@ function GUI:load()
         x = 80 * scale,
         y = wH - buttonH - 40 * scale, -- 40 is padding from bottom
         w = buttonW,
-        h = buttonH
+        h = buttonH,
+        holding = false
     }
 
     self.rightButton = {
         x = (80 + 110) * scale, -- 80 initial + 110 spacing
         y = wH - buttonH - 40 * scale,
         w = buttonW,
-        h = buttonH
+        h = buttonH,
+        holding = false
     }
 
     self.jumpButton = {
@@ -26,6 +28,17 @@ function GUI:load()
         w = jumpW,
         h = jumpH
     }
+end
+
+function GUI:update(dt)
+    local mx, my = love.mouse.getPosition()
+    local lB = self.leftButton
+    local rB = self.rightButton
+
+    lB.holding = love.mouse.isDown(1) and distRect(mx, my, lB.x, lB.y, lB.w, lB.h)
+    rB.holding = love.mouse.isDown(1) and distRect(mx, my, rB.x, rB.y, rB.w, rB.h)
+
+
 end
 
 function GUI:draw()
@@ -42,10 +55,10 @@ function GUI:draw()
         local lB = self.leftButton
         local rB = self.rightButton
         local jB = self.jumpButton
-        love.graphics.rectangle("fill", lB.x, lB.y , lB.w, lB.h, 10, 10)
+        love.graphics.rectangle("fill", lB.x, lB.y, lB.w, lB.h, 10, 10)
         love.graphics.rectangle("fill", rB.x, rB.y, rB.w, rB.h, 10, 10)
 
-       love.graphics.rectangle("fill",jB.x, jB.y , jB.w, jB.h, 40, 40)
+        love.graphics.rectangle("fill", jB.x, jB.y, jB.w, jB.h, 40, 40)
         love.graphics.setColor(1, 1, 1)
 
     end
