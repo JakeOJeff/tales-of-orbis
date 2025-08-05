@@ -49,15 +49,15 @@ end
 local SceneryInit = require("src.libs.scenery")
 local scenery = SceneryInit({
     path = "src.loading",
-    key = "loading",
-    default = true
+    key = "loading"
 }, {
     path = "src.loadScenes.production",
     key = "production"
 
 }, {
     path = "src.loadScenes.title",
-    key = "title"
+    key = "title",
+    default = true
 
 }, {
     path = "src.cutscenes.intro",

@@ -1,24 +1,21 @@
 local title = {
-    imgs = {
-        love.graphics.newImage("assets/vfx/loading/titles/background.png"),
-        love.graphics.newImage("assets/vfx/loading/titles/tales-of-text.png"),
-        love.graphics.newImage("assets/vfx/loading/titles/orb-light.png"),
-        love.graphics.newImage("assets/vfx/loading/titles/orb-text.png"),
-        love.graphics.newImage("assets/vfx/loading/titles/play.png") -- Play button is last
+    imgs = {love.graphics.newImage("assets/vfx/loading/titles/background.png"),
+            love.graphics.newImage("assets/vfx/loading/titles/tales-of-text.png"),
+            love.graphics.newImage("assets/vfx/loading/titles/orb-light.png"),
+            love.graphics.newImage("assets/vfx/loading/titles/orb-text.png"),
+            love.graphics.newImage("assets/vfx/loading/titles/play.png") -- Play button is last
     },
     timer = 0,
-    fadeTime = 1,         -- seconds to fade each image
-    delayBetween = 3,     -- delay between each image
+    fadeTime = 1, -- seconds to fade each image
+    delayBetween = 3, -- delay between each image
     startTime = nil,
     play_x = 527,
     play_y = 340,
     play_width = 240,
     play_height = 90,
     normal_play = love.graphics.newImage("assets/vfx/loading/titles/play.png"),
-    hover_play = love.graphics.newImage("assets/vfx/loading/titles/play-hover.png"),
+    hover_play = love.graphics.newImage("assets/vfx/loading/titles/play-hover.png")
 }
-
-
 
 function title:load()
     self.startTime = love.timer.getTime()
@@ -40,22 +37,30 @@ function title:update(dt)
 end
 
 function title:draw()
-    love.graphics.push()
-    love.graphics.scale(scale, scale)
-    love.graphics.translate(cenW, cenH)
 
     for i, img in ipairs(self.imgs) do
         local appearTime = (i - 1) * self.delayBetween
         local t = self.timer - appearTime
+        if i ~= 1 then
+            love.graphics.push()
+            love.graphics.scale(scale, scale)
+            love.graphics.translate(cenW, cenH)
+            if t >= 0 then
+                local alpha = math.min(t / self.fadeTime, 1)
+                love.graphics.setColor(1, 1, 1, alpha)
+                love.graphics.draw(img, 0, 0)
+            end
+            love.graphics.pop()
 
-        if t >= 0 then
-            local alpha = math.min(t / self.fadeTime, 1)
-            love.graphics.setColor(1, 1, 1, alpha)
-            love.graphics.draw(img, 0, 0)
+        else
+            if t >= 0 then
+                local alpha = math.min(t / self.fadeTime, 1)
+                love.graphics.setColor(1, 1, 1, alpha)
+            love.graphics.draw(img, 0, 0, 0, wW / img:getWidth(), scale)
+            end
         end
     end
 
-    love.graphics.pop()
     love.graphics.setColor(1, 1, 1, 1)
 end
 
