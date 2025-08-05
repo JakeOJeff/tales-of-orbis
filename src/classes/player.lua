@@ -138,7 +138,7 @@ function Player:move(dt)
         self:applyFriction(dt)
     end
 
-    local isBoostKeyDown = love.keyboard.isDown("lshift", "lctrl")
+    local isBoostKeyDown = love.keyboard.isDown("lshift", "lctrl") or GUI.boostButton.holding
     local isJoystickBoost = false
 
     if Joystick then
