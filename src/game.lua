@@ -72,6 +72,18 @@ end
 function game:touchpressed(id, x, y, dx, dy, pressure)
     isMobile = true
 end
+
+
+function game:focus(f)
+  if f then
+    print("Window is focused.")
+    track:play()
+  else
+    print("Window is not focused.")
+    track:pause()
+  end
+end
+
 function beginContact(a, b, collision)
     utils.collisions:beginContact(a, b, collision)
 end
