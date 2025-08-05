@@ -42,7 +42,7 @@ function game:update(dt)
         jAxes[1], jAxes[2], jAxes[3], jAxes[4] = Joystick:getAxes() -- lH, lV, rH, rV
     end
     World:update(dt)
-    Camera:setPosition(Player.x, 0)
+    Camera:setPosition(Player.x, Player.y)
     Player:update(dt)
     Fire.updateAll(dt)
     Blackhole.updateAll(dt)
