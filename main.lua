@@ -66,3 +66,6 @@ end
 function distRect(mx, my, x, y, width, height)
     return mx > x and mx < x + width and my > y and my < y + height
 end
+function normalizeCoords(x, y)
+    return (x / scale) - cenW / scale, (y / scale) - cenH / scale
+end
