@@ -69,7 +69,11 @@ local scenery = SceneryInit({
 })
 
 scenery:hook(love)
-
+-- filepath: main.lua
+function love.draw()
+    love.graphics.setColor(1, 0, 0)
+    love.graphics.rectangle("fill", 100, 100, 200, 200)
+end
 function love.resize(w, h)
     wW = w
     wH = h
