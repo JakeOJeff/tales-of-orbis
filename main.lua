@@ -6,9 +6,10 @@ wH = love.graphics:getHeight()
 baseW = 1280
 baseH = 720
 scale = wW / baseW
-
-cenW = (wW - baseW * scale) / 2
-cenH = (wH - baseH * scale) / 2
+    local scaledW = wW / scale
+    local scaledH = wH / scale
+     cenW = (scaledW - baseW) / 2
+     cenH = (scaledH - baseH) / 2
 
 -- [FONT DECLARATION]
 heading = love.graphics.newFont("assets/fonts/nihonium.ttf", 100)

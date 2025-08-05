@@ -81,15 +81,20 @@ function loading:draw()
     love.graphics.draw(self.imgs[1], cenW, cenH)
     love.graphics.setColor(0.79, 0.5, 0.19, self.alpha)
     love.graphics.setFont(heading)
-    love.graphics.print(self.text, wW / 2 - heading:getWidth(self.text) / 2, wH / 2 - heading:getHeight() / 2)
+    love.graphics.print(self.text, (wW / scale) / 2 - heading:getWidth(self.text) / 2,
+        (wH / scale) / 2 - heading:getHeight() / 2)
 
     love.graphics.setColor(1, 1, 1, self.alpha)
-    love.graphics.setScissor(0, 0, wW, self.loaded / 100 * wH)
+    love.graphics.setScissor(0, 0, wW / scale, (self.loaded / 100) * (wH / scale))
+
     love.graphics.draw(self.imgs[2], cenW, cenH)
     love.graphics.setColor(1, 1, 1, 0.5)
     love.graphics.setFont(heading)
-    love.graphics.print(self.text, wW / 2 - heading:getWidth(self.text) / 2, wH / 2 - heading:getHeight() / 2)
+    love.graphics.print(self.text, (wW / scale) / 2 - heading:getWidth(self.text) / 2,
+        (wH / scale) / 2 - heading:getHeight() / 2)
+
     love.graphics.setScissor()
+
     love.graphics.pop()
 
     if love.system.getOS() ~= "Android" then
