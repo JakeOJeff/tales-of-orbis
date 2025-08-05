@@ -4,7 +4,7 @@ local Camera = {
     scale = scale + 1
 }
 
-if wW/wH then
+if wW/wH > 2 then
     Camera.scale = scale + 1.3
 end
 

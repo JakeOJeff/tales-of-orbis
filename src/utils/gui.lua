@@ -113,7 +113,7 @@ function GUI:draw()
     print("YES")
     love.graphics.setColor(1, 1, 1)
 
-    if isMobile then
+    if not isMobile then
         love.graphics.setColor(0, 0, 0, 0.6)
         local lB = self.leftButton
         local rB = self.rightButton
