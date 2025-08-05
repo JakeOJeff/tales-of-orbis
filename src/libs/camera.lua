@@ -22,7 +22,7 @@ end
 function Camera:setPosition(x, y)
 
     self.x = x - love.graphics.getWidth() / 2 / self.scale
-    self.y = y
+    self.y = y - love.graphics.getHeight() / 2 / self.scale
 
     local rH = self.x + love.graphics.getWidth() /2
 
