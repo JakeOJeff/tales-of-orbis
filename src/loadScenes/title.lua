@@ -1,36 +1,39 @@
 local title = {
-    imgs = {love.graphics.newImage("assets/vfx/loading/titles/background.png"),
-            love.graphics.newImage("assets/vfx/loading/titles/tales-of-text.png"),
-            love.graphics.newImage("assets/vfx/loading/titles/orb-light.png"),
-            love.graphics.newImage("assets/vfx/loading/titles/orb-text.png"),
-            love.graphics.newImage("assets/vfx/loading/titles/play.png")},
+    imgs = {
+        love.graphics.newImage("assets/vfx/loading/titles/background.png"),
+        love.graphics.newImage("assets/vfx/loading/titles/tales-of-text.png"),
+        love.graphics.newImage("assets/vfx/loading/titles/orb-light.png"),
+        love.graphics.newImage("assets/vfx/loading/titles/orb-text.png"),
+    },
     timer = 0,
     fadeTime = 1, -- seconds for fade in
-    delayBetween = 3, -- seconds between each image's start time
+    delayBetween = 3,
     startTime = nil,
     play_x = 527,
     play_y = 340,
     play_width = 240,
     play_height = 90,
     normal_play = love.graphics.newImage("assets/vfx/loading/titles/play.png"),
-    hover_play = love.graphics.newImage("assets/vfx/loading/titles/play-hover.png")
+    hover_play = love.graphics.newImage("assets/vfx/loading/titles/play-hover.png"),
+    currentPlayButton = nil,
 }
 
 function title:load()
     self.startTime = love.timer.getTime()
+    self.currentPlayButton = self.normal_play
 end
 
 function title:update(dt)
     self.timer = love.timer.getTime() - self.startTime
-    local mx, my = love.mouse.getPosition()
-    local inPlay = distRect(mx, my, self.play_x, self.play_y, self.play_width, self.play_height)
-    if inPlay then
-        self.imgs[5] = self.hover_play
-        if love.mouse.isDown(1) then
-            title.setScene("intro")
-        end
-    else
-        self.imgs[5] = self.normal_play
+    local mx, my = normalizeCoords(love.mouse.getPosition())
+    self:handlePlayHover(mx, my, love.mouse.isDown(1))
+end
+
+function title:handlePlayHover(x, y, isPressed)
+    local inPlay = distRect(x, y, self.play_x, self.play_y, self.play_width, self.play_height)
+    self.currentPlayButton = inPlay and self.hover_play or self.normal_play
+    if inPlay and isPressed then
+        title.setScene("intro")
     end
 end
 
@@ -50,33 +53,32 @@ function title:draw()
         end
     end
 
+    -- Draw play button last
     love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.push()
+    love.graphics.scale(scale, scale)
+    love.graphics.translate(cenW, cenH)
+    love.graphics.draw(self.currentPlayButton, self.play_x, self.play_y)
+    love.graphics.pop()
 end
+
 function title:keypressed(key)
     if key == "return" then
+        title.setScene("intro")
     end
 end
 
-function title:gamepadpressed(joystic, button)
+function title:gamepadpressed(joystick, button)
     isMobile = false
     if button == "a" then
         title.setScene("intro")
     end
-    title.setScene("intro")
-
 end
 
 function title:touchpressed(id, x, y)
     isMobile = true
-    local inPlay = distRect(x, y, self.play_x, self.play_y, self.play_width, self.play_height)
-    if inPlay then
-        self.imgs[5] = self.hover_play
-        if love.mouse.isDown(1) then
-            title.setScene("intro")
-        end
-    else
-        self.imgs[5] = self.normal_play
-    end
+    local normX, normY = normalizeCoords(x, y)
+    self:handlePlayHover(normX, normY, true)
 end
 
 return title
