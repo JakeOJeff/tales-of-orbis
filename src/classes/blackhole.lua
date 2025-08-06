@@ -39,6 +39,7 @@ end
 
 function Blackhole.drawAll()
     for i, v in ipairs(ActiveHoles) do
+        love.graphics.setColor(v.color)
         v:draw()
     end
 end
