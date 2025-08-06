@@ -70,7 +70,7 @@ function loading:update(dt)
 
     end
 
-    if self.loaded > 200 then
+    if self.loaded > 150 then
         self.setScene("production")
     elseif self.loaded > 100 then
         self.text = "loaded."
