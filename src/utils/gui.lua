@@ -84,9 +84,10 @@ function GUI:update(dt)
     bB.holding = false
     jB.holding = false
 
+    self.touches = love.touch.getTouches()
     -- Check each touch
-    for _, touch in pairs(self.touches) do
-        local x, y = touch.x, touch.y
+    for _, id in pairs(self.touches) do
+        local x, y = love.touch.getPosition(id)
         if distRect(x, y, lB.x, lB.y, lB.w, lB.h) then
             lB.holding = true
         end
@@ -164,18 +165,4 @@ function GUI:drawButtonImage(button)
     local dx = button.x + (button.w - iw * scale) / 2
     local dy = button.y + (button.h - ih * scale) / 2
     love.graphics.draw(img, dx, dy, 0, scale, scale)
-end
-function GUI:touchpressed(id, x, y, dx, dy, pressure)
-    self.touches[id] = {x = x * wW, y = y * wH}
-end
-
-function GUI:touchreleased(id, x, y, dx, dy, pressure)
-    self.touches[id] = nil
-end
-
-function GUI:touchmoved(id, x, y, dx, dy, pressure)
-    if self.touches[id] then
-        self.touches[id].x = x * wW
-        self.touches[id].y = y * wH
-    end
 end
