@@ -10,7 +10,7 @@ function Player:load()
     self.xVel = 0
     self.yVel = 100
     self.maxSpeed = 100 -- 200/4000 = 0.05 seconds
-    self.acceleration = 2000
+    self.acceleration = 1000
     self.friction = 2000
 
     self.gravity = 100
@@ -27,7 +27,7 @@ function Player:load()
     self.bvY = 0
 
     self.health = {
-        current = 0,
+        current = 100,
         max = 100
     }
     self.alive = true
@@ -48,6 +48,9 @@ function Player:load()
     self.particleSize = 5
     self.emissionRate = 500 -- particles per second
     self.timeSinceLastEmit = 0
+
+    self.maxParticleLimit = 800
+    self.maxParticles = self.maxParticleLimit
 
     self.bobSpeed = 4
     self.bobRange = 10
@@ -76,7 +79,7 @@ function Player:update(dt)
             self.maxSpeed = 250
         else
             -- Restore normal movement if not boosting
-            self.acceleration = 2000
+            self.acceleration = 1000
             self.friction = 2000
             self.maxSpeed = 100 -- 200/4000 = 0.05 seconds
         end
@@ -119,6 +122,7 @@ function Player:respawn()
     if not self.alive then
         self.physics.body:setPosition(self.checkpointX, self.checkpointY)
         self.health.current = self.health.max
+        self.maxParticles = self.maxParticleLimit
         self.alive = true
     end
 end
@@ -239,7 +243,7 @@ function Player:updateTrail(dt)
     self.timeSinceLastEmit = self.timeSinceLastEmit - particlesToEmit / self.emissionRate
 
     -- Limit particle count to avoid memory issues
-    if #self.particles < 800 then
+    if #self.particles < self.maxParticles then
         for i = 1, math.min(particlesToEmit, 2) do
             self:spawnTrailParticles()
         end
@@ -270,6 +274,10 @@ function Player:updateTrail(dt)
                     self.xVel = p.vx * dt
                     self.yVel = p.vy * dt
                 end
+
+                self.maxParticles = math.max(self.maxParticles - 8 * dt, 0) -- reduce max particles if attracted
+                self:takeDamange(blackhole.damage * dt)
+                print("Taking damage :".. Player.health.current)
             end
 
         end
