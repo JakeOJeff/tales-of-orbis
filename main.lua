@@ -100,3 +100,6 @@ end
 function normalizeCoords(x, y)
     return (x / scale) - cenW / scale, (y / scale) - cenH / scale
 end
+function lerp(a, b, t)
+    return a + (b - a) * t
+end
