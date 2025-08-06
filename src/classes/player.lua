@@ -22,6 +22,10 @@ function Player:load()
     self.boost = self.maxBoost
     self.isBoosting = false
 
+    -- Blackhole attraction
+    self.bvX = 0
+    self.bvY = 0
+
     self.health = {
         current = 0,
         max = 100
@@ -250,18 +254,24 @@ function Player:updateTrail(dt)
             local dx = bx - p.x
             local dy = by - p.y
             local dist = math.sqrt(dx * dx + dy * dy)
-            local attractRadius = 250
+            local attractRadius = 120
             if dist < 20 then
                 -- If too close, remove particle to avoid infinite attraction
                 table.remove(self.particles, i)
                 break
             end
             if dist < attractRadius then
-                local strength = (1 - dist / attractRadius) * 20000 -- attraction strength
+                local strength = (1 - dist / attractRadius) * 15000 -- attraction strength
                 local angle = math.atan2(dy, dx)
                 p.vx = p.vx + math.cos(angle) * strength * dt
                 p.vy = p.vy + math.sin(angle) * strength * dt
+
+                if not self.isBoosting then
+                    self.xVel = p.vx * dt
+                    self.yVel = p.vy * dt
+                end
             end
+
         end
 
         -- Update particle motion
