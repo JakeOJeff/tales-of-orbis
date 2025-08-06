@@ -264,7 +264,7 @@ function Player:updateTrail(dt)
             local dx = bx - p.x
             local dy = by - p.y
             local dist = math.sqrt(dx * dx + dy * dy)
-            local attractRadius = 120
+            local attractRadius = 100
             if dist < 20 then
                 -- If too close, remove particle to avoid infinite attraction
                 table.remove(self.particles, i)
@@ -283,7 +283,7 @@ function Player:updateTrail(dt)
                     self.yVel = p.vy * dt
                 end
 
-                self.maxParticles = math.max(self.maxParticles - .5* strength/10000 * dt, 0) -- reduce max particles if attracted
+                self.maxParticles = math.max(self.maxParticles - .5* strength/8000 * dt, 0) -- reduce max particles if attracted
 
             end
 
@@ -348,12 +348,13 @@ function Player:draw()
         if not paused then
             offset = (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed))
         end
-        love.graphics.setColor(1, 1, 1, 1) -- reset color
+        love.graphics.setColor(1, 1, 1, self.maxParticles/self.maxParticleLimit) -- reset color
         local pX = self.x
         local pY = self.y + offset
         -- love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
         self.animations.idle:draw(self.spritesheet, pX - 16, pY - 25)
         -- love.graphics.circle("line", self.x, self.y, self.radius)
+        love.graphics.setColor(1,1,1,1)
 
     end
 end
