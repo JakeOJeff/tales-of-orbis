@@ -62,9 +62,9 @@ function Player:load()
     self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
 end
 function Player:update(dt)
-    self.health.current = self.maxParticles/self.maxParticleLimit * 100
+    self.health.current = self.maxParticles / self.maxParticleLimit * 100
     print("Player Health: " .. self.health.current)
-    if self.health.current <= 0 then    
+    if self.health.current <= 0 then
         self:die()
     end
 
@@ -271,20 +271,35 @@ function Player:updateTrail(dt)
                 break
             end
             if dist < attractRadius then
-                    self.graceTime = self.graceDuration
+                self.graceTime = self.graceDuration
 
-                local strength = (1 - dist / attractRadius) * 15000 -- attraction strength
+                local strength = (1 - dist / attractRadius)
                 local angle = math.atan2(dy, dx)
-                p.vx = p.vx + math.cos(angle) * strength * dt
-                p.vy = p.vy + math.sin(angle) * strength * dt
+
+                -- Swirl force: perpendicular (tangential) vector
+                local swirlAngle = angle + math.pi / 2 -- rotate 90 degrees for swirl
+                local swirlStrength = 6000 * strength
+
+                -- Central pull (mild, so it doesn't instantly fall into center)
+                local pullStrength = 2000 * strength
+
+                -- Apply swirl and pull
+                p.vx = p.vx + math.cos(swirlAngle) * swirlStrength * dt
+                p.vy = p.vy + math.sin(swirlAngle) * swirlStrength * dt
+
+                p.vx = p.vx + math.cos(angle) * pullStrength * dt
+                p.vy = p.vy + math.sin(angle) * pullStrength * dt
+
+                -- Bright effect: increase size or add glow flag
+                p.glow = true
+                p.brightness = strength -- used to make color brighter
 
                 if not self.isBoosting then
                     self.xVel = p.vx * dt
                     self.yVel = p.vy * dt
                 end
 
-                self.maxParticles = math.max(self.maxParticles - .5* strength/8000 * dt, 0) -- reduce max particles if attracted
-
+                self.maxParticles = math.max(self.maxParticles - 0.5 * strength * dt, 0)
             end
 
         end
@@ -348,13 +363,13 @@ function Player:draw()
         if not paused then
             offset = (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed))
         end
-        love.graphics.setColor(1, 1, 1, self.maxParticles/self.maxParticleLimit) -- reset color
+        love.graphics.setColor(1, 1, 1, self.maxParticles / self.maxParticleLimit) -- reset color
         local pX = self.x
         local pY = self.y + offset
         -- love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
         self.animations.idle:draw(self.spritesheet, pX - 16, pY - 25)
         -- love.graphics.circle("line", self.x, self.y, self.radius)
-        love.graphics.setColor(1,1,1,1)
+        love.graphics.setColor(1, 1, 1, 1)
 
     end
 end
