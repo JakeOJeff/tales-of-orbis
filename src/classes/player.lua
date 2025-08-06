@@ -62,6 +62,12 @@ function Player:load()
     self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
 end
 function Player:update(dt)
+    self.health.current = self.maxParticles/self.maxParticleLimit * 100
+    print("Player Health: " .. self.health.current)
+    if self.health.current <= 0 then    
+        self:die()
+    end
+
     local airborne = not self.grounded
     local boosting = self.isBoosting
 
@@ -203,7 +209,7 @@ function Player:jump()
     if self.grounded or self.graceTime > 0 then
         self.particleMaxLife = 2
         self.particleSize = 10
-        self.particleRadius = 5
+        self.particleRadius = 2
         self.yVel = self.jumpAmount
         self.grounded = false
     end
@@ -265,6 +271,8 @@ function Player:updateTrail(dt)
                 break
             end
             if dist < attractRadius then
+                    self.graceTime = self.graceDuration
+
                 local strength = (1 - dist / attractRadius) * 15000 -- attraction strength
                 local angle = math.atan2(dy, dx)
                 p.vx = p.vx + math.cos(angle) * strength * dt
@@ -275,9 +283,8 @@ function Player:updateTrail(dt)
                     self.yVel = p.vy * dt
                 end
 
-                self.maxParticles = math.max(self.maxParticles - 8 * dt, 0) -- reduce max particles if attracted
-                self:takeDamange(blackhole.damage * dt)
-                print("Taking damage :".. Player.health.current)
+                self.maxParticles = math.max(self.maxParticles - .5* strength/10000 * dt, 0) -- reduce max particles if attracted
+
             end
 
         end
