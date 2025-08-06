@@ -260,7 +260,6 @@ function Player:updateTrail(dt)
     end
 end
 
-
 function Player:spawnTrailParticles()
     for i = 1, 5 do -- emit 5 particles at once for a chunkier trail
         local angle = love.math.random() * 2 * math.pi
@@ -295,18 +294,24 @@ function Player:syncPhysics()
     self.physics.body:setLinearVelocity(self.xVel, self.yVel)
 end
 function Player:draw()
-    for _, p in ipairs(self.particles) do
-        local alpha = p.life / p.maxLife
-        -- love.graphics.setColor(0.79, 0.5, 0.19, alpha)
-        love.graphics.setColor(0.79,0.5, 0.19, alpha)
+    if not paused then
+        for _, p in ipairs(self.particles) do
+            local alpha = p.life / p.maxLife
+            -- love.graphics.setColor(0.79, 0.5, 0.19, alpha)
+            love.graphics.setColor(0.79, 0.5, 0.19, alpha)
 
-        love.graphics.circle("fill", p.x, p.y, p.size)
+            love.graphics.circle("fill", p.x, p.y, p.size)
+        end
+        local offset = 0
+        if not paused then
+            offset = (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed))
+        end
+        love.graphics.setColor(1, 1, 1, 1) -- reset color
+        local pX = self.x
+        local pY = self.y + offset
+        -- love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
+        self.animations.idle:draw(self.spritesheet, pX - 16, pY - 25)
+        -- love.graphics.circle("line", self.x, self.y, self.radius)
+
     end
-
-    love.graphics.setColor(1, 1, 1, 1) -- reset color
-    local pX = self.x
-    local pY = self.y + (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed))
-    -- love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
-    self.animations.idle:draw(self.spritesheet, pX - 16, pY - 25)
-    -- love.graphics.circle("line", self.x, self.y, self.radius)
 end
