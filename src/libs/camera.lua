@@ -1,11 +1,11 @@
 local Camera = {
     x = 0,
     y = 0,
-    scale = scale + 1
+    scale = scale + 2
 }
 
 if wW/wH > 2 then
-    Camera.scale = scale + 1.3
+    Camera.scale = scale + 2.3
 end
 
 function Camera:apply()

@@ -109,10 +109,9 @@ function GUI:draw()
     love.graphics.setColor(0.56, 0.23, 0.11)
     love.graphics.rectangle("fill", wW - 60 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 40 * scale,
         200 * scale * math.max((Player.boost / Player.maxBoost), 0), 10, 10)
-    print("YES")
     love.graphics.setColor(1, 1, 1)
 
-    if isMobile then
+    if not isMobile and not paused then
         love.graphics.setColor(0, 0, 0, 0.6)
         local lB = self.leftButton
         local rB = self.rightButton
@@ -153,6 +152,13 @@ function GUI:draw()
 
         love.graphics.setColor(1, 1, 1)
 
+    end
+
+    if paused then
+        local pauseText = "Paused"
+        love.graphics.setColor(1, 1, 1, 0.8)
+        love.graphics.setFont(heading)
+        love.graphics.print(pauseText, wW / 2 - heading:getWidth(pauseText) / 2, wH / 2 - heading:getHeight() / 2)
     end
 
 end

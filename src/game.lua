@@ -1,9 +1,9 @@
 local game = {
     background = love.graphics.newImage("assets/vfx/loading/background.png"),
-    scale = scale + 1
+    scale = scale + 2
 }
 if wW/wH > 2 then
-    game.scale = scale + 1.3
+    game.scale = scale + 2.3
 end
 local STI = require("src.libs.sti")
 -- REQUIRE LIBRARIES
@@ -38,7 +38,8 @@ function game:load()
 end
 
 function game:update(dt)
-    if Joystick then
+    if not paused then
+           if Joystick then
         jAxes[1], jAxes[2], jAxes[3], jAxes[4] = Joystick:getAxes() -- lH, lV, rH, rV
     end
     World:update(dt)
@@ -46,8 +47,9 @@ function game:update(dt)
     Player:update(dt)
     Fire.updateAll(dt)
     Blackhole.updateAll(dt)
-    GUI:update(dt)
-    collectgarbage("collect")
+    GUI:update(dt) 
+    end
+
 end
 
 function game:draw()
@@ -64,8 +66,16 @@ end
 function game:keypressed(key)
     Player:keyboardInput(key)
     if key == "r" then
-        print("LOADING")
         game.setScene("loading")
+    end
+
+    if key == "escape" then
+        paused = not paused
+        if paused then
+            track:pause()
+        else
+            track:play()
+        end
     end
 end
 function game:gamepadpressed(joystick, button)

@@ -6,7 +6,7 @@ function Player:load()
     self.checkpointX = self.x
     self.checkpointY = self.y
     self.radius = 16
-    --self.height = 28
+    -- self.height = 28
     self.xVel = 0
     self.yVel = 100
     self.maxSpeed = 100 -- 200/4000 = 0.05 seconds
@@ -104,7 +104,6 @@ function Player:takeDamange(amount)
         self.health.current = 0
         self:die()
     end
-    print("Health : "..self.health.current)
 end
 
 function Player:die()
@@ -152,11 +151,10 @@ function Player:move(dt)
     if jAxes[1] ~= 0 then
         isMobile = false
     end
- 
+
     if (isBoostKeyDown or isJoystickBoost) and self.boost > 0 and self.xVel ~= 0 then
         self.boost = math.max(0, self.boost - 5 * dt)
         self.isBoosting = true
-        print(self.boost)
     else
         self.isBoosting = false
     end
@@ -236,8 +234,11 @@ function Player:updateTrail(dt)
     local particlesToEmit = math.floor(self.timeSinceLastEmit * self.emissionRate)
     self.timeSinceLastEmit = self.timeSinceLastEmit - particlesToEmit / self.emissionRate
 
-    for i = 1, particlesToEmit do
-        self:spawnTrailParticles()
+    -- Limit particle count to avoid memory issues
+    if #self.particles < 800 then
+        for i = 1, math.min(particlesToEmit, 2) do
+            self:spawnTrailParticles()
+        end
     end
 
     for i = #self.particles, 1, -1 do
@@ -251,7 +252,14 @@ function Player:updateTrail(dt)
         end
     end
 
+    -- Run GC every 5 seconds only
+    self.gcTimer = (self.gcTimer or 0) + dt
+    if self.gcTimer > 5 then
+        collectgarbage("collect")
+        self.gcTimer = 0
+    end
 end
+
 
 function Player:spawnTrailParticles()
     for i = 1, 5 do -- emit 5 particles at once for a chunkier trail
@@ -290,11 +298,10 @@ function Player:draw()
     for _, p in ipairs(self.particles) do
         local alpha = p.life / p.maxLife
         -- love.graphics.setColor(0.79, 0.5, 0.19, alpha)
-        love.graphics.setColor(0.56, 0.23, 0.11, alpha)
+        love.graphics.setColor(0.79,0.5, 0.19, alpha)
 
         love.graphics.circle("fill", p.x, p.y, p.size)
     end
-
 
     love.graphics.setColor(1, 1, 1, 1) -- reset color
     local pX = self.x

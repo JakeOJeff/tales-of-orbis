@@ -6,7 +6,7 @@ function Blackhole.new(x, y)
     local instance = setmetatable({}, Blackhole)
     instance.x = x
     instance.y = y
-    instance.img = love.graphics.newImage("assets/vfx/items/fire.png")
+    instance.img = love.graphics.newImage("assets/vfx/items/blackhole.png")
     instance.width = instance.img:getWidth()
     instance.height = instance.img:getHeight()
 
