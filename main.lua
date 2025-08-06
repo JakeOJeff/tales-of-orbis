@@ -28,9 +28,9 @@ cenW = (scaledW - baseW) / 2
 cenH = (scaledH - baseH) / 2
 
 -- [FONT DECLARATION]
-heading = love.graphics.newFont("assets/fonts/nihonium.ttf", 100)
-subheading = love.graphics.newFont("assets/fonts/nihonium.ttf", 64)
-paragraph = love.graphics.newFont("assets/fonts/nihonium.ttf", 48)
+heading = love.graphics.newFont("assets/fonts/nihonium.ttf", 90 * scale)
+subheading = love.graphics.newFont("assets/fonts/nihonium.ttf", 64* scale)
+paragraph = love.graphics.newFont("assets/fonts/nihonium.ttf", 48 * scale)
 -- Input Connections 
 joysticks = love.joystick.getJoysticks()
 Joystick = joysticks[1] or nil
@@ -49,15 +49,15 @@ end
 local SceneryInit = require("src.libs.scenery")
 local scenery = SceneryInit({
     path = "src.loading",
-    key = "loading"
+    key = "loading",
+    default = true
 }, {
     path = "src.loadScenes.production",
     key = "production"
 
 }, {
     path = "src.loadScenes.title",
-    key = "title",
-    default = true
+    key = "title"
 
 }, {
     path = "src.cutscenes.intro",

@@ -37,24 +37,24 @@ function loading:update(dt)
     self.time = self.time + (1 * dt)
     -- if love.system.getOS() ~= "Android" then
 
-        self.timeSinceLastEmit = self.timeSinceLastEmit + dt
-        local particlesToEmit = math.floor(self.timeSinceLastEmit * self.emissionRate)
-        self.timeSinceLastEmit = self.timeSinceLastEmit - particlesToEmit / self.emissionRate
+    self.timeSinceLastEmit = self.timeSinceLastEmit + dt
+    local particlesToEmit = math.floor(self.timeSinceLastEmit * self.emissionRate)
+    self.timeSinceLastEmit = self.timeSinceLastEmit - particlesToEmit / self.emissionRate
 
-        for i = 1, particlesToEmit do
-            spawnParticle(self.particles)
-        end
+    for i = 1, particlesToEmit do
+        spawnParticle(self.particles)
+    end
 
-        -- Update all particles
-        for i = #self.particles, 1, -1 do
-            local p = self.particles[i]
-            p.x = p.x + p.vx * dt
-            p.y = p.y + p.vy * dt
-            p.life = p.life - dt
-            if p.life <= 0 then
-                table.remove(self.particles, i)
-            end
+    -- Update all particles
+    for i = #self.particles, 1, -1 do
+        local p = self.particles[i]
+        p.x = p.x + p.vx * dt
+        p.y = p.y + p.vy * dt
+        p.life = p.life - dt
+        if p.life <= 0 then
+            table.remove(self.particles, i)
         end
+    end
 
     -- end
     if (self.text ~= "loading....") then
@@ -88,44 +88,48 @@ function loading:draw()
     love.graphics.setFont(heading)
     love.graphics.print(self.text, baseW / 2 - heading:getWidth(self.text) / 2, baseH / 2 - heading:getHeight() / 2)
     love.graphics.pop()
-    love.graphics.push()
-    love.graphics.setColor(1, 1, 1, self.alpha)
-    love.graphics.setScissor(cenW, cenH, wW, (self.loaded / 100) * baseH * scale)
 
+    love.graphics.setScissor(cenW, cenH, wW, (self.loaded / 100) * baseH * scale)
+    love.graphics.setColor(1, 1, 1, self.alpha)
     love.graphics.draw(self.imgs[2], 0, 0, 0, wW / self.imgs[2]:getWidth(), scale)
+        love.graphics.push()
+
     love.graphics.scale(scale, scale)
     love.graphics.translate(cenW, cenH)
+
     love.graphics.setColor(1, 1, 1, 0.5)
     love.graphics.setFont(heading)
     love.graphics.print(self.text, baseW / 2 - heading:getWidth(self.text) / 2, baseH / 2 - heading:getHeight() / 2)
-
     love.graphics.setScissor()
 
     -- if love.system.getOS() ~= "Android" then
+    love.graphics.pop()
 
+    love.graphics.push()
+        love.graphics.scale(scale, scale)
     for _, p in ipairs(self.particles) do
         local alpha = p.life / p.maxLife
         love.graphics.setColor(1, 1, 1, alpha)
         love.graphics.circle("fill", p.x, p.y, 3)
     end
+    love.graphics.pop()
 
     -- end
 
-    love.graphics.pop()
 end
 
 function spawnParticle(particles)
     local y = loading.loaded / 100 * baseH
 
     for x = 0, wW, 4 do
-        local speed = math.random(30, 80)
+        local speed = math.random(10, 30)
         local particle = {
             x = x,
             y = y,
             vx = 0,
             vy = -speed,
-            life = 1,
-            maxLife = 1
+            life = .5,
+            maxLife = .5
         }
 
         table.insert(particles, particle)
