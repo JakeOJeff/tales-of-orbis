@@ -1,6 +1,11 @@
 local game = {
     background = love.graphics.newImage("assets/vfx/loading/background.png"),
-    scale = scale + 2
+    scale = scale + 2,
+    backgroundLayers = {
+        layer3 = love.graphics.newImage("assets/vfx/parallex/layer3.png"),
+        layer2 = love.graphics.newImage("assets/vfx/parallex/layer2.png"),
+        layer1 = love.graphics.newImage("assets/vfx/parallex/layer1.png"),
+    }
 }
 if wW/wH > 2 then
     game.scale = scale + 2.3
@@ -54,6 +59,35 @@ end
 
 function game:draw()
     love.graphics.draw(self.background, 0, 0, 0, self.scale, self.scale)
+        local px = Player.x
+    local py = Player.y
+        local screenWidth = love.graphics.getWidth()
+    local screenHeight = love.graphics.getHeight()
+
+    local function drawParallax(layer, factor)
+        local img = self.backgroundLayers[layer]
+        local imgWidth, imgHeight = img:getDimensions()
+
+        -- Calculate scaling to fit screen
+        local scaleX = screenWidth / imgWidth
+        local scaleY = screenHeight / imgHeight
+
+        -- Parallax offset
+        local offsetX = -px * factor % imgWidth
+        -- local offsetY = -py * factor % imgHeight
+
+        -- Draw 4 tiles to fill screen (to handle scrolling)
+        for i = -1, 1 do
+            for j = -1, 1 do
+                love.graphics.draw(img, offsetX + i * imgWidth * scaleX, j * imgHeight * scaleY, 0, scaleX, scaleY)
+            end
+        end
+    end
+
+    drawParallax("layer3", 0.1)
+    drawParallax("layer2", 0.2)
+    drawParallax("layer1", 0.3)
+
     Map:draw(-Camera.x, -Camera.y, self.scale, self.scale)
     Camera:apply()
     Player:draw()

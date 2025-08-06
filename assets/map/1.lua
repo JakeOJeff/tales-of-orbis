@@ -95,7 +95,7 @@ return {
       id = 2,
       name = "solid",
       class = "",
-      visible = false,
+      visible = true,
       opacity = 1,
       offsetx = 0,
       offsety = 0,
