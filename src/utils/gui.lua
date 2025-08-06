@@ -124,7 +124,7 @@ function GUI:draw()
         200 * scale * math.max((Player.boost / Player.maxBoost), 0), 10, 10)
     love.graphics.setColor(1, 1, 1)
 
-    if not isMobile and not paused then
+    if isMobile and not paused then
         love.graphics.setColor(0, 0, 0, 0.6)
         local lB = self.leftButton
         local rB = self.rightButton

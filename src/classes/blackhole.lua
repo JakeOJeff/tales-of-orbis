@@ -9,7 +9,6 @@ function Blackhole.new(x, y)
     instance.img = love.graphics.newImage("assets/vfx/items/blackhole.png")
     instance.width = instance.img:getWidth()
     instance.height = instance.img:getHeight()
-    instance.color = {1, 1, 1, 1}
 
     instance.damage = 1
 
@@ -39,7 +38,6 @@ end
 
 function Blackhole.drawAll()
     for i, v in ipairs(ActiveHoles) do
-        love.graphics.setColor(v.color)
         v:draw()
     end
 end
