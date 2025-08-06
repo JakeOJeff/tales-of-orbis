@@ -49,7 +49,8 @@ end
 local SceneryInit = require("src.libs.scenery")
 local scenery = SceneryInit({
     path = "src.loading",
-    key = "loading"
+    key = "loading",
+    default = true
 }, {
     path = "src.loadScenes.production",
     key = "production"
@@ -64,8 +65,7 @@ local scenery = SceneryInit({
 
 }, {
     path = "src.game",
-    key = "game",
-    default = true
+    key = "game"
 })
 
 scenery:hook(love)

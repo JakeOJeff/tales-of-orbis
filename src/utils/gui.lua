@@ -8,9 +8,7 @@ function GUI:load()
     local jumpH = 80 * scale
 
 
-    self.touches = {
-
-    }
+    self.touches = love.touch.getTouches()
     self.leftButton = {
         x = 100 * scale,
         y = wH - buttonH - 75 * scale, -- 40 is padding from bottom
@@ -114,7 +112,7 @@ function GUI:draw()
     print("YES")
     love.graphics.setColor(1, 1, 1)
 
-    if not isMobile then
+    if isMobile then
         love.graphics.setColor(0, 0, 0, 0.6)
         local lB = self.leftButton
         local rB = self.rightButton
