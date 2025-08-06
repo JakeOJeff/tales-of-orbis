@@ -243,21 +243,34 @@ function Player:updateTrail(dt)
 
     for i = #self.particles, 1, -1 do
         local p = self.particles[i]
+
+        -- Attraction to blackholes
+        for _, blackhole in ipairs(ActiveHoles) do
+            local bx, by = blackhole.x, blackhole.y
+            local dx = bx - p.x
+            local dy = by - p.y
+            local dist = math.sqrt(dx * dx + dy * dy)
+            local attractRadius = 150
+
+            if dist < attractRadius then
+                local strength = (1 - dist / attractRadius) * 100 -- attraction strength
+                local angle = math.atan2(dy, dx)
+                p.vx = p.vx + math.cos(angle) * strength * dt
+                p.vy = p.vy + math.sin(angle) * strength * dt
+            end
+        end
+
+        -- Update particle motion
         p.x = p.x + p.vx * dt
         p.y = p.y + p.vy * dt
         p.size = p.size * (1 - (p.life / p.maxLife)) - 0.1
         p.life = p.life - dt
+
         if p.life <= 0 then
             table.remove(self.particles, i)
         end
     end
 
-    -- Run GC every 5 seconds only
-    self.gcTimer = (self.gcTimer or 0) + dt
-    if self.gcTimer > 5 then
-        collectgarbage("collect")
-        self.gcTimer = 0
-    end
 end
 
 function Player:spawnTrailParticles()
