@@ -7,7 +7,6 @@ function GUI:load()
     local jumpW = 80 * scale
     local jumpH = 80 * scale
 
-
     self.touches = love.touch.getTouches()
     self.leftButton = {
         x = 100 * scale,
@@ -68,6 +67,20 @@ function GUI:load()
         holding = false
     }
 
+    self.jumpButton = {
+        x = wW - jumpW - 90 * scale, -- 80 is right-side padding
+        y = wH - jumpH - 190 * scale, -- padding from bottom
+        w = jumpW,
+        h = jumpH,
+        img = {
+            x = 0,
+            y = 0,
+            w = imgW / scale,
+            h = imgW / scale,
+            src = love.graphics.newImage("assets/vfx/icons/jump.png")
+        },
+        holding = false
+    }
 end
 
 function GUI:update(dt)
