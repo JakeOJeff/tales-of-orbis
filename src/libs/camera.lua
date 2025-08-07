@@ -1,10 +1,13 @@
 local Camera = {
     x = 0,
     y = 0,
-    scale = scale + 2
+    targetX = 0,
+    targetY = 0,
+    scale = scale + 2,
+    lerpSpeed = 5 -- Adjust this for smoother/slower movement
 }
 
-if wW/wH > 2 then
+if wW / wH > 2 then
     Camera.scale = scale + 2.3
 end
 
@@ -20,19 +23,32 @@ function Camera:clear()
 end
 
 function Camera:setPosition(x, y)
-    -- Center X and Y on the player
-    self.x = x - love.graphics.getWidth() / 2 / self.scale
-    self.y = y - love.graphics.getHeight() / 2 / self.scale
+    local targetX = x - love.graphics.getWidth() / 2 / self.scale
+    local targetY = y - love.graphics.getHeight() / 2 / self.scale
 
-    -- Clamp X to map bounds
     local screenW = love.graphics.getWidth() / self.scale
+    local screenH = love.graphics.getHeight() / self.scale
 
-    if self.x < 0 then
-        self.x = 0
-    elseif self.x + screenW > MapWidth then
-        self.x = MapWidth - screenW
+    if targetX < 0 then
+        targetX = 0
+    elseif targetX + screenW > MapWidth then
+        targetX = MapWidth - screenW
     end
+
+    if targetY < 0 then
+        targetY = 0
+    elseif targetY + screenH > MapHeight then
+        targetY = MapHeight - screenH
+    end
+
+    self.targetX = targetX
+    self.targetY = targetY
 end
 
+-- Smoothly update current position toward target
+function Camera:update(dt)
+    self.x = lerp(self.x, self.targetX, math.min(self.lerpSpeed * dt, 1))
+    self.y = lerp(self.y, self.targetY, math.min(self.lerpSpeed * dt, 1))
+end
 
 return Camera

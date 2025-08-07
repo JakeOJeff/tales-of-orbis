@@ -34,6 +34,7 @@ function game:load()
     Map:box2d_init(World)
     Map.layers.solid.visible = false
     MapWidth = Map.layers.Base.width * 32
+    MapHeight = Map.layers.Base.height * 32
     track:play()
 
     fire1 = Fire.new(100, 100)
@@ -47,6 +48,7 @@ function game:update(dt)
            if Joystick then
         jAxes[1], jAxes[2], jAxes[3], jAxes[4] = Joystick:getAxes() -- lH, lV, rH, rV
     end
+    Camera:update(dt)
     World:update(dt)
     Camera:setPosition(Player.x, Player.y)
     Player:update(dt)
