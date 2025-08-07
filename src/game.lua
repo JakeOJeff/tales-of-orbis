@@ -84,9 +84,9 @@ function game:draw()
         end
     end
 
-    drawParallax("layer3", 0.1)
-    drawParallax("layer2", 0.2)
-    drawParallax("layer1", 0.3)
+    drawParallax("layer3", 0.05)
+    drawParallax("layer2", 0.15)
+    drawParallax("layer1", 0.25)
 
     Map:draw(-Camera.x, -Camera.y, self.scale, self.scale)
     Camera:apply()
@@ -100,7 +100,7 @@ end
 function game:keypressed(key)
     Player:keyboardInput(key)
     if key == "r" then
-        game.setScene("loading")
+        Player:die()
     end
 
     if key == "escape" then
