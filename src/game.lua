@@ -18,6 +18,7 @@ Camera = require 'src.libs.camera'
 require("src.classes.player")
 require("src.classes.fire")
 require("src.classes.blackhole")
+require("src.classes.block")
 
 -- REQUIRE UTILS
 local utils = {}
@@ -39,6 +40,8 @@ function game:load()
 
     fire1 = Fire.new(100, 100)
     Blackhole1 = Blackhole.new(200, 200)
+    Stone1 = Block.new(400, 100)
+
     GUI:load()
     Player:load()
 end
@@ -54,6 +57,7 @@ function game:update(dt)
     Player:update(dt)
     Fire.updateAll(dt)
     Blackhole.updateAll(dt)
+    Block.updateAll(dt)
     GUI:update(dt) 
     end
 
@@ -95,6 +99,7 @@ function game:draw()
     Player:draw()
     Fire.drawAll()
     Blackhole.drawAll()
+    Block.drawAll()
     Camera:clear()
     GUI:draw()
 end
