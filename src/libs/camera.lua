@@ -4,7 +4,7 @@ local Camera = {
     targetX = 0,
     targetY = 0,
     scale = scale + 2,
-    lerpSpeed = 5 -- Adjust this for smoother/slower movement
+    lerpSpeed = 3 -- Adjust this for smoother/slower movement
 }
 
 if wW / wH > 2 then
@@ -47,7 +47,7 @@ end
 
 -- Smoothly update current position toward target
 function Camera:update(dt)
-    self.x = lerp(self.x, self.targetX, math.min(self.lerpSpeed * dt, 1))
+    self.x = lerp(self.x, self.targetX , math.min(self.lerpSpeed * dt, 1))
     self.y = lerp(self.y, self.targetY, math.min(self.lerpSpeed * dt, 1))
 end
 
