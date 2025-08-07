@@ -34,16 +34,18 @@ function game:load()
     World:setCallbacks(beginContact, endContact)
     Map:box2d_init(World)
     Map.layers.solid.visible = false
+        Map.layers.entity.visible = false
     MapWidth = Map.layers.Base.width * 32
     MapHeight = Map.layers.Base.height * 32
     track:play()
 
-    fire1 = Fire.new(100, 100)
-    Blackhole1 = Blackhole.new(200, 200)
-    Stone1 = Block.new(400, 100)
+    -- fire1 = Fire.new(100, 100)
+    -- Blackhole1 = Blackhole.new(200, 200)
+    -- Stone1 = Block.new(400, 100)
 
     GUI:load()
     Player:load()
+    spawnEntities()
 end
 
 function game:update(dt)
@@ -145,5 +147,17 @@ end
 function endContact(a, b, collision)
     utils.collisions:endContact(a, b, collision)
 
+end
+
+function spawnEntities(args)
+    for i, v in ipairs(Map.layers.entity.objects) do
+        if v.name == "Fire" then
+            Fire.new(v.x + v.width/2, v.y+ v.height/2)
+        elseif v.name == "Blackhole" then
+            Blackhole.new(v.x + v.width/2, v.y+ v.height/2)
+        elseif v.name == "Block" then
+            Block.new(v.x, v.y)
+        end
+    end
 end
 return game
