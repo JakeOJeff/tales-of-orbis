@@ -4,7 +4,7 @@ local Camera = {
     targetX = 0,
     targetY = 0,
     scale = scale + 2,
-    lerpSpeed = 3 -- Adjust this for smoother/slower movement
+    lerpSpeed = 6 -- Adjust this for smoother/slower movement
 }
 
 if wW / wH > 2 then
