@@ -60,6 +60,7 @@ function Player:load()
     self.physics.body:setFixedRotation(true)
     self.physics.shape = love.physics.newCircleShape(self.radius)
     self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
+    self.physics.body:setGravityScale(0) 
 end
 function Player:update(dt)
     self.health.current = self.maxParticles/self.maxParticleLimit * 100

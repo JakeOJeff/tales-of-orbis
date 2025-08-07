@@ -30,7 +30,7 @@ track = love.audio.newSource("assets/sfx/bg.mp3", "stream")
 
 function game:load()
     Map = STI("assets/map/1.lua", {"box2d"})
-    World = love.physics.newWorld(0, 0)
+    World = love.physics.newWorld(0, 2000)
     World:setCallbacks(beginContact, endContact)
     Map:box2d_init(World)
     Map.layers.solid.visible = false
