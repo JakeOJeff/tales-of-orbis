@@ -64,7 +64,6 @@ function Player:load()
 end
 function Player:update(dt)
     self.health.current = self.maxParticles/self.maxParticleLimit * 100
-    print("Player Health: " .. self.health.current)
     if self.health.current <= 0 then    
         self:die()
     end
