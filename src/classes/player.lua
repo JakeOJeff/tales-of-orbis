@@ -358,7 +358,7 @@ function Player:draw()
         local pY = self.y + offset
         -- love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
         self.animations.idle:draw(self.spritesheet, pX - 16, pY - 25)
-        love.graphics.circle("line", self.x, self.y, self.radius)
+        -- love.graphics.circle("line", self.x, self.y, self.radius)
         love.graphics.setColor(1,1,1,1)
 
     end

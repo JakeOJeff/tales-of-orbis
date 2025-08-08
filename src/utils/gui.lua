@@ -70,7 +70,7 @@ function GUI:load()
         holding = false
     }
 
-    self.resetButton = {
+    self.pauseButton = {
         x = wW - navW - 30 * scale, -- 80 is right-side padding
         y = 30 * scale,             -- padding from bottom
         w = navW,
@@ -80,11 +80,11 @@ function GUI:load()
             y = 0,
             w = imgW / scale,
             h = imgW / scale,
-            src = love.graphics.newImage("assets/vfx/icons/reset.png")
+            src = love.graphics.newImage("assets/vfx/icons/pause.png")
         },
         holding = false
     }
-    self.pauseButton = {
+    self.resetButton = {
         x = wW - (2 * navW) - 40 * scale, -- 80 is right-side padding
         y = 30 * scale,                   -- padding from bottom
         w = navW,
@@ -94,7 +94,7 @@ function GUI:load()
             y = 0,
             w = imgW / scale,
             h = imgW / scale,
-            src = love.graphics.newImage("assets/vfx/icons/pause.png")
+            src = love.graphics.newImage("assets/vfx/icons/reset.png")
         },
         holding = false
     }
