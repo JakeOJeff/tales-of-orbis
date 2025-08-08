@@ -6,17 +6,17 @@ function Block.new(x, y)
     local instance = setmetatable({}, Block)
     instance.x = x
     instance.y = y
-    instance.img = love.graphics.newImage("assets/vfx/items/blackhole.png")
+    instance.img = love.graphics.newImage("assets/vfx/items/block.png")
     instance.width = instance.img:getWidth()
     instance.height = instance.img:getHeight()
     instance.r = 0
 
 
     instance.physics = {}
-    instance.physics.body = love.physics.newBody(World, instance.x, instance.y, "static")
+    instance.physics.body = love.physics.newBody(World, instance.x, instance.y, "dynamic")
     instance.physics.shape = love.physics.newRectangleShape(instance.width, instance.height)
     instance.physics.fixture = love.physics.newFixture(instance.physics.body, instance.physics.shape)
-    instance.physics.body:setMass(25)
+    instance.physics.body:setMass(15)
     table.insert(ActiveBlocks, instance)
     return instance
 end

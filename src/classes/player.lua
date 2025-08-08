@@ -1,11 +1,11 @@
 Player = {}
 
 function Player:load()
-    self.x = 100
-    self.y = 300
+    self.x = 1971
+    self.y = 332
     self.checkpointX = self.x
     self.checkpointY = self.y
-    self.radius = 16
+    self.radius = 14
     -- self.height = 28
     self.xVel = 0
     self.yVel = 100
@@ -354,7 +354,7 @@ function Player:draw()
         local pY = self.y + offset
         -- love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
         self.animations.idle:draw(self.spritesheet, pX - 16, pY - 25)
-        -- love.graphics.circle("line", self.x, self.y, self.radius)
+        love.graphics.circle("line", self.x, self.y, self.radius)
         love.graphics.setColor(1,1,1,1)
 
     end
