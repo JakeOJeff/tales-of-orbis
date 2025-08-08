@@ -102,6 +102,10 @@ function Player:update(dt)
         self:jump()
     end
 
+    if Player.y > MapHeight then
+        Player:die()
+    end
+
     self.animations.idle:update(dt)
     self:updateTrail(dt)
     self:respawn()
