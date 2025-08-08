@@ -125,7 +125,9 @@ function game:gamepadpressed(joystick, button)
     isMobile = false
     Player:gamepadInput(button)
 end
-
+function game:mousepressed(x, y, button)
+    GUI:mousepressed(x, y, button)
+end 
 function game:touchpressed(id, x, y, dx, dy, pressure)
     isMobile = true
 end
