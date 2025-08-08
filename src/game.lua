@@ -158,7 +158,7 @@ function spawnEntities(args)
         elseif v.name == "Blackhole" then
             Blackhole.new(v.x + v.width/2, v.y+ v.height/2)
         elseif v.name == "Block" then
-            Block.new(v.x, v.y)
+            Block.new(v.x + v.width/2, v.y + v.height/2)
         end
     end
 end

@@ -13,7 +13,7 @@ function Block.new(x, y)
 
 
     instance.physics = {}
-    instance.physics.body = love.physics.newBody(World, instance.x, instance.y, "dynamic")
+    instance.physics.body = love.physics.newBody(World, instance.x, instance.y, "static")
     instance.physics.shape = love.physics.newRectangleShape(instance.width, instance.height)
     instance.physics.fixture = love.physics.newFixture(instance.physics.body, instance.physics.shape)
     instance.physics.body:setMass(25)

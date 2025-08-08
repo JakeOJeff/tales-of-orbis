@@ -72,7 +72,7 @@ function GUI:load()
 
     self.resetButton = {
         x = wW - navW - 30 * scale, -- 80 is right-side padding
-        y = 30 * scale,      -- padding from bottom
+        y = 30 * scale,             -- padding from bottom
         w = navW,
         h = navH,
         img = {
@@ -86,7 +86,7 @@ function GUI:load()
     }
     self.pauseButton = {
         x = wW - (2 * navW) - 40 * scale, -- 80 is right-side padding
-        y = 30 * scale,            -- padding from bottom
+        y = 30 * scale,                   -- padding from bottom
         w = navW,
         h = navH,
         img = {
@@ -219,7 +219,12 @@ end
 
 function GUI:mousepressed(x, y, button)
     local distP = distRect(x, y, self.pauseButton.x, self.pauseButton.y, self.pauseButton.w, self.pauseButton.h)
+    local distR = distRect(x, y, self.resetButton.x, self.resetButton.y, self.resetButton.w, self.resetButton.h)
+
     if distP and button == 1 and not paused then
         paused = not paused
+    end
+    if distR and button == 1 and not paused then
+        Player:die()
     end
 end
