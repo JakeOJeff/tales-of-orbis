@@ -67,17 +67,17 @@ function GUI:load()
         holding = false
     }
 
-    self.jumpButton = {
-        x = wW - jumpW - 90 * scale, -- 80 is right-side padding
-        y = wH - jumpH - 190 * scale, -- padding from bottom
-        w = jumpW,
-        h = jumpH,
+    self.resetButton = {
+        x = wW - buttonW - 90 * scale, -- 80 is right-side padding
+        y = buttonH + 75 * scale, -- padding from bottom
+        w = buttonW,
+        h = buttonH,
         img = {
             x = 0,
             y = 0,
             w = imgW / scale,
             h = imgW / scale,
-            src = love.graphics.newImage("assets/vfx/icons/jump.png")
+            src = love.graphics.newImage("assets/vfx/icons/reset.png")
         },
         holding = false
     }
@@ -88,12 +88,16 @@ function GUI:update(dt)
     local rB = self.rightButton
     local bB = self.boostButton
     local jB = self.jumpButton
+    local rtB = self.resetButton
+    local pB = self.pauseButton
 
     -- Reset all holding states
     lB.holding = false
     rB.holding = false
     bB.holding = false
     jB.holding = false
+    rtB.holding = false
+    pB.holding = false
 
     self.touches = love.touch.getTouches()
     -- Check each touch
@@ -183,3 +187,5 @@ function GUI:drawButtonImage(button)
     local dy = button.y + (button.h - ih * scale) / 2
     love.graphics.draw(img, dx, dy, 0, scale, scale)
 end
+
+
