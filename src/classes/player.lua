@@ -39,19 +39,15 @@ function Player:load()
     self.grid = anim8.newGrid(32, 50, self.spritesheet:getWidth(), self.spritesheet:getHeight())
 
     self.animations = {
-        back = anim8.newAnimation(self.grid('1-3', 2), .1),
-        spark = anim8.newAnimation(self.grid('1-3', 3), .1),
-        main = anim8.newAnimation(self.grid('1-3', 4), .1),
+        idle = anim8.newAnimation(self.grid('1-3', 1), .1)
     }
 
     self.particles = {}
     self.particleRadius = love.math.random() * 25
     self.particleMaxLife = 3
-    self.particleSize = 24
+    self.particleSize = 5
     self.emissionRate = 500 -- particles per second
     self.timeSinceLastEmit = 0
-    self.particleImageBack = love.graphics.newImage('assets/vfx/tilesets/flame.png')
-    self.particleImageMain = love.graphics.newImage('assets/vfx/tilesets/flame-inner2.png')
 
     self.maxParticleLimit = 800
     self.maxParticles = self.maxParticleLimit
@@ -64,12 +60,11 @@ function Player:load()
     self.physics.body:setFixedRotation(true)
     self.physics.shape = love.physics.newCircleShape(self.radius)
     self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
-    self.physics.body:setGravityScale(0)
+    self.physics.body:setGravityScale(0) 
 end
-
 function Player:update(dt)
-    self.health.current = self.maxParticles / self.maxParticleLimit * 100
-    if self.health.current <= 0 then
+    self.health.current = self.maxParticles/self.maxParticleLimit * 100
+    if self.health.current <= 0 then    
         self:die()
     end
 
@@ -79,7 +74,7 @@ function Player:update(dt)
     if airborne or boosting then
         -- Particle properties
         self.particleMaxLife = airborne and 6 or 4
-        self.particleSize = airborne and 24 or 28
+        self.particleSize = airborne and 6 or 4
         self.particleRadius = love.math.random() * 20
 
         -- Boosting overrides acceleration/friction
@@ -110,10 +105,7 @@ function Player:update(dt)
         Player:die()
     end
 
-    self.animations.back:update(dt)
-    self.animations.spark:update(dt)
-    self.animations.main:update(dt)
-
+    self.animations.idle:update(dt)
     self:updateTrail(dt)
     self:respawn()
     self:syncPhysics()
@@ -144,8 +136,8 @@ function Player:respawn()
         self.alive = true
     end
 end
-
 function Player:resetTrails()
+
     self.particleMaxLife = 1
     self.particleSize = 5
     -- self.bobRange = 10
@@ -156,13 +148,13 @@ function Player:resetTrails()
     self.friction = 2000
     self.maxSpeed = 100 -- 200/4000 = 0.05 seconds
 end
-
 -- function Player
 function Player:move(dt)
     if love.keyboard.isDown("d", "right") or jAxes[1] > 0.2 or GUI.rightButton.holding then -- small deadzone
         self.xVel = math.min(self.xVel + self.acceleration * dt, self.maxSpeed)
     elseif love.keyboard.isDown("a", "left") or (jAxes[1] or 0) < -0.2 or GUI.leftButton.holding then
         self.xVel = math.max(self.xVel - self.acceleration * dt, -self.maxSpeed)
+
     else
         self:applyFriction(dt)
     end
@@ -184,14 +176,14 @@ function Player:move(dt)
     else
         self.isBoosting = false
     end
-end
 
+end
 function Player:applyGravity(dt)
     if not self.grounded then
         self.yVel = self.yVel + self.gravity * dt
     end
-end
 
+end
 function Player:applyFriction(dt)
     if self.xVel > 0 then
         self.xVel = math.min(self.xVel - self.friction * dt, 0)
@@ -205,7 +197,6 @@ function Player:decreaseGraceTime(dt)
         self.graceTime = self.graceTime - dt
     end
 end
-
 function Player:keyboardInput(key)
     if key == "space" or key == "w" or key == "up" then
         self:jump()
@@ -216,8 +207,8 @@ function Player:gamepadInput(button)
     if button == "a" then
         self:jump()
     end
-end
 
+end
 function Player:jump()
     if self.grounded or self.graceTime > 0 then
         self.particleMaxLife = 2
@@ -226,6 +217,7 @@ function Player:jump()
         self.yVel = self.jumpAmount
         self.grounded = false
     end
+
 end
 
 function Player:beginContact(a, b, collision)
@@ -255,7 +247,6 @@ function Player:endContact(a, b, collision)
         end
     end
 end
-
 function Player:updateTrail(dt)
     self.timeSinceLastEmit = self.timeSinceLastEmit + dt
     local particlesToEmit = math.floor(self.timeSinceLastEmit * self.emissionRate)
@@ -284,7 +275,7 @@ function Player:updateTrail(dt)
                 break
             end
             if dist < attractRadius then
-                self.graceTime = self.graceDuration
+                    self.graceTime = self.graceDuration
 
                 local strength = (dist / attractRadius) * 15000 -- attraction strength
                 local angle = math.atan2(dy, dx)
@@ -296,41 +287,37 @@ function Player:updateTrail(dt)
                     self.yVel = p.vy * dt
                 end
 
-                self.maxParticles = math.max(self.maxParticles - .5 * strength / 8000 * dt, 0) -- reduce max particles if attracted
+                self.maxParticles = math.max(self.maxParticles - .5* strength/8000 * dt, 0) -- reduce max particles if attracted
+
             end
+
         end
 
         -- Update particle motion
         p.x = p.x + p.vx * dt
         p.y = p.y + p.vy * dt
-        p.size = p.size - 0.3
+        p.size = p.size * (1 - (p.life / p.maxLife)) - 0.3
         p.life = p.life - dt
 
         if p.life <= 0 then
             table.remove(self.particles, i)
         end
     end
+
 end
 
 function Player:spawnTrailParticles()
-    for i = 1, 5 do                        -- emit 5 particles at once for a chunkier trail
+    for i = 1, 5 do -- emit 5 particles at once for a chunkier trail
         local angle = love.math.random() * 2 * math.pi
         local radius = self.particleRadius -- controls how far from center the particles spawn
         local speed = love.math.random(1, 2)
 
         local dx = math.cos(angle) * radius
         local dy = math.sin(angle) * radius
-        local incX = dx
-        local incY = dy
-        if not self.grounded then
-            incX = 0
-            incY = 0
-        end
-
 
         local particle = {
-            x = self.x + incX,                                                                    -- + dx,
-            y = self.y + (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed)) + incY, -- + dy,
+            x = self.x + dx,
+            y = self.y + (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed)) + dy,
             size = self.particleSize,
             vx = math.cos(angle) * speed,
             vy = math.sin(angle) * speed,
@@ -348,57 +335,30 @@ function Player:land(collision)
     self.grounded = true
     self.graceTime = self.graceDuration
 end
-
 function Player:syncPhysics()
     self.x, self.y = self.physics.body:getPosition()
     self.physics.body:setLinearVelocity(self.xVel, self.yVel)
 end
-
 function Player:draw()
     if not paused then
-        -- self.animations.back:draw(self.spritesheet, pX - 16, pY - 25)
-        --         for _, p in ipairs(self.particles) do
-        --     local alpha = p.life / p.maxLife
-        --     -- love.graphics.setColor(0.79, 0.5, 0.19, alpha)
-        --     love.graphics.setColor(0.79, 0.5, 0.19, alpha)
+        for _, p in ipairs(self.particles) do
+            local alpha = p.life / p.maxLife
+            -- love.graphics.setColor(0.79, 0.5, 0.19, alpha)
+            love.graphics.setColor(0.79, 0.5, 0.19, alpha)
 
-        --     love.graphics.circle("fill", p.x, p.y, p.size)
-        -- end
+            love.graphics.circle("fill", p.x, p.y, p.size)
+        end
         local offset = 0
         if not paused then
             offset = (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed))
         end
+        love.graphics.setColor(1, 1, 1, self.maxParticles/self.maxParticleLimit) -- reset color
         local pX = self.x
         local pY = self.y + offset
         -- love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
-                love.graphics.setColor(1, 1, 1, self.maxParticles / self.maxParticleLimit) -- reset color
-
-        self.animations.back:draw(self.spritesheet, pX - 16, pY - 25)
-
-        for _, p in ipairs(self.particles) do
-            local alpha = p.life / p.maxLife
-            love.graphics.setColor(1, 1, 1, alpha)
-            love.graphics.draw(self.particleImageBack, p.x - self.particleImageBack:getWidth() / 2,
-                p.y - self.particleImageMain:getHeight() / 2, 0, p.size / self.particleImageBack:getWidth(),
-                p.size / self.particleImageBack:getHeight())
-        end
-                love.graphics.setColor(1, 1, 1, self.maxParticles / self.maxParticleLimit) -- reset color
-
-        self.animations.spark:draw(self.spritesheet, pX - 16, pY - 25)
-        for _, p in ipairs(self.particles) do
-            local alpha = p.life / p.maxLife
-            love.graphics.setColor(1, 1, 1, alpha)
-
-            love.graphics.draw(self.particleImageMain, p.x - self.particleImageBack:getWidth() / 2,
-                p.y - self.particleImageMain:getHeight() / 2, 0, p.size / self.particleImageMain:getWidth(),
-                p.size / self.particleImageMain:getHeight())
-        end
-        love.graphics.setColor(1, 1, 1, self.maxParticles / self.maxParticleLimit) -- reset color
-
-
-        self.animations.main:draw(self.spritesheet, pX - 16, pY - 25)
-
+        self.animations.idle:draw(self.spritesheet, pX - 16, pY - 25)
         -- love.graphics.circle("line", self.x, self.y, self.radius)
-        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.setColor(1,1,1,1)
+
     end
 end
