@@ -2,7 +2,7 @@ Player = {}
 
 function Player:load()
     self.x = 100
-    self.y = 300
+    self.y = 100
     self.checkpointX = self.x
     self.checkpointY = self.y
     self.radius = 14
@@ -18,7 +18,7 @@ function Player:load()
     self.jumpAmount = -175
     self.currentGroundCollision = nil
 
-    self.maxBoost = 550
+    self.maxBoost = 35
     self.boost = self.maxBoost
     self.isBoosting = false
 
@@ -166,10 +166,13 @@ function Player:move(dt)
     end
 
     if (isBoostKeyDown or isJoystickBoost) and self.boost > 0 and self.xVel ~= 0 then
-        self.boost = math.max(0, self.boost - 5 * dt)
+        self.boost = math.max(0.01, self.boost - 5 * dt)
         self.isBoosting = true
     else
         self.isBoosting = false
+        if self.boost < self.maxBoost then
+            self.boost = math.min(self.maxBoost, self.boost + 3 * dt)
+        end
     end
 
 end
@@ -205,11 +208,12 @@ function Player:gamepadInput(button)
 
 end
 function Player:jump()
-    if self.grounded or self.graceTime > 0 then
+    if self.grounded  or self.boost - 3 > 0.01 then -- or self.graceTime > 0
         self.particleMaxLife = 2
         self.particleSize = 10
         self.particleRadius = 2
         self.yVel = self.jumpAmount
+        self.boost = math.max(0.01, self.boost - 3)
         self.grounded = false
     end
 
