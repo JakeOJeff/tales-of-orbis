@@ -71,6 +71,8 @@ function Player:update(dt)
     local airborne = not self.grounded
     local boosting = self.isBoosting
 
+    game.shaking = boosting
+
     if airborne or boosting then
         -- Particle properties
         self.particleMaxLife = airborne and 6 or 4

@@ -1,4 +1,4 @@
-local game = {
+game = {
     background = love.graphics.newImage("assets/vfx/loading/background.png"),
     scale = scale + 1.5,
     shaking = false,
@@ -100,8 +100,8 @@ function game:draw()
     local dy = 0
 
     if self.shaking then
-        dx = love.math.random(-2, 2)
-        dy = love.math.random(-2, 2)
+        dx = love.math.random(-1, 1)
+        dy = love.math.random(-1, 1)
         love.graphics.push()
     end
     Map:draw(-Camera.x + dx, -Camera.y + dy, self.scale, self.scale)

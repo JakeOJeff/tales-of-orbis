@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="260" height="45" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="170">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="260" height="45" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="178">
  <editorsettings>
   <export target="../1.lua" format="lua"/>
  </editorsettings>
@@ -93,15 +93,23 @@
   <object id="158" name="Blackhole" x="4048" y="336" width="32" height="32"/>
   <object id="159" name="Blackhole" x="4224" y="256" width="32" height="32"/>
   <object id="160" name="Blackhole" x="4608" y="16" width="32" height="32"/>
-  <object id="161" name="Blackhole" x="2088" y="-56" width="32" height="32"/>
-  <object id="162" name="Blackhole" x="2208" y="-56" width="32" height="32"/>
-  <object id="163" name="Blackhole" x="2312" y="-56" width="32" height="32"/>
-  <object id="164" name="Blackhole" x="2416" y="-56" width="32" height="32"/>
-  <object id="165" name="Blackhole" x="2248" y="-56" width="32" height="32"/>
-  <object id="166" name="Blackhole" x="2368" y="-56" width="32" height="32"/>
-  <object id="167" name="Blackhole" x="2472" y="-56" width="32" height="32"/>
-  <object id="168" name="Blackhole" x="2576" y="-56" width="32" height="32"/>
-  <object id="169" name="Blackhole" x="2152" y="-56" width="32" height="32"/>
+  <object id="161" name="Blackhole" x="2048" y="-48" width="32" height="32"/>
+  <object id="162" name="Blackhole" x="2112" y="-48" width="32" height="32"/>
+  <object id="163" name="Blackhole" x="2176" y="-48" width="32" height="32"/>
+  <object id="164" name="Blackhole" x="2240" y="-48" width="32" height="32"/>
+  <object id="165" name="Blackhole" x="2144" y="-48" width="32" height="32"/>
+  <object id="166" name="Blackhole" x="2208" y="-48" width="32" height="32"/>
+  <object id="167" name="Blackhole" x="2272" y="-48" width="32" height="32"/>
+  <object id="168" name="Blackhole" x="2560" y="-48" width="32" height="32"/>
+  <object id="169" name="Blackhole" x="2080" y="-48" width="32" height="32"/>
+  <object id="170" name="Blackhole" x="2304" y="-48" width="32" height="32"/>
+  <object id="171" name="Blackhole" x="2368" y="-48" width="32" height="32"/>
+  <object id="172" name="Blackhole" x="2432" y="-48" width="32" height="32"/>
+  <object id="173" name="Blackhole" x="2496" y="-48" width="32" height="32"/>
+  <object id="174" name="Blackhole" x="2400" y="-48" width="32" height="32"/>
+  <object id="175" name="Blackhole" x="2464" y="-48" width="32" height="32"/>
+  <object id="176" name="Blackhole" x="2528" y="-48" width="32" height="32"/>
+  <object id="177" name="Blackhole" x="2336" y="-48" width="32" height="32"/>
  </objectgroup>
  <objectgroup color="#e30004" id="2" name="solid">
   <properties>
