@@ -36,6 +36,7 @@ function game:load()
     Map:box2d_init(World)
     Map.layers.solid.visible = false
     Map.layers.entity.visible = false
+        Map.layers.checkpoints.visible = false
     MapWidth = Map.layers.Base.width * 32
     MapHeight = Map.layers.Base.height * 32
     track:play()
@@ -180,9 +181,11 @@ end
 function hitCheckpoints()
     for i, v in ipairs(Map.layers.checkpoints.objects) do
         if Player.x > v.x and Player.x < v.x + v.width and Player.y > v.y and Player.y < v.y + v.height then
+            if Player.checkpointX == v.x + v.width / 2 and Player.checkpointY == v.y + v.height / 2 then
+                return
+            end
             Player.checkpointX = v.x + v.width / 2
             Player.checkpointY = v.y + v.height / 2
-            print("Checkpoint reached at: ", Player.checkpointX, Player.checkpointY)
         end
     end
 end

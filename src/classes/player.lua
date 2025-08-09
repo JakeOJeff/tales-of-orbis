@@ -33,7 +33,7 @@ function Player:load()
     self.alive = true
 
     self.graceTime = 0
-    self.graceDuration = 2
+    self.graceDuration = 3
 
     self.spritesheet = love.graphics.newImage('assets/vfx/tilesets/player.png')
     self.grid = anim8.newGrid(32, 50, self.spritesheet:getWidth(), self.spritesheet:getHeight())
@@ -71,6 +71,9 @@ function Player:update(dt)
         self:die()
     end
 
+    if self.y > MapHeight then
+        self:die()
+    end
 
     local airborne = not self.grounded
     local boosting = self.isBoosting
@@ -221,7 +224,7 @@ function Player:gamepadInput(button)
 
 end
 function Player:jump()
-    if self.grounded  or self.boost - 3 > 0.01 then -- or self.graceTime > 0
+    if self.grounded  or self.boost - 3 > 0.01 and self.graceTime > 0 then -- or self.graceTime > 0
         self.particleMaxLife = 2
         self.particleSize = 10
         self.particleRadius = 2
