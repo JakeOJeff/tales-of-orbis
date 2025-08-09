@@ -9,7 +9,7 @@ return {
   height = 45,
   tilewidth = 32,
   tileheight = 32,
-  nextlayerid = 6,
+  nextlayerid = 8,
   nextobjectid = 120,
   properties = {},
   tilesets = {
@@ -24,7 +24,7 @@ return {
       columns = 7,
       image = "../vfx/tilesets/tiles.png",
       imagewidth = 224,
-      imageheight = 128,
+      imageheight = 224,
       objectalignment = "unspecified",
       tilerendersize = "tile",
       fillmode = "stretch",
@@ -39,7 +39,7 @@ return {
       },
       properties = {},
       wangsets = {},
-      tilecount = 28,
+      tilecount = 49,
       tiles = {}
     }
   },

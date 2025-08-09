@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="160" height="45" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="120">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="160" height="45" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="120">
  <editorsettings>
   <export target="../1.lua" format="lua"/>
  </editorsettings>
- <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32" tilecount="28" columns="7">
-  <image source="../../vfx/tilesets/tiles.png" width="224" height="128"/>
+ <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32" tilecount="49" columns="7">
+  <image source="../../vfx/tilesets/tiles.png" width="224" height="224"/>
  </tileset>
  <layer id="1" name="Base" width="160" height="45">
   <data encoding="csv">

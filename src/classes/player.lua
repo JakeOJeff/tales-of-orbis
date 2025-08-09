@@ -1,11 +1,11 @@
 Player = {}
 
 function Player:load()
-    self.x = 1971
-    self.y = 332
+    self.x = 100
+    self.y = 300
     self.checkpointX = self.x
     self.checkpointY = self.y
-    self.radius = 14
+    self.radius = 16
     -- self.height = 28
     self.xVel = 0
     self.yVel = 100
@@ -64,6 +64,7 @@ function Player:load()
 end
 function Player:update(dt)
     self.health.current = self.maxParticles/self.maxParticleLimit * 100
+    print("Player Health: " .. self.health.current)
     if self.health.current <= 0 then    
         self:die()
     end
@@ -99,10 +100,6 @@ function Player:update(dt)
 
     if GUI.jumpButton.holding then
         self:jump()
-    end
-
-    if Player.y > MapHeight then
-        Player:die()
     end
 
     self.animations.idle:update(dt)
@@ -296,7 +293,7 @@ function Player:updateTrail(dt)
         -- Update particle motion
         p.x = p.x + p.vx * dt
         p.y = p.y + p.vy * dt
-        p.size = p.size * (1 - (p.life / p.maxLife)) - 0.3
+        p.size = p.size * (1 - (p.life / p.maxLife)) - 0.1
         p.life = p.life - dt
 
         if p.life <= 0 then
