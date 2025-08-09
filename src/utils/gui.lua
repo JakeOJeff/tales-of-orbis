@@ -70,7 +70,8 @@ function GUI:load()
             h = imgW / scale,
             src = love.graphics.newImage("assets/vfx/icons/jump.png")
         },
-        holding = false
+        holding = false,
+        holdTime = 0
     }
 
     self.pauseButton = {
@@ -103,7 +104,7 @@ function GUI:load()
     }
 
     self.resumeButton = {
-        x = (wW / 2 - resumeW / 2) * scale, -- 80 is right-side padding
+        x = (wW / 2 - resumeW / 2) * scale,      -- 80 is right-side padding
         y = (wH / 2 - resumeH / 2) + 80 * scale, -- padding from bottom
         w = resumeW,
         h = resumeH,
@@ -129,6 +130,10 @@ function GUI:update(dt)
     pB.holding = false
     rsB.holding = false
 
+    if jB.holdTime and jB.holdTime > 0 then
+        jB.holdTime = 0 -- Reset hold time after jump
+    end
+
     self.touches = love.touch.getTouches()
     -- Check each touch
     for _, id in pairs(self.touches) do
@@ -144,11 +149,11 @@ function GUI:update(dt)
         end
         if distRect(x, y, jB.x, jB.y, jB.w, jB.h) then
             jB.holding = true
+            jB.holdTime = (jB.holdTime or 0) + dt
         end
     end
     if distRect(love.mouse.getX(), love.mouse.getY(), rsB.x, rsB.y, rsB.w, rsB.h) then
         rsB.holding = true
-
     end
 end
 
@@ -246,14 +251,17 @@ function GUI:mousepressed(x, y, button)
     local distR = distRect(x, y, self.resetButton.x, self.resetButton.y, self.resetButton.w, self.resetButton.h)
     local distRB = distRect(x, y, self.resumeButton.x, self.resumeButton.y, self.resumeButton.w, self.resumeButton.h)
 
-    if distP and button == 1 and not paused then
-        paused = not paused
+    if button == 1 then
+        if distP and not paused then
+            paused = not paused
+        end
+        if distR and not paused then
+            Player:die()
+        end
+        if paused then
+            print("HELLO")
+            paused = not paused
+        end
     end
-    if distR and button == 1 and not paused then
-        Player:die()
-    end
-    if  button == 1 and paused then
-        print("HELLO")
-        paused = not paused
-    end
+
 end
