@@ -1,6 +1,6 @@
 local game = {
     background = love.graphics.newImage("assets/vfx/loading/background.png"),
-    scale = scale + 2,
+    scale = scale + 1.5,
     backgroundLayers = {
         layer3 = love.graphics.newImage("assets/vfx/parallex/layer3.png"),
         layer2 = love.graphics.newImage("assets/vfx/parallex/layer2.png"),
@@ -8,7 +8,7 @@ local game = {
     }
 }
 if wW/wH > 2 then
-    game.scale = scale + 2.3
+    game.scale = scale + 1.8
 end
 local STI = require("src.libs.sti")
 -- REQUIRE LIBRARIES
@@ -49,6 +49,7 @@ function game:load()
 end
 
 function game:update(dt)
+    hitCheckpoints()
     if not paused then
            if Joystick then
         jAxes[1], jAxes[2], jAxes[3], jAxes[4] = Joystick:getAxes() -- lH, lV, rH, rV
@@ -159,6 +160,16 @@ function spawnEntities(args)
             Blackhole.new(v.x + v.width/2, v.y+ v.height/2)
         elseif v.name == "Block" then
             Block.new(v.x + v.width/2, v.y + v.height/2)
+        end
+    end
+end
+
+function hitCheckpoints()
+    for i, v in ipairs(Map.layers.checkpoints.objects) do
+        if Player.x > v.x and Player.x < v.x + v.width and Player.y > v.y and Player.y < v.y + v.height then
+            Player.checkpointX = v.x + v.width / 2
+            Player.checkpointY = v.y + v.height / 2
+            print("Checkpoint reached at: ", Player.checkpointX, Player.checkpointY)
         end
     end
 end
