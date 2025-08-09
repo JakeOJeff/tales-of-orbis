@@ -55,6 +55,9 @@ function Player:load()
     self.bobSpeed = 4
     self.bobRange = 10
 
+    self.pickedUpItem = false
+    self.pickedUpItemTime = 0
+
     self.physics = {}
     self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
     self.physics.body:setFixedRotation(true)
@@ -68,11 +71,19 @@ function Player:update(dt)
         self:die()
     end
 
+
     local airborne = not self.grounded
     local boosting = self.isBoosting
 
     game.shaking = boosting
 
+    if self.pickedUpItem then
+        self.pickedUpItemTime = self.pickedUpItemTime + dt
+        if self.pickedUpItemTime > 0.6 then
+            self.pickedUpItem = false
+        end
+        game.shaking = true
+    end
     if airborne or boosting then
         -- Particle properties
         self.particleMaxLife = airborne and 6 or 4
@@ -356,6 +367,10 @@ function Player:draw()
         love.graphics.setColor(1, 1, 1, self.maxParticles/self.maxParticleLimit) -- reset color
         local pX = self.x
         local pY = self.y + offset
+
+        if self.pickedUpItem then
+            love.graphics.setColor(0.79, 0.5, 0.19, self.maxParticles/self.maxParticleLimit)
+        end
         -- love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
         self.animations.idle:draw(self.spritesheet, pX - 16, pY - 25)
         -- love.graphics.circle("line", self.x, self.y, self.radius)

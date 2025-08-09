@@ -54,7 +54,7 @@ function Fire:checkRemoved()
 end
 
 function Fire:draw()
-    love.graphics.draw(self.img, self.x, self.y, 0, self.scaleX, 1, self.width / 2, self.height / 2)
+    love.graphics.draw(self.img, self.x, self.y + self.scaleX * 4, 0, self.scaleX, 1, self.width / 2, self.height / 2)
 end
 
 function Fire.drawAll()
@@ -68,6 +68,7 @@ function Fire.beginContact(a, b, collision)
         if a == v.physics.fixture or b == v.physics.fixture then
             if a == Player.physics.fixture or b == Player.physics.fixture then
                 v.toBeRemoved = true
+                Player.pickedUpItem = true
                 return true
             end
         end
