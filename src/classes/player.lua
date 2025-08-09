@@ -40,13 +40,14 @@ function Player:load()
 
     self.animations = {
         back = anim8.newAnimation(self.grid('1-3', 2), .1),
-        main = anim8.newAnimation(self.grid('1-3', 3), .1),
+        spark = anim8.newAnimation(self.grid('1-3', 3), .1),
+        main = anim8.newAnimation(self.grid('1-3', 4), .1),
     }
 
     self.particles = {}
     self.particleRadius = love.math.random() * 25
     self.particleMaxLife = 3
-    self.particleSize = 3
+    self.particleSize = 24
     self.emissionRate = 500 -- particles per second
     self.timeSinceLastEmit = 0
     self.particleImageBack = love.graphics.newImage('assets/vfx/tilesets/flame.png')
@@ -78,7 +79,7 @@ function Player:update(dt)
     if airborne or boosting then
         -- Particle properties
         self.particleMaxLife = airborne and 6 or 4
-        self.particleSize = airborne and 6 or 4
+        self.particleSize = airborne and 24 or 28
         self.particleRadius = love.math.random() * 20
 
         -- Boosting overrides acceleration/friction
@@ -301,7 +302,7 @@ function Player:updateTrail(dt)
         -- Update particle motion
         p.x = p.x + p.vx * dt
         p.y = p.y + p.vy * dt
-        p.size = p.size * (1 - (p.life / p.maxLife)) - 0.3
+        p.size = p.size - 0.3
         p.life = p.life - dt
 
         if p.life <= 0 then
@@ -318,10 +319,17 @@ function Player:spawnTrailParticles()
 
         local dx = math.cos(angle) * radius
         local dy = math.sin(angle) * radius
+        local incX = dx
+        local incY = dy
+        if not self.grounded then
+            incX = 0
+            incY = 0
+        end
+
 
         local particle = {
-            x = self.x + dx,
-            y = self.y + (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed)) + dy,
+            x = self.x + incX,                                                                    -- + dx,
+            y = self.y + (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed)) + incY, -- + dy,
             size = self.particleSize,
             vx = math.cos(angle) * speed,
             vy = math.sin(angle) * speed,
@@ -362,21 +370,30 @@ function Player:draw()
         local pX = self.x
         local pY = self.y + offset
         -- love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
-        for _, p in ipairs(self.particles) do
-            local alpha = p.life / p.maxLife
-            love.graphics.setColor(1,1,1, alpha)
-            love.graphics.draw(self.particleImageBack, p.x, p.y, 0, p.size / self.particleImageBack:getWidth(),
-                p.size / self.particleImageBack:getHeight())
-        end
-        for _, p in ipairs(self.particles) do
-            local alpha = p.life / p.maxLife
-            love.graphics.setColor(1,1,1, alpha)
-            love.graphics.draw(self.particleImageMain, p.x, p.y, 0, p.size / self.particleImageMain:getWidth(),
-                p.size / self.particleImageMain:getHeight())
-        end
                 love.graphics.setColor(1, 1, 1, self.maxParticles / self.maxParticleLimit) -- reset color
 
         self.animations.back:draw(self.spritesheet, pX - 16, pY - 25)
+
+        for _, p in ipairs(self.particles) do
+            local alpha = p.life / p.maxLife
+            love.graphics.setColor(1, 1, 1, alpha)
+            love.graphics.draw(self.particleImageBack, p.x - self.particleImageBack:getWidth() / 2,
+                p.y - self.particleImageMain:getHeight() / 2, 0, p.size / self.particleImageBack:getWidth(),
+                p.size / self.particleImageBack:getHeight())
+        end
+                love.graphics.setColor(1, 1, 1, self.maxParticles / self.maxParticleLimit) -- reset color
+
+        self.animations.spark:draw(self.spritesheet, pX - 16, pY - 25)
+        for _, p in ipairs(self.particles) do
+            local alpha = p.life / p.maxLife
+            love.graphics.setColor(1, 1, 1, alpha)
+
+            love.graphics.draw(self.particleImageMain, p.x - self.particleImageBack:getWidth() / 2,
+                p.y - self.particleImageMain:getHeight() / 2, 0, p.size / self.particleImageMain:getWidth(),
+                p.size / self.particleImageMain:getHeight())
+        end
+        love.graphics.setColor(1, 1, 1, self.maxParticles / self.maxParticleLimit) -- reset color
+
 
         self.animations.main:draw(self.spritesheet, pX - 16, pY - 25)
 
