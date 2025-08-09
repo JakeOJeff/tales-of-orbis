@@ -11,12 +11,18 @@ if wW / wH > 2 then
     Camera.scale = scale + 1.8
 end
 
-function Camera:apply()
+function Camera:apply(shaking, dx, dy)
     love.graphics.push()
-    local dx = love.math.random(-4, 4)
-    local dy = love.math.random(-4, 4)
+
     love.graphics.scale(self.scale, self.scale)
-    love.graphics.translate(-self.x * dx, -self.y)
+
+    if (shaking) then
+        love.graphics.translate(-self.x + dx, -self.y + dy)
+    else
+        love.graphics.translate(-self.x, -self.y)
+    end
+
+
 end
 
 function Camera:clear()

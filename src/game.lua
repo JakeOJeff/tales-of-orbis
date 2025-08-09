@@ -1,6 +1,7 @@
 local game = {
     background = love.graphics.newImage("assets/vfx/loading/background.png"),
     scale = scale + 1.5,
+    shaking = false,
     backgroundLayers = {
         layer3 = love.graphics.newImage("assets/vfx/parallex/layer3.png"),
         layer2 = love.graphics.newImage("assets/vfx/parallex/layer2.png"),
@@ -95,16 +96,17 @@ function game:draw()
     drawParallax("layer3", 0.05)
     drawParallax("layer2", 0.15)
     drawParallax("layer1", 0.25)
+    local dx = 0
+    local dy = 0
+
     if self.shaking then
+        dx = love.math.random(-2, 2)
+        dy = love.math.random(-2, 2)
         love.graphics.push()
-        local dx = love.math.random(-4, 4)
-        local dy = love.math.random(-4, 4)
-        love.graphics.translate(-self.x + dx, -self.y + dy)
-            Map:draw(-Camera.x + dx, -Camera.y + dy, self.scale, self.scale)
-    else
-    Map:draw(-Camera.x, -Camera.y, self.scale, self.scale)
     end
-    Camera:apply()
+    Map:draw(-Camera.x + dx, -Camera.y + dy, self.scale, self.scale)
+
+    Camera:apply(self.shaking, dx, dy)
     Player:draw()
     Fire.drawAll()
     Blackhole.drawAll()
