@@ -252,7 +252,7 @@ function GUI:mousepressed(x, y, button)
     if distR and button == 1 and not paused then
         Player:die()
     end
-    if distRB and button == 1 and paused then
+    if  button == 1 and paused then
         print("HELLO")
         paused = not paused
     end

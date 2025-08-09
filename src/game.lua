@@ -152,9 +152,11 @@ function game:focus(f)
     if f then
         print("Window is focused.")
         track:play()
+        paused = false
     else
         print("Window is not focused.")
         track:pause()
+        paused = true
     end
 end
 
