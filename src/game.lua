@@ -1,6 +1,6 @@
 local game = {
     background = love.graphics.newImage("assets/vfx/loading/background.png"),
-    scale = scale + 2,
+    scale = scale + 1,
     backgroundLayers = {
         layer3 = love.graphics.newImage("assets/vfx/parallex/layer3.png"),
         layer2 = love.graphics.newImage("assets/vfx/parallex/layer2.png"),
@@ -8,7 +8,7 @@ local game = {
     }
 }
 if wW/wH > 2 then
-    game.scale = scale + 2.3
+    game.scale = scale + 1.3
 end
 local STI = require("src.libs.sti")
 -- REQUIRE LIBRARIES

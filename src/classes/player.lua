@@ -5,7 +5,7 @@ function Player:load()
     self.y = 300
     self.checkpointX = self.x
     self.checkpointY = self.y
-    self.radius = 16
+    self.radius = 14
     -- self.height = 28
     self.xVel = 0
     self.yVel = 100
@@ -64,7 +64,6 @@ function Player:load()
 end
 function Player:update(dt)
     self.health.current = self.maxParticles/self.maxParticleLimit * 100
-    print("Player Health: " .. self.health.current)
     if self.health.current <= 0 then    
         self:die()
     end
@@ -122,7 +121,6 @@ end
 
 function Player:die()
     self.alive = false
-    print("player died")
 end
 
 function Player:respawn()

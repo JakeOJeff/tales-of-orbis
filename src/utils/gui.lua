@@ -148,7 +148,6 @@ function GUI:update(dt)
     end
     if distRect(love.mouse.getX(), love.mouse.getY(), rsB.x, rsB.y, rsB.w, rsB.h) then
         rsB.holding = true
-                    print("HELLO")
 
     end
 end

@@ -3,12 +3,12 @@ local Camera = {
     y = 0,
     targetX = 0,
     targetY = 0,
-    scale = scale + 2,
+    scale = scale + 1,
     lerpSpeed = 6 -- Adjust this for smoother/slower movement
 }
 
 if wW / wH > 2 then
-    Camera.scale = scale + 2.3
+    Camera.scale = scale + 1.3
 end
 
 function Camera:apply()
