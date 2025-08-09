@@ -111,6 +111,7 @@ function Player:update(dt)
     end
 
     self.animations.back:update(dt)
+    self.animations.spark:update(dt)
     self.animations.main:update(dt)
 
     self:updateTrail(dt)
