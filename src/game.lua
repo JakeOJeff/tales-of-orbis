@@ -7,7 +7,7 @@ local game = {
         layer1 = love.graphics.newImage("assets/vfx/parallex/layer1.png"),
     }
 }
-if wW/wH > 2 then
+if wW / wH > 2 then
     game.scale = scale + 1.8
 end
 local STI = require("src.libs.sti")
@@ -29,12 +29,12 @@ require("src.utils.gui")
 track = love.audio.newSource("assets/sfx/bg.mp3", "stream")
 
 function game:load()
-    Map = STI("assets/map/1.lua", {"box2d"})
+    Map = STI("assets/map/1.lua", { "box2d" })
     World = love.physics.newWorld(0, 2000)
     World:setCallbacks(beginContact, endContact)
     Map:box2d_init(World)
     Map.layers.solid.visible = false
-        Map.layers.entity.visible = false
+    Map.layers.entity.visible = false
     MapWidth = Map.layers.Base.width * 32
     MapHeight = Map.layers.Base.height * 32
     track:play()
@@ -51,26 +51,25 @@ end
 function game:update(dt)
     hitCheckpoints()
     if not paused then
-           if Joystick then
-        jAxes[1], jAxes[2], jAxes[3], jAxes[4] = Joystick:getAxes() -- lH, lV, rH, rV
+        if Joystick then
+            jAxes[1], jAxes[2], jAxes[3], jAxes[4] = Joystick:getAxes() -- lH, lV, rH, rV
+        end
+        Camera:update(dt)
+        World:update(dt)
+        Camera:setPosition(Player.x, Player.y)
+        Player:update(dt)
+        Fire.updateAll(dt)
+        Blackhole.updateAll(dt)
+        Block.updateAll(dt)
+        GUI:update(dt)
     end
-    Camera:update(dt)
-    World:update(dt)
-    Camera:setPosition(Player.x, Player.y)
-    Player:update(dt)
-    Fire.updateAll(dt)
-    Blackhole.updateAll(dt)
-    Block.updateAll(dt)
-    GUI:update(dt) 
-    end
-
 end
 
 function game:draw()
     love.graphics.draw(self.background, 0, 0, 0, self.scale, self.scale)
-        local px = Player.x
+    local px = Player.x
     local py = Player.y
-        local screenWidth = love.graphics.getWidth()
+    local screenWidth = love.graphics.getWidth()
     local screenHeight = love.graphics.getHeight()
 
     local function drawParallax(layer, factor)
@@ -96,14 +95,24 @@ function game:draw()
     drawParallax("layer3", 0.05)
     drawParallax("layer2", 0.15)
     drawParallax("layer1", 0.25)
-
+    if self.shaking then
+        love.graphics.push()
+        local dx = love.math.random(-4, 4)
+        local dy = love.math.random(-4, 4)
+        love.graphics.translate(-self.x + dx, -self.y + dy)
+            Map:draw(-Camera.x + dx, -Camera.y + dy, self.scale, self.scale)
+    else
     Map:draw(-Camera.x, -Camera.y, self.scale, self.scale)
+    end
     Camera:apply()
     Player:draw()
     Fire.drawAll()
     Blackhole.drawAll()
     Block.drawAll()
     Camera:clear()
+    if self.shaking then
+        love.graphics.pop()
+    end
     GUI:draw()
 end
 
@@ -122,13 +131,16 @@ function game:keypressed(key)
         end
     end
 end
+
 function game:gamepadpressed(joystick, button)
     isMobile = false
     Player:gamepadInput(button)
 end
+
 function game:mousepressed(x, y, button)
     GUI:mousepressed(x, y, button)
-end 
+end
+
 function game:touchpressed(id, x, y, dx, dy, pressure)
     isMobile = true
 end
@@ -149,17 +161,16 @@ end
 
 function endContact(a, b, collision)
     utils.collisions:endContact(a, b, collision)
-
 end
 
 function spawnEntities(args)
     for i, v in ipairs(Map.layers.entity.objects) do
         if v.name == "Fire" then
-            Fire.new(v.x + v.width/2, v.y+ v.height/2)
+            Fire.new(v.x + v.width / 2, v.y + v.height / 2)
         elseif v.name == "Blackhole" then
-            Blackhole.new(v.x + v.width/2, v.y+ v.height/2)
+            Blackhole.new(v.x + v.width / 2, v.y + v.height / 2, math.random(50, 150), math.random(1, 5))
         elseif v.name == "Block" then
-            Block.new(v.x + v.width/2, v.y + v.height/2)
+            Block.new(v.x + v.width / 2, v.y + v.height / 2)
         end
     end
 end
@@ -173,4 +184,5 @@ function hitCheckpoints()
         end
     end
 end
+
 return game

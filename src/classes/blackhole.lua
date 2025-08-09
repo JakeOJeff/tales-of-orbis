@@ -2,14 +2,15 @@ Blackhole = {}
 Blackhole.__index = Blackhole
 ActiveHoles = {}
 
-function Blackhole.new(x, y)
+function Blackhole.new(x, y, attractRadius, offsetRange )
     local instance = setmetatable({}, Blackhole)
     instance.x = x
     instance.y = y
     instance.img = love.graphics.newImage("assets/vfx/items/blackhole.png")
     instance.width = instance.img:getWidth()
     instance.height = instance.img:getHeight()
-
+    instance.attractRadius = attractRadius or 100
+    instance.offsetRange = offsetRange or 3
     instance.damage = 1
 
     instance.physics = {}
@@ -33,8 +34,8 @@ end
 
 function Blackhole:draw()
 
-    local offsetX = (3 * math.cos(love.timer.getTime() * 3))
-    local offsetY = (3 * math.sin(love.timer.getTime() * 3))
+    local offsetX = (self.offsetRange * math.cos(love.timer.getTime() * 3))
+    local offsetY = (self.offsetRange * math.sin(love.timer.getTime() * 3))
 
     love.graphics.draw(self.img, self.x + offsetX, self.y + offsetY, 0, self.scaleX, 1, self.width / 2, self.height / 2)
 end

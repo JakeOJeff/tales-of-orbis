@@ -267,7 +267,7 @@ function Player:updateTrail(dt)
             local dx = bx - p.x
             local dy = by - p.y
             local dist = math.sqrt(dx * dx + dy * dy)
-            local attractRadius = 100
+            local attractRadius = blackhole.attractRadius or 100
             if dist < 20 then
                 -- If too close, remove particle to avoid infinite attraction
                 table.remove(self.particles, i)

@@ -13,9 +13,10 @@ end
 
 function Camera:apply()
     love.graphics.push()
-
+    local dx = love.math.random(-4, 4)
+    local dy = love.math.random(-4, 4)
     love.graphics.scale(self.scale, self.scale)
-    love.graphics.translate(-self.x, -self.y)
+    love.graphics.translate(-self.x * dx, -self.y)
 end
 
 function Camera:clear()
@@ -47,7 +48,7 @@ end
 
 -- Smoothly update current position toward target
 function Camera:update(dt)
-    self.x = lerp(self.x, self.targetX , math.min(self.lerpSpeed * dt, 1))
+    self.x = lerp(self.x, self.targetX, math.min(self.lerpSpeed * dt, 1))
     self.y = lerp(self.y, self.targetY, math.min(self.lerpSpeed * dt, 1))
 end
 
