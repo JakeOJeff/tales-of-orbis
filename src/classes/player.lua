@@ -57,7 +57,7 @@ function Player:load()
 
     self.pickedUpItem = false
     self.pickedUpItemTime = 0
-    
+
     self.collectedRelics = 0
 
     self.physics = {}
@@ -65,11 +65,12 @@ function Player:load()
     self.physics.body:setFixedRotation(true)
     self.physics.shape = love.physics.newCircleShape(self.radius)
     self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
-    self.physics.body:setGravityScale(0) 
+    self.physics.body:setGravityScale(0)
 end
+
 function Player:update(dt)
-    self.health.current = self.maxParticles/self.maxParticleLimit * 100
-    if self.health.current <= 0 then    
+    self.health.current = self.maxParticles / self.maxParticleLimit * 100
+    if self.health.current <= 0 then
         self:die()
     end
 
@@ -89,7 +90,7 @@ function Player:update(dt)
         end
         game.shaking = true
     end
-                movementSFX:setVolume(0.2)
+    movementSFX:setVolume(0.2)
     if airborne or boosting then
         -- Particle properties
         self.particleMaxLife = airborne and 6 or 4
@@ -154,8 +155,8 @@ function Player:respawn()
         spawnEntities()
     end
 end
-function Player:resetTrails()
 
+function Player:resetTrails()
     self.particleMaxLife = 1
     self.particleSize = 5
     -- self.bobRange = 10
@@ -166,13 +167,13 @@ function Player:resetTrails()
     self.friction = 2000
     self.maxSpeed = 100 -- 200/4000 = 0.05 seconds
 end
+
 -- function Player
 function Player:move(dt)
     if love.keyboard.isDown("d", "right") or jAxes[1] > 0.2 or GUI.rightButton.holding then -- small deadzone
         self.xVel = math.min(self.xVel + self.acceleration * dt, self.maxSpeed)
     elseif love.keyboard.isDown("a", "left") or (jAxes[1] or 0) < -0.2 or GUI.leftButton.holding then
         self.xVel = math.max(self.xVel - self.acceleration * dt, -self.maxSpeed)
-
     else
         self:applyFriction(dt)
     end
@@ -188,23 +189,23 @@ function Player:move(dt)
         isMobile = false
     end
 
-    if (isBoostKeyDown or isJoystickBoost) and self.boost > 0 and self.xVel ~= 0 then
+    if (isBoostKeyDown or isJoystickBoost) and self.boost > 0 then
         self.boost = math.max(0.01, self.boost - 5 * dt)
         self.isBoosting = true
     else
         self.isBoosting = false
-        if self.boost < self.maxBoost then
+        if self.boost < self.maxBoost then -- Add a Boost debounce
             self.boost = math.min(self.maxBoost, self.boost + 3 * dt)
         end
     end
-
 end
+
 function Player:applyGravity(dt)
     if not self.grounded then
         self.yVel = self.yVel + self.gravity * dt
     end
-
 end
+
 function Player:applyFriction(dt)
     if self.xVel > 0 then
         self.xVel = math.min(self.xVel - self.friction * dt, 0)
@@ -218,6 +219,7 @@ function Player:decreaseGraceTime(dt)
         self.graceTime = self.graceTime - dt
     end
 end
+
 function Player:keyboardInput(key)
     if key == "space" or key == "w" or key == "up" then
         self:jump()
@@ -228,10 +230,10 @@ function Player:gamepadInput(button)
     if button == "a" then
         self:jump()
     end
-
 end
+
 function Player:jump()
-    if self.grounded  or self.boost - 3 > 0.01 and self.graceTime > 0 then -- or self.graceTime > 0
+    if self.grounded or self.boost - 3 > 0.01 and self.graceTime > 0 then -- or self.graceTime > 0
         self.particleMaxLife = 2
         self.particleSize = 10
         self.particleRadius = 2
@@ -239,7 +241,6 @@ function Player:jump()
         self.boost = math.max(0.01, self.boost - 3)
         self.grounded = false
     end
-
 end
 
 function Player:beginContact(a, b, collision)
@@ -269,6 +270,7 @@ function Player:endContact(a, b, collision)
         end
     end
 end
+
 function Player:updateTrail(dt)
     self.timeSinceLastEmit = self.timeSinceLastEmit + dt
     local particlesToEmit = math.floor(self.timeSinceLastEmit * self.emissionRate)
@@ -297,22 +299,27 @@ function Player:updateTrail(dt)
                 break
             end
             if dist < attractRadius then
-                    self.graceTime = self.graceDuration
+                -- self.graceTime = self.graceDuration
+
 
                 local strength = (dist / attractRadius) * 15000 -- attraction strength
-                local angle = math.atan2(dy, dx)
-                p.vx = (p.vx + math.cos(angle) * strength * dt)
-                p.vy = (p.vy + math.sin(angle) * strength * dt)
+
 
                 if not self.isBoosting then
+                    local angle = math.atan2(dy, dx)
+                    p.vx = (p.vx + math.cos(angle) * strength * dt)
+                    p.vy = (p.vy + math.sin(angle) * strength * dt)
                     self.xVel = p.vx * dt
                     self.yVel = p.vy * dt
+                else
+                    if self.boost - 0.5 > 0.01 then
+                        self.boost = self.boost - 0.3 * dt
+                    end
                 end
 
-                self.maxParticles = math.max(self.maxParticles - .5* strength/8000 * dt, 0) -- reduce max particles if attracted
 
+                self.maxParticles = math.max(self.maxParticles - .5 * strength / 8000 * dt, 0) -- reduce max particles if attracted
             end
-
         end
 
         -- Update particle motion
@@ -325,11 +332,10 @@ function Player:updateTrail(dt)
             table.remove(self.particles, i)
         end
     end
-
 end
 
 function Player:spawnTrailParticles()
-    for i = 1, 5 do -- emit 5 particles at once for a chunkier trail
+    for i = 1, 5 do                        -- emit 5 particles at once for a chunkier trail
         local angle = love.math.random() * 2 * math.pi
         local radius = self.particleRadius -- controls how far from center the particles spawn
         local speed = love.math.random(1, 2)
@@ -357,10 +363,12 @@ function Player:land(collision)
     self.grounded = true
     self.graceTime = self.graceDuration
 end
+
 function Player:syncPhysics()
     self.x, self.y = self.physics.body:getPosition()
     self.physics.body:setLinearVelocity(self.xVel, self.yVel)
 end
+
 function Player:draw()
     if not paused then
         for _, p in ipairs(self.particles) do
@@ -374,17 +382,16 @@ function Player:draw()
         if not paused then
             offset = (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed))
         end
-        love.graphics.setColor(1, 1, 1, self.maxParticles/self.maxParticleLimit) -- reset color
+        love.graphics.setColor(1, 1, 1, self.maxParticles / self.maxParticleLimit) -- reset color
         local pX = self.x
         local pY = self.y + offset
 
         if self.pickedUpItem then
-            love.graphics.setColor(0.79, 0.5, 0.19, self.maxParticles/self.maxParticleLimit)
+            love.graphics.setColor(0.79, 0.5, 0.19, self.maxParticles / self.maxParticleLimit)
         end
         -- love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
         self.animations.idle:draw(self.spritesheet, pX - 16, pY - 25)
         -- love.graphics.circle("line", self.x, self.y, self.radius)
-        love.graphics.setColor(1,1,1,1)
-
+        love.graphics.setColor(1, 1, 1, 1)
     end
 end
