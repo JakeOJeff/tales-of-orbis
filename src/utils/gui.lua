@@ -112,7 +112,13 @@ function GUI:load()
     }
 
     self.relicsDisplay = {
-        img = love.graphics.newImage("assets/vfx/items/relic.png"),
+        img = {
+            src = love.graphics.newImage("assets/vfx/items/relic.png"),
+            x = 0,
+            y = 0,
+            w = imgW * scale,
+            h = imgW * scale
+        },
         x = 20 * scale,
         y = 20 * scale,
         w = 75 * scale,
@@ -145,7 +151,7 @@ function GUI:update(dt)
         jB.holdTime = 0 -- Reset hold time after jump
     end
 
-    self.relicsDisplay.scaleX = math.sin(love.timer.getTime() * 2)
+    self.relicsDisplay.scaleX = math.sin(5 + love.timer.getTime() * 2)
 
     self.touches = love.touch.getTouches()
     -- Check each touch
@@ -186,9 +192,8 @@ function GUI:draw()
     love.graphics.rectangle("fill", wW - 85 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
         200 * scale * math.max((Player.health.current / Player.health.max), 0), 5, 5)
     love.graphics.setColor(1, 1, 1)
-    
-    -- Relics Display
-    love.graphics.draw(self.relicsDisplay.img, self.relicsDisplay.x, self.relicsDisplay.y + self.relicsDisplay.scaleX * 4, 0, self.relicsDisplay.scaleX, 1, self.relicsDisplay.w / 2, self.relicsDisplay.h / 2)
+
+
 
     if isMobile and not paused then
         love.graphics.setColor(0, 0, 0, 0.6)
@@ -248,6 +253,8 @@ function GUI:draw()
         local rtB = self.resetButton
         local pB = self.pauseButton
 
+        local rD = self.relicsDisplay
+
 
         love.graphics.setColor(0, 0, 0, 0.6)
         love.graphics.rectangle("fill", rtB.x, rtB.y, rtB.w, rtB.h, 10, 10)
@@ -258,16 +265,25 @@ function GUI:draw()
         love.graphics.rectangle("fill", pB.x, pB.y, pB.w, pB.h, 10, 10)
         love.graphics.setColor(1, 1, 1)
         self:drawButtonImage(pB)
+
+
+        -- Relics Display
+        love.graphics.setFont(paragraph)
+       self:drawButtonImage(rD, self.relicsDisplay.scaleX)
+       love.graphics.setColor(1, 1, 1)
+       love.graphics.print(Player.collectedRelics, rD.x + (rD.w - rD.img.src:getWidth() * scale) + 20 * scale, rD.y + (rD.h - rD.img.src:getHeight() - paragraph:getHeight()/2 * scale)/2 + 10 * scale)
+
     end
 end
 
-function GUI:drawButtonImage(button)
+function GUI:drawButtonImage(button, sX)
     local img = button.img.src
     local iw, ih = img:getWidth(), img:getHeight()
     local scale = math.min(button.w / iw, button.h / ih)
+    local scaleX = sX or scale
     local dx = button.x + (button.w - iw * scale) / 2
     local dy = button.y + (button.h - ih * scale) / 2
-    love.graphics.draw(img, dx, dy, 0, scale, scale)
+    love.graphics.draw(img, dx, dy + scaleX, 0, scale, scale)
 end
 
 function GUI:mousepressed(x, y, button)
@@ -275,7 +291,7 @@ function GUI:mousepressed(x, y, button)
     local distR = distRect(x, y, self.resetButton.x, self.resetButton.y, self.resetButton.w, self.resetButton.h)
 
     if button == 1 then
-                if paused then
+        if paused then
             paused = false
         end
         if distP and not paused then
@@ -284,7 +300,5 @@ function GUI:mousepressed(x, y, button)
         if distR and not paused then
             Player:die()
         end
-
     end
-
 end

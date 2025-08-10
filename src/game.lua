@@ -50,6 +50,7 @@ function game:load()
     GUI:load()
     Player:load()
     spawnEntities()
+    spawnOnceEntities()
 end
 
 function game:update(dt)
@@ -195,7 +196,13 @@ function spawnEntities(args)
             Blackhole.new(v.x + v.width / 2, v.y + v.height / 2, math.random(50, 150), math.random(1, 5))
         elseif v.name == "Block" then
             Block.new(v.x + v.width / 2, v.y + v.height / 2)
-        elseif v.name == "Relic" then
+        end
+    end
+end
+
+function spawnOnceEntities()
+    for i, v in ipairs(Map.layers.entity.objects) do
+        if v.name == "Relic" then
             Relic.new(v.x + v.width / 2, v.y + v.height / 2)
         end
     end
