@@ -1,8 +1,8 @@
 Player = {}
 
 function Player:load()
-    self.x = 100
-    self.y = 100
+    self.x = 4734
+    self.y = 90
     self.checkpointX = self.x
     self.checkpointY = self.y
     self.radius = 14

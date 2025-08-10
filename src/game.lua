@@ -28,7 +28,9 @@ local utils = {}
 utils.collisions = require("src.utils.collisions")
 require("src.utils.gui")
 
--- Soundss and Tracks
+-- Sounds and Tracks
+introTrack = love.audio.newSource("assets/sfx/intro.wav", "stream")
+introTrack:setLooping(true)
 track = love.audio.newSource("assets/sfx/bg.mp3", "stream")
 track:setLooping(true)
 movementSFX = love.audio.newSource("assets/sfx/movement.mp3", "static")

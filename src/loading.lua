@@ -13,6 +13,7 @@ local loading = {
 }
 
 function loading:load()
+    introTrack:play()
     self.loaded = 0 -- In percentages
     self.time = 0 -- text loading 
     self.speed = 10

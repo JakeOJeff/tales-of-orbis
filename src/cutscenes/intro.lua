@@ -77,6 +77,7 @@ function intro:inputReceived()
         self.fadeTimer = 0
     else
         -- Transition to next game state here
+        introTrack:stop()
         intro.setScene("game")
     end
 end
