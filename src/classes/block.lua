@@ -46,3 +46,9 @@ function Block.drawAll()
     end
 end
 
+function Block.clear()
+    for i, v in ipairs(ActiveBlocks) do
+        v.physics.body:destroy()
+    end
+    ActiveBlocks = {}
+end

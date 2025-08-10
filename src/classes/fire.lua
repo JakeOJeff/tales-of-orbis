@@ -41,6 +41,7 @@ end
 function Fire:spin(dt)
     self.scaleX = math.sin(love.timer.getTime() * 2 + self.randomTimeOffset)
 end
+
 function Fire.updateAll(dt)
     for i, v in ipairs(ActiveFire) do
         v:update(dt)
@@ -73,4 +74,11 @@ function Fire.beginContact(a, b, collision)
             end
         end
     end
+end
+
+function Fire.clear()
+    for i, v in ipairs(ActiveFire) do
+        v.physics.body:destroy()
+    end
+    ActiveFire = {}
 end

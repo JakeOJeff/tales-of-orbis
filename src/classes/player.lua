@@ -146,6 +146,7 @@ function Player:respawn()
         self.boost = self.maxBoost
         self.maxParticles = self.maxParticleLimit
         self.alive = true
+        deleteEntities()
         spawnEntities()
     end
 end

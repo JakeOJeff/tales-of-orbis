@@ -2,7 +2,7 @@ Blackhole = {}
 Blackhole.__index = Blackhole
 ActiveHoles = {}
 
-function Blackhole.new(x, y, attractRadius, offsetRange )
+function Blackhole.new(x, y, attractRadius, offsetRange)
     local instance = setmetatable({}, Blackhole)
     instance.x = x
     instance.y = y
@@ -33,7 +33,6 @@ function Blackhole.updateAll(dt)
 end
 
 function Blackhole:draw()
-
     local offsetX = (self.offsetRange * math.cos(love.timer.getTime() * 3))
     local offsetY = (self.offsetRange * math.sin(love.timer.getTime() * 3))
 
@@ -55,4 +54,11 @@ function Blackhole.beginContact(a, b, collision)
             end
         end
     end
+end
+
+function Blackhole.clear()
+    for i, v in ipairs(ActiveHoles) do
+        v.physics.body:destroy()
+    end
+    ActiveHoles = {}
 end
