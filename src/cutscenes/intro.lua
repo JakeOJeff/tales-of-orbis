@@ -19,8 +19,8 @@ end
 
 function intro:update(dt)
     self.timer = self.timer + dt
-    if self.fadeTimer < .6 then
-        self.fadeTimer = self.fadeTimer + (0.2 * dt)
+    if self.fadeTimer < 1 then
+        self.fadeTimer = self.fadeTimer + (.5 * dt)
     end
 end
 

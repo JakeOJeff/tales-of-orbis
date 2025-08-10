@@ -54,6 +54,9 @@ end
 function game:update(dt)
     hitCheckpoints()
     if not paused then
+        if self.introfadeTimer < 1 then
+            self.introfadeTimer = self.introfadeTimer + (.5 * dt)
+        end
         if Joystick then
             jAxes[1], jAxes[2], jAxes[3], jAxes[4] = Joystick:getAxes() -- lH, lV, rH, rV
         end
@@ -69,8 +72,7 @@ function game:update(dt)
 end
 
 function game:draw()
-    -- Beginner Cutscene
-    love.graphics.setColor(1, 1, 1, self.introfadeTimer)
+
 
     -- Draw text
     local text = "Escape the Void. Reach the Core. Don't fight it, RUN!"
@@ -78,9 +80,8 @@ function game:draw()
     local textHeight = paragraph:getHeight()
 
     love.graphics.setFont(paragraph)
-    love.graphics.setColor(1, 1, 1, (self.introfadeTimer / 0.6))
+    love.graphics.setColor(1, 1, 1, self.introfadeTimer/1)
     love.graphics.print(text, (wW - textWidth) / 2, wH - textHeight - 50)
-
 
 
     love.graphics.draw(self.background, 0, 0, 0, self.scale, self.scale)
