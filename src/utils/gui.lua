@@ -158,14 +158,21 @@ function GUI:update(dt)
 end
 
 function GUI:draw()
+    -- Boost Bar
     love.graphics.setColor(0, 0, 0, 0.5)
-    love.graphics.rectangle("fill", wW - 60 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 40 * scale,
-        200 * scale, 10 * scale, 10 * scale)
+    love.graphics.rectangle("fill", wW - 60 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
+        200 * scale, 5 * scale, 5 * scale)
     love.graphics.setColor(0.56, 0.23, 0.11)
-    love.graphics.rectangle("fill", wW - 60 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 40 * scale,
-        200 * scale * math.max((Player.boost / Player.maxBoost), 0), 10, 10)
+    love.graphics.rectangle("fill", wW - 60 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
+        200 * scale * math.max((Player.boost / Player.maxBoost), 0), 5, 5)
+    -- Health Bar
+    love.graphics.setColor(0, 0, 0, 0.5)
+    love.graphics.rectangle("fill", wW - 85 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
+        200 * scale, 5 * scale, 5 * scale)
+    love.graphics.setColor(0.79, 0.50, 0.19)
+    love.graphics.rectangle("fill", wW - 85 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
+        200 * scale * math.max((Player.health.current / Player.health.max), 0), 5, 5)
     love.graphics.setColor(1, 1, 1)
-
     if isMobile and not paused then
         love.graphics.setColor(0, 0, 0, 0.6)
         local lB = self.leftButton

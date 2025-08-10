@@ -143,8 +143,10 @@ function Player:respawn()
     if not self.alive then
         self.physics.body:setPosition(self.checkpointX, self.checkpointY)
         self.health.current = self.health.max
+        self.boost = self.maxBoost
         self.maxParticles = self.maxParticleLimit
         self.alive = true
+        spawnEntities()
     end
 end
 function Player:resetTrails()

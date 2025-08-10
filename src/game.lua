@@ -196,6 +196,12 @@ function spawnEntities(args)
     end
 end
 
+function deleteEntities()
+    Fire.clear()
+    Blackhole.clear()
+    Block.clear()
+end
+
 function hitCheckpoints()
     for i, v in ipairs(Map.layers.checkpoints.objects) do
         if Player.x > v.x and Player.x < v.x + v.width and Player.y > v.y and Player.y < v.y + v.height then
