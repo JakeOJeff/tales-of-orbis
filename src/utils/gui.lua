@@ -273,19 +273,18 @@ end
 function GUI:mousepressed(x, y, button)
     local distP = distRect(x, y, self.pauseButton.x, self.pauseButton.y, self.pauseButton.w, self.pauseButton.h)
     local distR = distRect(x, y, self.resetButton.x, self.resetButton.y, self.resetButton.w, self.resetButton.h)
-    local distRB = distRect(x, y, self.resumeButton.x, self.resumeButton.y, self.resumeButton.w, self.resumeButton.h)
 
     if button == 1 then
+                if paused then
+            paused = false
+        end
         if distP and not paused then
-            paused = not paused
+            paused = true
         end
         if distR and not paused then
             Player:die()
         end
-        if paused then
-            print("HELLO")
-            paused = not paused
-        end
+
     end
 
 end
