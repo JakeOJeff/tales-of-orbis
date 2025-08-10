@@ -229,6 +229,25 @@ end
 function Player:gamepadInput(button)
     if button == "a" then
         self:jump()
+    elseif button == "b" then
+        self:die()
+    elseif button == "start" then
+        paused = not paused
+        if paused then
+            track:pause()
+            movementSFX:pause()
+        else
+            track:play()
+            movementSFX:play()
+        end
+    elseif button == "back" then
+        if paused then
+            paused = false
+            track:play()
+            movementSFX:play()
+        else
+            self:die()
+        end
     end
 end
 

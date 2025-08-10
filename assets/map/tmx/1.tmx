@@ -108,7 +108,7 @@
   <object id="120" name="c1" x="1920" y="608" width="96" height="32"/>
   <object id="121" name="c2" x="800" y="800" width="32" height="224"/>
   <object id="178" name="c3" x="3104" y="8" width="32" height="248"/>
-  <object id="192" name="c4" x="4736" y="8" width="32" height="152"/>
+  <object id="192" name="c4" x="4800" y="160" width="96" height="32"/>
  </objectgroup>
  <objectgroup id="5" name="entity" tintcolor="#a7b435">
   <object id="72" name="Fire" x="512" y="448" width="32" height="32">
