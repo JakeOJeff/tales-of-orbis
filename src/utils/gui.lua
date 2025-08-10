@@ -242,13 +242,6 @@ function GUI:draw()
         love.graphics.setColor(1, 1, 1, 0.8)
         love.graphics.setFont(heading)
         love.graphics.print(pauseText, wW / 2 - heading:getWidth(pauseText) / 2, wH / 2 - heading:getHeight() / 2)
-        love.graphics.setColor(0, 0, 0, 0.6)
-        local rsB = self.resumeButton
-        if rsB.holding then
-            love.graphics.setColor(0.1, 0.1, 0.1, 0.6)
-        end
-        love.graphics.rectangle("fill", rsB.x, rsB.y, rsB.w, rsB.h, 10, 10)
-        love.graphics.setColor(1, 1, 1)
     else
         local rtB = self.resetButton
         local pB = self.pauseButton

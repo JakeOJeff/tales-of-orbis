@@ -89,6 +89,7 @@ function Player:update(dt)
         end
         game.shaking = true
     end
+                movementSFX:setVolume(0.2)
     if airborne or boosting then
         -- Particle properties
         self.particleMaxLife = airborne and 6 or 4
@@ -97,14 +98,13 @@ function Player:update(dt)
 
         -- Boosting overrides acceleration/friction
         if boosting then
-            movementSFX:setVolume(1)
+            movementSFX:setVolume(0.6)
             self.emissionRate = 1000
             self.acceleration = 4500
             self.friction = 1000
             self.maxSpeed = 250
         else
             -- Restore normal movement if not boosting
-            movementSFX:setVolume(0.5)
             self.acceleration = 1000
             self.friction = 2000
             self.maxSpeed = 100 -- 200/4000 = 0.05 seconds
