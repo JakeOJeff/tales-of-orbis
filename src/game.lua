@@ -30,6 +30,10 @@ require("src.utils.gui")
 
 -- Soundss and Tracks
 track = love.audio.newSource("assets/sfx/bg.mp3", "stream")
+track:setLooping(true)
+movementSFX = love.audio.newSource("assets/sfx/movement.mp3", "static")
+movementSFX:setVolume(0.5)
+movementSFX:setLooping(true)
 
 function game:load()
     Map = STI("assets/map/1.lua", { "box2d" })
@@ -42,6 +46,7 @@ function game:load()
     MapWidth = Map.layers.Base.width * 32
     MapHeight = Map.layers.Base.height * 32
     track:play()
+    movementSFX:play()
 
     -- fire1 = Fire.new(100, 100)
     -- Blackhole1 = Blackhole.new(200, 200)
@@ -149,8 +154,10 @@ function game:keypressed(key)
         paused = not paused
         if paused then
             track:pause()
+            movementSFX:pause()
         else
             track:play()
+            movementSFX:play()
         end
     end
 end
