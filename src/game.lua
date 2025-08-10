@@ -6,7 +6,8 @@ game = {
         layer3 = love.graphics.newImage("assets/vfx/parallex/layer3.png"),
         layer2 = love.graphics.newImage("assets/vfx/parallex/layer2.png"),
         layer1 = love.graphics.newImage("assets/vfx/parallex/layer1.png"),
-    }
+    },
+    introfadeTimer = 0
 }
 if wW / wH > 2 then
     game.scale = scale + 1.8
@@ -36,7 +37,7 @@ function game:load()
     Map:box2d_init(World)
     Map.layers.solid.visible = false
     Map.layers.entity.visible = false
-        Map.layers.checkpoints.visible = false
+    Map.layers.checkpoints.visible = false
     MapWidth = Map.layers.Base.width * 32
     MapHeight = Map.layers.Base.height * 32
     track:play()
@@ -68,6 +69,20 @@ function game:update(dt)
 end
 
 function game:draw()
+    -- Beginner Cutscene
+    love.graphics.setColor(1, 1, 1, self.introfadeTimer)
+
+    -- Draw text
+    local text = "Escape the Void. Reach the Core. Don't fight it, RUN!"
+    local textWidth = paragraph:getWidth(text)
+    local textHeight = paragraph:getHeight()
+
+    love.graphics.setFont(paragraph)
+    love.graphics.setColor(1, 1, 1, (self.introfadeTimer / 0.6))
+    love.graphics.print(text, (wW - textWidth) / 2, wH - textHeight - 50)
+
+
+
     love.graphics.draw(self.background, 0, 0, 0, self.scale, self.scale)
     local px = Player.x
     local py = Player.y

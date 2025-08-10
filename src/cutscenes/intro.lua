@@ -3,8 +3,8 @@ local intro = {
     sceneTexts = {"Long ago, the gods danced in basking glory",
                   "They shaped the worlds with light, laughter... and law", "But from their order... came envy",
                   "Null was born, the end... with no beginning", "The war was historic, the gods fought... and fell",
-                  "And from their ashes, one spark remained", "Orbis, the last light! The only hope left.",
-                  "Escape the Void. Reach the Core. Don't fight it, RUN!"},
+                  "And from their ashes, one spark remained", "Orbis, the last light! The only hope left."
+                  },
     currentIndex = 1,
     timer = 0,
     fadeTimer = 0
@@ -12,7 +12,7 @@ local intro = {
 
 function intro:load()
 
-    for i = 1, 8 do
+    for i = 1, 7 do
         self.scenes[i] = love.graphics.newImage("assets/vfx/cutscenes/frame" .. i .. ".png")
     end
 end
