@@ -21,6 +21,7 @@ require("src.classes.player")
 require("src.classes.fire")
 require("src.classes.blackhole")
 require("src.classes.block")
+require("src.classes.relic")
 
 -- REQUIRE UTILS
 local utils = {}
@@ -67,6 +68,7 @@ function game:update(dt)
         Fire.updateAll(dt)
         Blackhole.updateAll(dt)
         Block.updateAll(dt)
+        Relic.updateAll(dt)
         GUI:update(dt)
     end
 end
@@ -128,6 +130,7 @@ function game:draw()
     Fire.drawAll()
     Blackhole.drawAll()
     Block.drawAll()
+    Relic.drawAll()
     Camera:clear()
     if self.shaking then
         love.graphics.pop()
@@ -192,6 +195,8 @@ function spawnEntities(args)
             Blackhole.new(v.x + v.width / 2, v.y + v.height / 2, math.random(50, 150), math.random(1, 5))
         elseif v.name == "Block" then
             Block.new(v.x + v.width / 2, v.y + v.height / 2)
+        elseif v.name == "Relic" then
+            Relic.new(v.x + v.width / 2, v.y + v.height / 2)
         end
     end
 end

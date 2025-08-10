@@ -110,6 +110,16 @@ function GUI:load()
         h = resumeH,
         holding = false
     }
+
+    self.relicsDisplay = {
+        img = love.graphics.newImage("assets/vfx/items/relic.png"),
+        x = 20 * scale,
+        y = 20 * scale,
+        w = 75 * scale,
+        h = 75 * scale,
+        scaleX = 1.5,
+
+    }
 end
 
 function GUI:update(dt)
@@ -130,9 +140,12 @@ function GUI:update(dt)
     pB.holding = false
     rsB.holding = false
 
+
     if jB.holdTime and jB.holdTime > 0 then
         jB.holdTime = 0 -- Reset hold time after jump
     end
+
+    self.relicsDisplay.scaleX = math.sin(love.timer.getTime() * 2)
 
     self.touches = love.touch.getTouches()
     -- Check each touch
@@ -173,6 +186,10 @@ function GUI:draw()
     love.graphics.rectangle("fill", wW - 85 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
         200 * scale * math.max((Player.health.current / Player.health.max), 0), 5, 5)
     love.graphics.setColor(1, 1, 1)
+    
+    -- Relics Display
+    love.graphics.draw(self.relicsDisplay.img, self.relicsDisplay.x, self.relicsDisplay.y + self.relicsDisplay.scaleX * 4, 0, self.relicsDisplay.scaleX, 1, self.relicsDisplay.w / 2, self.relicsDisplay.h / 2)
+
     if isMobile and not paused then
         love.graphics.setColor(0, 0, 0, 0.6)
         local lB = self.leftButton

@@ -32,8 +32,8 @@ function Relic:remove()
     for i, v in ipairs(ActiveRelics) do
         if v == self then
             self.physics.body:destroy()
-            table.remove(ActiveFire, i)
-            Player.boost = Player.maxBoost
+            table.remove(ActiveRelics, i)
+            Player.collectedRelics = Player.collectedRelics + 1
         end
     end
 end

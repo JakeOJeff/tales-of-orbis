@@ -57,6 +57,8 @@ function Player:load()
 
     self.pickedUpItem = false
     self.pickedUpItemTime = 0
+    
+    self.collectedRelics = 0
 
     self.physics = {}
     self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
