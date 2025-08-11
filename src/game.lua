@@ -68,6 +68,10 @@ function game:update(dt)
         end
         if Joystick then
             jAxes[1], jAxes[2], jAxes[3], jAxes[4] = Joystick:getAxes() -- lH, lV, rH, rV
+        else
+            for i = 1, 4 do
+                jAxes[i] = 0
+            end
         end
         Camera:update(dt)
         World:update(dt)
