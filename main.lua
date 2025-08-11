@@ -6,7 +6,7 @@ baseW = 1280
 baseH = 720
 
 -- Android/Mobile 
-isMobile = love.system.getOS() == "Android"
+isMobile = false
 
 wW = love.graphics.getWidth()
 wH = love.graphics.getHeight()
@@ -51,7 +51,8 @@ end
 local SceneryInit = require("src.libs.scenery")
 local scenery = SceneryInit({
     path = "src.loading",
-    key = "loading"
+    key = "loading",
+    default = true
 }, {
     path = "src.loadScenes.production",
     key = "production"
@@ -62,8 +63,7 @@ local scenery = SceneryInit({
 
 }, {
     path = "src.cutscenes.intro",
-    key = "intro",
-    default = true
+    key = "intro"
 
 }, {
     path = "src.game",
