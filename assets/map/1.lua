@@ -9,8 +9,8 @@ return {
   height = 45,
   tilewidth = 32,
   tileheight = 32,
-  nextlayerid = 10,
-  nextobjectid = 194,
+  nextlayerid = 11,
+  nextobjectid = 195,
   properties = {},
   tilesets = {
     {
@@ -239,6 +239,37 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 10,
+      name = "cutscene",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 194,
+          name = "act1_scene1",
+          type = "",
+          shape = "rectangle",
+          x = 6240,
+          y = 568,
+          width = 32,
+          height = 520,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["started"] = false
+          }
         }
       }
     },

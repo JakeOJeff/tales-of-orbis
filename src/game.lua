@@ -239,4 +239,9 @@ function hitCheckpoints()
     end
 end
 
+function cutsceneManager()
+
+
+end
+
 return game

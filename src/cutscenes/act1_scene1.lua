@@ -1,8 +1,7 @@
 local intro = {
     scenes = {},
     sceneTexts = { "Why have you come so far?",
-        "For the truth lies in the way you were born",
-        "Say Goodbye to the deserted Sky", "To be Continued..."
+        "For the truth lies in the way you were born", "To be Continued..."
     },
     currentIndex = 1,
     timer = 0,
@@ -11,7 +10,7 @@ local intro = {
 
 function intro:load()
     for i = 1, 7 do
-        self.scenes[i] = love.graphics.newImage("assets/vfx/cutscenes/frame" .. i .. ".png")
+        self.scenes[i] = love.graphics.newImage("assets/vfx/cutscenes/act1scene1/frame" .. i .. ".png")
     end
 end
 
