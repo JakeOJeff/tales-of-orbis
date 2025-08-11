@@ -1,9 +1,8 @@
 local intro = {
     scenes = {},
-    sceneTexts = { "Long ago, the gods danced in basking glory",
-        "They shaped the worlds with light, laughter... and law", "But from their order... came envy",
-        "Null was born, the end... with no beginning", "The war was historic, the gods fought... and fell",
-        "And from their ashes, one spark remained", "Orbis, the last light! The only hope left."
+    sceneTexts = { "Why have you come so far?",
+        "For the truth lies in the way you were born",
+        "Say Goodbye to the deserted Sky", "To be Continued..."
     },
     currentIndex = 1,
     timer = 0,

@@ -1,8 +1,8 @@
 Player = {}
 
 function Player:load()
-    self.x = 4734
-    self.y = 90
+    self.x = 100
+    self.y = 100
     self.checkpointX = self.x
     self.checkpointY = self.y
     self.radius = 14
@@ -85,10 +85,12 @@ function Player:update(dt)
 
     if self.pickedUpItem then
         self.pickedUpItemTime = self.pickedUpItemTime + dt
+                game.shaking = true
         if self.pickedUpItemTime > 0.6 then
             self.pickedUpItem = false
+            self.pickedUpItemItem = 0
+            game.shaking = false
         end
-        game.shaking = true
     end
     movementSFX:setVolume(0.2)
     if airborne or boosting then
