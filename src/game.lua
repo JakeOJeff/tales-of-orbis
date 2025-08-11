@@ -45,6 +45,7 @@ function game:load()
     Map.layers.solid.visible = false
     Map.layers.entity.visible = false
     Map.layers.checkpoints.visible = false
+        Map.layers.cutscene.visible = false
     MapWidth = Map.layers.Base.width * 32
     MapHeight = Map.layers.Base.height * 32
     track:play()
@@ -62,6 +63,7 @@ end
 
 function game:update(dt)
     hitCheckpoints()
+    cutsceneManager()
     if not paused then
         if self.introfadeTimer < 1 then
             self.introfadeTimer = self.introfadeTimer + (.5 * dt)
@@ -89,6 +91,7 @@ function game:draw()
 
 
     -- Draw text
+    love.graphics.push()
     local text = "Escape the Void. Reach the Core. Don't fight it, RUN!"
     local textWidth = paragraph:getWidth(text)
     local textHeight = paragraph:getHeight()
@@ -148,6 +151,9 @@ function game:draw()
         love.graphics.pop()
     end
     GUI:draw()
+            print(scale)
+
+    love.graphics.pop()
 end
 
 function game:keypressed(key)
@@ -240,8 +246,14 @@ function hitCheckpoints()
 end
 
 function cutsceneManager()
-
-
+    for i, v in ipairs(Map.layers.cutscene.objects) do
+        if Player.x > v.x and Player.x < v.x + v.width and Player.y > v.y and Player.y < v.y + v.height then
+            if v.started then return end
+            game.setScene(v.name)
+            print(v.name)
+            v.started = true
+        end
+    end
 end
 
 return game

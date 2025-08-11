@@ -47,6 +47,8 @@ function intro:draw()
 
     love.graphics.setColor(1, 1, 1, (self.fadeTimer / 0.6))
     love.graphics.print(text, (wW - textWidth) / 2, wH - textHeight - 50)
+            print(scale)
+
 end
 
 function intro:keypressed(key)

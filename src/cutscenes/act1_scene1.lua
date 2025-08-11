@@ -1,4 +1,4 @@
-local intro = {
+local a1s1 = {
     scenes = {},
     sceneTexts = { "Why have you come so far?",
         "For the truth lies in the way you were born", "To be Continued..."
@@ -8,23 +8,25 @@ local intro = {
     fadeTimer = 0
 }
 
-function intro:load()
-    for i = 1, 7 do
+function a1s1:load()
+    for i = 1, #self.sceneTexts do
         self.scenes[i] = love.graphics.newImage("assets/vfx/cutscenes/act1scene1/frame" .. i .. ".png")
     end
 end
 
-function intro:update(dt)
+function a1s1:update(dt)
     self.timer = self.timer + dt
     if self.fadeTimer < 1 then
         self.fadeTimer = self.fadeTimer + (.5 * dt)
     end
 end
 
-function intro:draw()
+function a1s1:draw()
     love.graphics.setColor(1, 1, 1, self.fadeTimer)
     if self.scenes[self.currentIndex] then
         love.graphics.push()
+        -- Use the minimum scale that fits the full base resolution in screen
+        print(scale, wW, baseW)
         love.graphics.scale(scale, scale)
         love.graphics.draw(self.scenes[self.currentIndex], cenW, cenH)
         love.graphics.pop()
@@ -47,11 +49,11 @@ function intro:draw()
     love.graphics.print(text, (wW - textWidth) / 2, wH - textHeight - 50)
 end
 
-function intro:keypressed(key)
+function a1s1:keypressed(key)
     self:inputReceived()
 end
 
-function intro:gamepadpressed(joystic, button)
+function a1s1:gamepadpressed(joystic, button)
     isMobile = false
     self:inputReceived()
 end
@@ -61,20 +63,18 @@ end
 -- end
 
 -- Using mouse input for phone as well
-function intro:mousepressed(x, y, button)
+function a1s1:mousepressed(x, y, button)
     self:inputReceived()
 end
 
-function intro:inputReceived()
+function a1s1:inputReceived()
     if self.currentIndex < #self.sceneTexts then
         self.currentIndex = self.currentIndex + 1
         self.timer = 0
         self.fadeTimer = 0
     else
-        -- Transition to next game state here
-        introTrack:stop()
-        intro.setScene("game")
+        a1s1.setScene("game")
     end
 end
 
-return intro
+return a1s1

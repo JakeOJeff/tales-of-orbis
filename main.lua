@@ -62,17 +62,17 @@ local scenery = SceneryInit({
 
 }, {
     path = "src.cutscenes.intro",
-    key = "intro"
+    key = "intro",
+    default = true
 
 }, {
     path = "src.game",
-    key = "game",
-    default = true
+    key = "game"
 }, 
 
 {
     path = "src.cutscenes.act1_scene1",
-    key = "act1_scene1"
+    key = "a1s1"
 }
 )
 

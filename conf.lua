@@ -3,7 +3,7 @@ function love.conf(t)
     t.window.height = 1080  -- 1080 
     t.window.title = "Tales of Orbis"
     t.window.fullscreen = false
-    t.console = false
+    t.console = true
     -- t.window.resizable = true
     t.window.usedpiscale = false
     t.externalstorage = true

@@ -258,7 +258,7 @@ return {
       objects = {
         {
           id = 194,
-          name = "act1_scene1",
+          name = "a1s1",
           type = "",
           shape = "rectangle",
           x = 6240,
