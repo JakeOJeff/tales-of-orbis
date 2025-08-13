@@ -4,7 +4,7 @@
 # or if the current directory is a part of a git repository, it will use the name of
 # the directory containing the git repository.
 # Specify this!
-name = "Tales of Orbis"
+name = "game"
 
 # These are the files included in the .love file.
 # The patterns are evaluated in the order they are specified. If they start with "-" they
