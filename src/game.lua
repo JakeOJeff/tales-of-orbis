@@ -62,6 +62,8 @@ function game:load()
 end
 
 function game:update(dt)
+        isMobile = true
+
     hitCheckpoints()
     cutsceneManager()
     if not paused then

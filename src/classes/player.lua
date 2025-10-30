@@ -59,6 +59,7 @@ function Player:load()
     self.pickedUpItemTime = 0
 
     self.collectedRelics = 0
+    self.touchJumpDebounce = 1
 
     self.physics = {}
     self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
@@ -70,6 +71,8 @@ end
 
 function Player:update(dt)
     self.health.current = self.maxParticles / self.maxParticleLimit * 100
+
+    self.touchJumpDebounce = math.max(0, (self.touchJumpDebounce - 1 * dt))
     if self.health.current <= 0 then
         self:die()
     end
@@ -120,8 +123,9 @@ function Player:update(dt)
         self.maxSpeed = 100 -- 200/4000 = 0.05 seconds
     end
 
-    if GUI.jumpButton.holding then
+    if GUI.jumpButton.holding and self.touchJumpDebounce <= 0 then
         self:jump()
+        self.touchJumpDebounce = 1
     end
 
     self.animations.idle:update(dt)
