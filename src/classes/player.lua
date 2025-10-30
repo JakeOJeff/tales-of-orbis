@@ -67,6 +67,7 @@ function Player:load()
     self.physics.shape = love.physics.newCircleShape(self.radius)
     self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
     self.physics.body:setGravityScale(0)
+    
 end
 
 function Player:update(dt)
@@ -317,6 +318,7 @@ function Player:updateTrail(dt)
             local dx = bx - p.x
             local dy = by - p.y
             local dist = math.sqrt(dx * dx + dy * dy)
+            local playerDist = math.sqrt( (bx - self.x)^2 + (by - self.y)^2)
             local attractRadius = blackhole.attractRadius or 100
             if dist < 20 then
                 -- If too close, remove particle to avoid infinite attraction
@@ -327,22 +329,37 @@ function Player:updateTrail(dt)
                 -- self.graceTime = self.graceDuration
 
 
-                local strength = (dist / attractRadius) * 15000 -- attraction strength
+                -- local strength = (dist / attractRadius) * 15000 -- attraction strength
 
 
-                if not self.isBoosting then
-                    local angle = math.atan2(dy, dx)
-                    p.vx = (p.vx + math.cos(angle) * strength * dt)
-                    p.vy = (p.vy + math.sin(angle) * strength * dt)
-                    self.xVel = p.vx * dt
-                    self.yVel = p.vy * dt
-                else
-                    if self.boost - 0.5 > 0.01 then
-                        self.boost = self.boost - 0.3 * dt
-                    end
-                end
+                -- if not self.isBoosting then
+                --     local angle = math.atan2(dy, dx)
+                --     p.vx = (p.vx + math.cos(angle) * strength * dt)
+                --     p.vy = (p.vy + math.sin(angle) * strength * dt)
+                    -- self.xVel = p.vx * dt
+                    -- self.yVel = p.vy * dt
+                -- else
+                --     if self.boost - 0.5 > 0.01 then
+                --         self.boost = self.boost - 0.3 * dt
+                --     end
+                -- end
+                local strength = (1 - dist / attractRadius) * 15000
+                local angle = math.atan2(dy, dx)
 
+                -- Tangential (spiral) force
+                local tangentAngle = angle + math.pi / 2
+                local spinStrength = (1 - dist / attractRadius) * 3000
 
+                -- if not self.isBoosting and playerDist < attractRadius/2 then
+                --     self.xVel = p.vx * dt
+                --     self.yVel = p.vy * dt
+                -- end
+
+                p.vx = p.vx + (math.cos(angle) * strength + math.cos(tangentAngle) * spinStrength) * dt
+                p.vy = p.vy + (math.sin(angle) * strength + math.sin(tangentAngle) * spinStrength) * dt
+                local warpFactor = 1 + 0.2 * math.sin(dist * 0.1 - love.timer.getTime() * 3)
+                p.x = p.x + dx / dist * warpFactor * dt * 10
+                p.y = p.y + dy / dist * warpFactor * dt * 10
                 self.maxParticles = math.max(self.maxParticles - .5 * strength / 8000 * dt, 0) -- reduce max particles if attracted
             end
         end
