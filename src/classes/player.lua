@@ -13,7 +13,7 @@ function Player:load()
     self.acceleration = 1000
     self.friction = 2000
 
-    self.gravity = 100
+    self.gravity = 125
     self.grounded = false
     self.jumpAmount = -175
     self.currentGroundCollision = nil
