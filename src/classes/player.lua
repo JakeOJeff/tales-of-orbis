@@ -75,9 +75,11 @@ function Player:update(dt)
 
     if self.pickedUpGrace <= 0 then
         self.pickedUpItem = false
+        self.shaking = false
     else
         self.pickedUpGrace = self.pickedUpGrace - 1 * dt
         self.pickedUpItem = true
+        self.shaking = true
     end
 
 
