@@ -16,7 +16,7 @@ function Block.new(x, y)
     instance.physics.body = love.physics.newBody(World, instance.x, instance.y, "dynamic")
     instance.physics.shape = love.physics.newRectangleShape(instance.width, instance.height)
     instance.physics.fixture = love.physics.newFixture(instance.physics.body, instance.physics.shape)
-    instance.physics.body:setMass(15)
+    instance.physics.body:setMass(5)
     table.insert(ActiveBlocks, instance)
     return instance
 end
