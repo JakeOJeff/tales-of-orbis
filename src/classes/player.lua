@@ -56,7 +56,7 @@ function Player:load()
     self.bobRange = 10
 
     self.pickedUpItem = false
-    self.pickedUpItemTime = 0
+    self.pickedUpGrace = 0
 
     self.collectedRelics = 0
     self.touchJumpDebounce = 1
@@ -73,6 +73,13 @@ end
 function Player:update(dt)
     self.health.current = self.maxParticles / self.maxParticleLimit * 100
 
+    if self.pickedUpGrace <= 0 then
+        self.pickedUpItem = true
+    else
+        self.pickedUpGrace = self.pickedUpItem - 1 * dt
+    end
+
+
     self.touchJumpDebounce = math.max(0, (self.touchJumpDebounce - 1 * dt))
     if self.health.current <= 0 then
         self:die()
@@ -87,15 +94,15 @@ function Player:update(dt)
 
     game.shaking = boosting
 
-    if self.pickedUpItem then
-        self.pickedUpItemTime = self.pickedUpItemTime + dt
-                game.shaking = true
-        if self.pickedUpItemTime > 0.6 then
-            self.pickedUpItem = false
-            self.pickedUpItemItem = 0
-            game.shaking = false
-        end
-    end
+    -- if self.pickedUpItem then
+    --     self.pickedUpItemTime = self.pickedUpItemTime + dt
+    --             game.shaking = true
+    --     if self.pickedUpItemTime > 0.6 then
+    --         self.pickedUpItem = false
+    --         self.pickedUpItemItem = 0
+    --         game.shaking = false
+    --     end
+    -- end
     movementSFX:setVolume(0.1)
     if airborne or boosting then
         -- Particle properties
