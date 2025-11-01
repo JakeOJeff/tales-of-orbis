@@ -25,7 +25,7 @@ end
 
 function Relic:update(dt)
     self:spin(dt)
-    self:checkRemoved()
+    self:checkRemoved(dt)
 end
 
 function Relic:remove()
@@ -48,12 +48,20 @@ function Relic.updateAll(dt)
     end
 end
 
-function Relic:checkRemoved()
-    if self.toBeRemoved then
-        self:remove()
+function Relic:checkRemoved(dt) 
+    if self.toBeRemoved then 
+        local img = GUI.relicsDisplay.img.src 
+        local iw, ih = img:getWidth(), img:getHeight() 
+        local dx = GUI.relicsDisplay.x + (GUI.relicsDisplay.w - iw * scale) / 2 + 128
+        local dy = GUI.relicsDisplay.y + (GUI.relicsDisplay.h - ih * scale) / 2 + 20 + self.scaleX + 72 
+        if self.x > dx  * scale and self.y > dy  * scale then 
+            self.x = self.x - 30 * wW/100 * dt 
+            self.y = self.y - 30 * wH/100 * dt 
+        else 
+            self:remove() 
+        end
     end
 end
-
 function Relic:draw()
     love.graphics.draw(self.img, self.x, self.y + self.scaleX * 4, 0, self.scaleX, 1, self.width / 2, self.height / 2)
 end

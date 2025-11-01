@@ -10,7 +10,7 @@ return {
   tilewidth = 32,
   tileheight = 32,
   nextlayerid = 12,
-  nextobjectid = 201,
+  nextobjectid = 202,
   properties = {},
   tilesets = {
     {
@@ -880,6 +880,19 @@ return {
           shape = "rectangle",
           x = 1024,
           y = 864,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 201,
+          name = "Relic",
+          type = "",
+          shape = "ellipse",
+          x = 352,
+          y = 416,
           width = 32,
           height = 32,
           rotation = 0,
