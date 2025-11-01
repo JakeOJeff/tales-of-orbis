@@ -25,7 +25,7 @@ end
 
 function Fire:update(dt)
     self:spin(dt)
-    self:checkRemoved()
+    self:checkRemoved(dt)
 end
 
 function Fire:remove()
@@ -33,7 +33,7 @@ function Fire:remove()
         if v == self then
             self.physics.body:destroy()
             table.remove(ActiveFire, i)
-            Player.boost = Player.maxBoost
+            
         end
     end
 end
@@ -48,9 +48,13 @@ function Fire.updateAll(dt)
     end
 end
 
-function Fire:checkRemoved()
+function Fire:checkRemoved(dt)
     if self.toBeRemoved then
-        self:remove()
+        if Player.boost < Player.maxBoost then
+            Player.boost = Player.boost + 100 * dt
+        else
+            self:remove()
+        end
     end
 end
 
