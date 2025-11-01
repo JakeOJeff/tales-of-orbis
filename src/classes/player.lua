@@ -484,6 +484,10 @@ function Player:draw()
         local pY = self.y + offset
 
         if self.pickedUpItem then
+            love.graphics.setColor(0.79, 0.5, 0.19, self.pickedUpGrace * 4)
+            love.graphics.circle("fill", pX, pY, 50 * (self.pickedUpGrace * 4))
+            love.graphics.setColor(0.79 + 0.1, 0.5 + 0.1, 0.19 + 0.1, self.pickedUpGrace * 4)
+            love.graphics.circle("fill", pX, pY, 50 * (self.pickedUpGrace * 2))
             love.graphics.setColor(0.79, 0.5, 0.19, self.maxParticles / self.maxParticleLimit)
         end
         -- love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
