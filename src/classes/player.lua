@@ -67,6 +67,8 @@ function Player:load()
     self.physics.shape = love.physics.newCircleShape(self.radius)
     self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
     self.physics.body:setGravityScale(0)
+
+    -- self.lightCanvas = love.graphics.newCanvas(love.graphics.getWidth(), love.graphics.getHeight())
     
 end
 
@@ -421,6 +423,46 @@ function Player:syncPhysics()
     self.physics.body:setLinearVelocity(self.xVel, self.yVel)
 end
 
+-- function Player:drawLight(map, worldCanvas)
+--     if not self.lightCanvas then
+--         self.lightCanvas = love.graphics.newCanvas(love.graphics.getWidth(), love.graphics.getHeight())
+--     end
+
+--     love.graphics.setCanvas(self.lightCanvas)
+--     love.graphics.clear(0, 0, 0, 1)
+
+--     -- add light only to solid tiles (or your logic)
+--     for _, layer in ipairs(map.layers) do
+--         if layer.name == "Solid" then
+--             for y, row in ipairs(layer.data) do
+--                 for x, tile in ipairs(row) do
+--                     if tile then
+--                         local tx = (x - 1) * map.tilewidth
+--                         local ty = (y - 1) * map.tileheight
+--                         local dist = ((self.x - tx)^2 + (self.y - ty)^2)^0.5
+--                         if dist < 100 * scale then
+--                             love.graphics.setColor(1, 1, 1, 0.15)
+--                             love.graphics.rectangle("fill", tx, ty, map.tilewidth, map.tileheight)
+--                         end
+--                     end
+--                 end
+--             end
+--         end
+--     end
+
+--     love.graphics.setColor(1, 1, 1, 0.25)
+--     love.graphics.circle("fill", self.x, self.y, 100 * scale)
+
+--     love.graphics.setCanvas()
+
+--     -- Blend lighting only with worldCanvas (not background)
+--     love.graphics.setBlendMode("multiply", "premultiplied")
+--     love.graphics.draw(worldCanvas, 0, 0)
+--     love.graphics.draw(self.lightCanvas, 0, 0)
+--     love.graphics.setBlendMode("alpha")
+-- end
+
+
 function Player:draw()
     if not paused then
         for _, p in ipairs(self.particles) do
@@ -434,6 +476,9 @@ function Player:draw()
         if not paused then
             offset = (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed))
         end
+        -- love.graphics.setColor(1, 1, 1, 0.01) -- light
+        -- love.graphics.circle("fill", self.x, self.y, 100 * scale)
+
         love.graphics.setColor(1, 1, 1, self.maxParticles / self.maxParticleLimit) -- reset color
         local pX = self.x
         local pY = self.y + offset
