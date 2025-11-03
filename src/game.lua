@@ -2,6 +2,8 @@ game = {
     background = love.graphics.newImage("assets/vfx/loading/background.png"),
     scale = scale + 1.5,
     shaking = false,
+    blasting = false,
+    downBlast = 1,
     backgroundLayers = {
         layer3 = love.graphics.newImage("assets/vfx/parallex/layer3.png"),
         layer2 = love.graphics.newImage("assets/vfx/parallex/layer2.png"),
@@ -146,7 +148,7 @@ function game:draw()
 
     if self.shaking then
         dx = love.math.random(-1, 1)
-        dy = love.math.random(-1, 1)
+        dy = love.math.random(-1 * game.downBlast, 1 * game.downBlast)
         love.graphics.push()
     end
     
