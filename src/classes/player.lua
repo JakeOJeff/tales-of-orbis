@@ -89,16 +89,6 @@ function Player:update(dt)
     local boosting = self.isBoosting
 
     game.shaking = boosting
-
-    -- if self.pickedUpItem then
-    --     self.pickedUpItemTime = self.pickedUpItemTime + dt
-    --             game.shaking = true
-    --     if self.pickedUpItemTime > 0.6 then
-    --         self.pickedUpItem = false
-    --         self.pickedUpItemItem = 0
-    --         game.shaking = false
-    --     end
-    -- end
     movementSFX:setVolume(0.1)
     if airborne or boosting then
         -- Particle properties
