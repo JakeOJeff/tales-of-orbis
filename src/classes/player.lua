@@ -132,11 +132,7 @@ function Player:update(dt)
         self.touchJumpDebounce = 1
     end
 
-    if self.health.current <= 0 then
-        self:die()
-    end
-
-    if self.y > MapHeight then
+    if self.health.current <= 0 or self.y > MapHeight then
         self:die()
     end
 
