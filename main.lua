@@ -16,7 +16,7 @@ Baton = require "src.libs.baton"
 
 -- Set fullscreen for mobile and trigger resize logic
 if isMobile and not love.window.getFullscreen() then
-    love.window.setFullscreen(true, "exclusive")
+    love.window.setFullscreen(true, "desktop")
 end
 
 -- Use the minimum scale that fits the full base resolution in screen

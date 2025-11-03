@@ -165,9 +165,13 @@ function game:draw()
     Map:draw(-Camera.x + dx, -Camera.y + dy, self.scale, self.scale)
 
     Camera:apply(self.shaking, dx, dy)
+    MovementShader:send("time", self.time)
+
     for _, v in ipairs(Map.layers.checkpoints.objects) do
         love.graphics.setColor(0,1,0, 0.1)
+        love.graphics.setShader(MovementShader)
         love.graphics.rectangle("fill", v.x, v.y, v.width, v.height)
+        love.graphics.setShader()
         love.graphics.setColor(1,1,1)
     end
     Player:draw()
