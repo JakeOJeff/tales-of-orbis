@@ -3,6 +3,7 @@ game = {
     scale = scale + 1.5,
     shaking = false,
     blasting = false,
+    blastTime = 0,
     downBlast = 1,
     backgroundLayers = {
         layer3 = love.graphics.newImage("assets/vfx/parallex/layer3.png"),
@@ -81,6 +82,7 @@ function game:update(dt)
             self.blastTime = self.blastTime - dt
         else
             self.blasting = false
+            self.downBlast = 1
         end
         -- if Joystick then
         --     jAxes[1], jAxes[2], jAxes[3], jAxes[4] = Joystick:getAxes() -- lH, lV, rH, rV
