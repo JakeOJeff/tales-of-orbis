@@ -46,18 +46,22 @@ vec4 effect(vec4 color, Image tex, vec2 texCoord, vec2 screenCoord)
     vec2 su = vec2(sampleUV.x * aspect, sampleUV.y);
 
     float y = sampleUV.y;
-    vec2 np = vec2(su.x * 2.2, (su.y * 2.2) - time * 1.2);
+    vec2 np = vec2(su.x * 2.2, (su.y * 2.2) - time * 0.6); // speed change
     float n = fbm(np);
-    float flick = fbm(np * 3.0 + vec2(0.0, time * 2.5)) * 0.35;
+    float flick = fbm(np * 3.0 + vec2(0.0, time * 1.6)) * 0.35; // flick change
 
     float h = pow(clamp(1.0 - y * 1.25, 0.0, 1.0), 1.4);
     float i = max(0.0, n * 0.9 + flick) * h;
     float center = smoothstep(0.5, 0.0, abs(su.x - 0.5)) * 0.8;
-    i += center * 0.35 * h;
-    i = pow(i, 1.6);
+    i += center * 0.1 * h;
+    i = pow(i, 1.5);
 
-    vec3 col = baseColor * i * 1.6;
-    col = clamp(col, 0.0, 1.0);
+    // Compute color based on intensity
+    vec3 col = baseColor * i;
 
-    return vec4(col, 1.0);
+    // Make low-intensity (black) areas transparent
+    float alpha = smoothstep(0.05, 0.3, i); // Lower first value = more transparent black
+    col *= alpha; // Fade color with alpha too
+
+    return vec4(col, alpha);
 }

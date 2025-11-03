@@ -50,7 +50,7 @@ function game:load()
     MapHeight = Map.layers.Base.height * 32
 
     DustShader = love.graphics.newShader("src/shaders/dust.glsl")
-    DustShader:send("pixelSize", 2.0)
+    DustShader:send("pixelSize", 1.0)
     DustShader:send("baseColor", {1, 1, 1})
 
     self.time = 0
@@ -137,13 +137,17 @@ function game:draw()
             end
         end
     end
-    love.graphics.setShader(DustShader)
-    love.graphics.rectangle("fill", 0, 0, wW, wH)
-    love.graphics.setShader()
+    love.graphics.setBlendMode("alpha", "premultiplied")
+
+
 
     drawParallax("layer3", 0.05)
     drawParallax("layer2", 0.15)
     drawParallax("layer1", 0.25)
+        love.graphics.setShader(DustShader)
+    love.graphics.rectangle("fill", 0, 0, wW, wH)
+    love.graphics.setShader()
+    love.graphics.setBlendMode("alpha")
     local dx = 0
     local dy = 0
 
