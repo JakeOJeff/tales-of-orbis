@@ -337,28 +337,11 @@ function Player:updateTrail(dt)
             local playerDist = math.sqrt( (bx - self.x)^2 + (by - self.y)^2)
             local attractRadius = blackhole.attractRadius or 100
             if dist < 20 then
-                -- If too close, remove particle to avoid infinite attraction
                 table.remove(self.particles, i)
                 break
             end
             if dist < attractRadius then
-                -- self.graceTime = self.graceDuration
 
-
-                -- local strength = (dist / attractRadius) * 15000 -- attraction strength
-
-
-                -- if not self.isBoosting then
-                --     local angle = math.atan2(dy, dx)
-                --     p.vx = (p.vx + math.cos(angle) * strength * dt)
-                --     p.vy = (p.vy + math.sin(angle) * strength * dt)
-                    -- self.xVel = p.vx * dt
-                    -- self.yVel = p.vy * dt
-                -- else
-                --     if self.boost - 0.5 > 0.01 then
-                --         self.boost = self.boost - 0.3 * dt
-                --     end
-                -- end
                 local strength = (1 - dist / attractRadius) * 15000
                 local angle = math.atan2(dy, dx)
 
@@ -366,10 +349,6 @@ function Player:updateTrail(dt)
                 local tangentAngle = angle + math.pi / 2
                 local spinStrength = (1 - dist / attractRadius) * 3000
 
-                -- if not self.isBoosting and playerDist < attractRadius/2 then
-                --     self.xVel = p.vx * dt
-                --     self.yVel = p.vy * dt
-                -- end
 
                 p.vx = p.vx + (math.cos(angle) * strength + math.cos(tangentAngle) * spinStrength) * dt
                 p.vy = p.vy + (math.sin(angle) * strength + math.sin(tangentAngle) * spinStrength) * dt
@@ -427,44 +406,6 @@ function Player:syncPhysics()
     self.physics.body:setLinearVelocity(self.xVel, self.yVel)
 end
 
--- function Player:drawLight(map, worldCanvas)
---     if not self.lightCanvas then
---         self.lightCanvas = love.graphics.newCanvas(love.graphics.getWidth(), love.graphics.getHeight())
---     end
-
---     love.graphics.setCanvas(self.lightCanvas)
---     love.graphics.clear(0, 0, 0, 1)
-
---     -- add light only to solid tiles (or your logic)
---     for _, layer in ipairs(map.layers) do
---         if layer.name == "Solid" then
---             for y, row in ipairs(layer.data) do
---                 for x, tile in ipairs(row) do
---                     if tile then
---                         local tx = (x - 1) * map.tilewidth
---                         local ty = (y - 1) * map.tileheight
---                         local dist = ((self.x - tx)^2 + (self.y - ty)^2)^0.5
---                         if dist < 100 * scale then
---                             love.graphics.setColor(1, 1, 1, 0.15)
---                             love.graphics.rectangle("fill", tx, ty, map.tilewidth, map.tileheight)
---                         end
---                     end
---                 end
---             end
---         end
---     end
-
---     love.graphics.setColor(1, 1, 1, 0.25)
---     love.graphics.circle("fill", self.x, self.y, 100 * scale)
-
---     love.graphics.setCanvas()
-
---     -- Blend lighting only with worldCanvas (not background)
---     love.graphics.setBlendMode("multiply", "premultiplied")
---     love.graphics.draw(worldCanvas, 0, 0)
---     love.graphics.draw(self.lightCanvas, 0, 0)
---     love.graphics.setBlendMode("alpha")
--- end
 
 
 function Player:draw()
