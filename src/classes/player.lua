@@ -198,6 +198,10 @@ function Player:move(dt)
         self:applyFriction(dt)
     end
 
+    if Input:pressed 'jump' then
+        self:jump()
+    end
+
     local activeDevice = Input:getActiveDevice()
     local isBoostKeyDown = Input:down 'boost' or GUI.boostButton.holding
 
@@ -238,9 +242,7 @@ function Player:decreaseGraceTime(dt)
 end
 
 function Player:keyboardInput(key)
-    if key == "space" or key == "w" or key == "up" then
-        self:jump()
-    end
+
 end
 
 function Player:gamepadInput(button)
