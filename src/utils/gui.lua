@@ -4,8 +4,10 @@ function GUI:load()
     local buttonW = 130 * scale
     local buttonH = 130 * scale
     local imgW = love.graphics.newImage("assets/vfx/icons/left.png"):getWidth()
-    local jumpW = 80 * scale
-    local jumpH = 80 * scale
+    local jumpW = 100 * scale
+    local jumpH = 100 * scale
+    local boostW = 80 * scale
+    local boostH = 80 * scale
 
     local navW = 75 * scale
     local navH = 75 * scale
@@ -45,10 +47,10 @@ function GUI:load()
     }
 
     self.boostButton = {
-        x = wW - jumpW - 190 * scale, -- 80 is right-side padding
-        y = wH - jumpH - 90 * scale,  -- padding from bottom
-        w = jumpW,
-        h = jumpH,
+        x = wW - boostW - 190 * scale, -- 80 is right-side padding
+        y = wH - boostH - 90 * scale,  -- padding from bottom
+        w = boostW,
+        h = boostH,
         img = {
             x = 0,
             y = 0,
@@ -58,9 +60,23 @@ function GUI:load()
         },
         holding = false
     }
+    self.diveButton = {
+        x = wW - boostW - 90 * scale, -- 80 is right-side padding
+        y = wH - boostH - 50 * scale,  -- padding from bottom
+        w = boostW,
+        h = boostH,
+        img = {
+            x = 0,
+            y = 0,
+            w = imgW / scale,
+            h = imgW / scale,
+            src = love.graphics.newImage("assets/vfx/icons/dive.png")
+        },
+        holding = false
+    }
     self.jumpButton = {
         x = wW - jumpW - 90 * scale,  -- 80 is right-side padding
-        y = wH - jumpH - 190 * scale, -- padding from bottom
+        y = wH - jumpH - 160 * scale, -- padding from bottom
         w = jumpW,
         h = jumpH,
         img = {
@@ -136,6 +152,7 @@ function GUI:update(dt)
     local rtB = self.resetButton
     local pB = self.pauseButton
     local rsB = self.resumeButton
+    local dB = self.diveButton
 
     -- Reset all holding states
     lB.holding = false
@@ -145,6 +162,7 @@ function GUI:update(dt)
     rtB.holding = false
     pB.holding = false
     rsB.holding = false
+    dB.holding = false
 
 
     if jB.holdTime and jB.holdTime > 0 then
@@ -169,6 +187,9 @@ function GUI:update(dt)
         if distRect(x, y, jB.x, jB.y, jB.w, jB.h) then
             jB.holding = true
             jB.holdTime = (jB.holdTime or 0) + dt
+        end
+        if distRect(x, y, dB.x, dB.y, dB.w, dB.h) and not Player.grounded then
+            dB.holding = true
         end
     end
     if distRect(love.mouse.getX(), love.mouse.getY(), rsB.x, rsB.y, rsB.w, rsB.h) then
@@ -201,6 +222,7 @@ function GUI:draw()
         local rB = self.rightButton
         local jB = self.jumpButton
         local bB = self.boostButton
+        local dB = self.diveButton
 
         if lB.holding then
             love.graphics.setColor(0.1, 0.1, 0.1, 0.6)
@@ -233,6 +255,16 @@ function GUI:draw()
         love.graphics.setColor(1, 1, 1)
         self:drawButtonImage(jB)
         love.graphics.setColor(0, 0, 0, 0.6)
+
+        if not Player.grounded  then
+            if dB.holding then
+                love.graphics.setColor(0.1, 0.1, 0.1, 0.6)
+            end
+            love.graphics.rectangle("fill", dB.x, dB.y, dB.w, dB.h, 40, 40)
+            love.graphics.setColor(1, 1, 1)
+            self:drawButtonImage(dB)
+            love.graphics.setColor(0, 0, 0, 0.6)
+        end
 
         love.graphics.setColor(1, 1, 1)
     end
