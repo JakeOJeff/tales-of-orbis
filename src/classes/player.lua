@@ -201,6 +201,10 @@ function Player:move(dt)
     local activeDevice = Input:getActiveDevice()
     local isBoostKeyDown = Input:down 'boost' or GUI.boostButton.holding
 
+    if activeDevice == "kbm" or activeDevice == "joy" then
+        isMobile = false
+    end
+
 
     if (isBoostKeyDown) and self.boost > 0 then
         self.boost = math.max(0.01, self.boost - 5 * dt)
