@@ -164,17 +164,15 @@ function game:draw()
 
     Camera:apply(self.shaking, dx, dy)
     Player:draw()
-    Fire.drawAll()
     Blackhole.drawAll()
     Block.drawAll()
     Relic.drawAll()
+    Fire.drawAll()
     Camera:clear()
     if self.shaking  or self.blasting then
         love.graphics.pop()
     end
     GUI:draw()
-            print(scale)
-
     love.graphics.pop()
 end
 

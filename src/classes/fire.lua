@@ -73,7 +73,7 @@ function Fire.beginContact(a, b, collision)
         if a == v.physics.fixture or b == v.physics.fixture then
             if a == Player.physics.fixture or b == Player.physics.fixture then
                 v.toBeRemoved = true
-                Player.pickedUpGrace = 4
+                Player.pickedUpGrace = .75
                 return true
             end
         end
