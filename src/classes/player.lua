@@ -285,8 +285,9 @@ function Player:beginContact(a, b, collision)
         return
     end
     local nx, ny = collision:getNormal()
-    if (a == self.physics.fixture or b == self.physics.fixture) then
-        game.blastTime = 3
+
+    if self.yVel > 400 then
+        game.blastTime = 0.5
         game.downBlast = 10
     end
     if a == self.physics.fixture then
