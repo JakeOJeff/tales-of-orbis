@@ -52,6 +52,8 @@ function game:load()
     MapWidth = Map.layers.Base.width * 32
     MapHeight = Map.layers.Base.height * 32
 
+    MovementShader = love.graphics.newShader("src/shaders/movement.glsl")
+
 
     self.time = 0
     track:play()
@@ -163,6 +165,11 @@ function game:draw()
     Map:draw(-Camera.x + dx, -Camera.y + dy, self.scale, self.scale)
 
     Camera:apply(self.shaking, dx, dy)
+    for _, v in ipairs(Map.layers.checkpoints.objects) do
+        love.graphics.setColor(0,1,0, 0.1)
+        love.graphics.rectangle("fill", v.x, v.y, v.width, v.height)
+        love.graphics.setColor(1,1,1)
+    end
     Player:draw()
     Blackhole.drawAll()
     Block.drawAll()
@@ -172,6 +179,7 @@ function game:draw()
     if self.shaking  or self.blasting then
         love.graphics.pop()
     end
+
     GUI:draw()
     love.graphics.pop()
 end
