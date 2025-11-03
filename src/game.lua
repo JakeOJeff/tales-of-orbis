@@ -144,9 +144,7 @@ function game:draw()
     drawParallax("layer3", 0.1)
     drawParallax("layer2", 0.2)
     drawParallax("layer1", 0.4)
-        love.graphics.setShader(DustShader)
-    love.graphics.rectangle("fill", 0, 0, wW, wH)
-    love.graphics.setShader()
+
     love.graphics.setBlendMode("alpha")
     local dx = 0
     local dy = 0
