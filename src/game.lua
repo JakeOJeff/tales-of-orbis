@@ -157,8 +157,8 @@ function game:draw()
     local dy = 0
 
     if self.shaking or self.blasting then
-        dx = love.math.random(-1, 1)
-        dy = love.math.random(-1 * game.downBlast, 1 * game.downBlast)
+        dx = love.math.random(-1 * game.downBlast, 1 * game.downBlast)
+        dy = love.math.random(-1, 1)
         love.graphics.push()
     end
     

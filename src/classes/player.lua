@@ -287,8 +287,8 @@ function Player:beginContact(a, b, collision)
     local nx, ny = collision:getNormal()
 
     if self.yVel > 400 then
-        game.blastTime = 0.5
-        game.downBlast = 10
+        game.blastTime = 0.25
+        game.downBlast = 2
     end
     if a == self.physics.fixture then
         if ny > 0 then
