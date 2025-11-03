@@ -76,6 +76,12 @@ function game:update(dt)
         if self.introfadeTimer < 1 then
             self.introfadeTimer = self.introfadeTimer + (.5 * dt)
         end
+        if self.blastTime >= 0 then
+            self.blasting = true
+            self.blastTime = self.blastTime - dt
+        else
+            self.blasting = false
+        end
         -- if Joystick then
         --     jAxes[1], jAxes[2], jAxes[3], jAxes[4] = Joystick:getAxes() -- lH, lV, rH, rV
         -- else
@@ -146,7 +152,7 @@ function game:draw()
     local dx = 0
     local dy = 0
 
-    if self.shaking then
+    if self.shaking or self.blasting then
         dx = love.math.random(-1, 1)
         dy = love.math.random(-1 * game.downBlast, 1 * game.downBlast)
         love.graphics.push()
