@@ -46,8 +46,24 @@ function Blackhole:draw()
     love.graphics.draw(self.img, self.x + offsetX, self.y + offsetY, 0, self.scaleX, 1, self.width / 2, self.height / 2)
 end
 
-function Blackhole.drawAll()
+function Blackhole:drawAll()
+
+    local src = self.sceneCanvas
+    local dst = self.tempCanvas
+
+
     for i, v in ipairs(ActiveHoles) do
+        local cx, cy = v.x, v.y   
+        local radius = v.attractRadius or 120
+        local strength = 1.0         
+        local twist = 4.0            
+
+        self:applyWarp(self.shader, src, dst, cx, cy, radius, strength, twist)
+
+        -- swap src/dst so next blackhole uses output of this pass
+        src, dst = dst, src
+
+         love.graphics.draw(src, 0, 0)
         v:draw()
     end
 end
@@ -70,7 +86,7 @@ function Blackhole.clear()
     ActiveHoles = {}
 end
 
-function Blackhole.applyWarp(shader, sourceCanvas, destCanvas, centerX, centerY, radius, strength, twist)
+function Blackhole:applyWarp(shader, sourceCanvas, destCanvas, centerX, centerY, radius, strength, twist)
     love.graphics.setShader(shader)
     shader:send("center", {centerX, centerY})
     shader:send("radius", radius)
