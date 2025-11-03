@@ -77,22 +77,13 @@ function Player:update(dt)
 
     if self.pickedUpGrace <= 0 then
         self.pickedUpItem = false
-        self.shaking = false
     else
         self.pickedUpGrace = self.pickedUpGrace - 1 * dt
         self.pickedUpItem = true
-        self.shaking = true
     end
 
 
     self.touchJumpDebounce = math.max(0, (self.touchJumpDebounce - 1 * dt))
-    if self.health.current <= 0 then
-        self:die()
-    end
-
-    if self.y > MapHeight then
-        self:die()
-    end
 
     local airborne = not self.grounded
     local boosting = self.isBoosting
@@ -141,6 +132,15 @@ function Player:update(dt)
         self.touchJumpDebounce = 1
     end
 
+    if self.health.current <= 0 then
+        self:die()
+    end
+
+    if self.y > MapHeight then
+        self:die()
+    end
+
+    Input:update()
     self.animations.idle:update(dt)
     self:updateTrail(dt)
     self:respawn()
@@ -189,24 +189,27 @@ end
 
 -- function Player
 function Player:move(dt)
-    if love.keyboard.isDown("d", "right") or jAxes[1] > 0.2 or GUI.rightButton.holding then -- small deadzone
-        self.xVel = math.min(self.xVel + self.acceleration * dt, self.maxSpeed)
-    elseif love.keyboard.isDown("a", "left") or (jAxes[1] or 0) < -0.2 or GUI.leftButton.holding then
-        self.xVel = math.max(self.xVel - self.acceleration * dt, -self.maxSpeed)
-    else
-        self:applyFriction(dt)
-    end
+    -- if love.keyboard.isDown("d", "right") or jAxes[1] > 0.2 or GUI.rightButton.holding then -- small deadzone
+    --     self.xVel = math.min(self.xVel + self.acceleration * dt, self.maxSpeed)
+    -- elseif love.keyboard.isDown("a", "left") or (jAxes[1] or 0) < -0.2 or GUI.leftButton.holding then
+    --     self.xVel = math.max(self.xVel - self.acceleration * dt, -self.maxSpeed)
+    -- else
+    --     self:applyFriction(dt)
+    -- end
 
-    local isBoostKeyDown = love.keyboard.isDown("lshift", "lctrl") or GUI.boostButton.holding
-    local isJoystickBoost = false
+    -- local isBoostKeyDown = love.keyboard.isDown("lshift", "lctrl") or GUI.boostButton.holding
+    -- local isJoystickBoost = false
 
-    if Joystick then
-        isJoystickBoost = Joystick:isGamepadDown("leftstick")
-    end
+    -- if Joystick then
+    --     isJoystickBoost = Joystick:isGamepadDown("leftstick")
+    -- end
 
-    if jAxes[1] ~= 0 then
-        isMobile = false
-    end
+    -- if jAxes[1] ~= 0 then
+    --     isMobile = false
+    -- end
+
+    local activeDevice = Input:getActiveDevice()
+    
 
     if (isBoostKeyDown or isJoystickBoost) and self.boost > 0 then
         self.boost = math.max(0.01, self.boost - 5 * dt)

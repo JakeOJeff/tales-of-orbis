@@ -11,6 +11,9 @@ isMobile = false
 wW = love.graphics.getWidth()
 wH = love.graphics.getHeight()
 
+-- Global Libs
+Baton = require "src.libs.baton"
+
 -- Set fullscreen for mobile and trigger resize logic
 if isMobile and not love.window.getFullscreen() then
     love.window.setFullscreen(true, "exclusive")
@@ -31,7 +34,19 @@ cenH = (scaledH - baseH) / 2
 heading = love.graphics.newFont("assets/fonts/nihonium.ttf", 90 * scale)
 subheading = love.graphics.newFont("assets/fonts/nihonium.ttf", 64* scale)
 paragraph = love.graphics.newFont("assets/fonts/nihonium.ttf", 48 * scale)
+
 -- Input Connections 
+Input = Baton.new {
+    controls = {
+        left = {'key:left', 'key:a', 'axis:leftx-', 'button:dpleft'},
+        right = {'key:right', 'key:d', 'axis:leftx+', 'button:dpright'},
+        jump = {'key:up', 'key:w', 'key:space', 'axis:lefty-', 'button:dpup'},
+        dive = {'key:down', 'key:s', 'axis:lefty+', 'button:dpdown'},
+        boost = {'key:x', 'key:lshift', 'button:a'},
+    },
+    joystick = love.joystick.getJoysticks()[1]
+}
+
 joysticks = love.joystick.getJoysticks()
 Joystick = joysticks[1] or nil
 jAxes = {0, 0, 0, 0}
@@ -39,7 +54,7 @@ jAxes = {0, 0, 0, 0}
 paused = false
 
 -- if isMobile then
---         love.window.setFullscreen(true)
+--    love.window.setFullscreen(true)
 -- end
 
 -- Manually call resize logic for correct GUI and canvas scaling
@@ -97,7 +112,6 @@ end
 
 function dist(x1, y1, x2, y2)
     return math.sqrt((x2 - x1) ^ 2 - (y2 - y1) ^ 2)
-
 end
 
 function distRect(mx, my, x, y, width, height)

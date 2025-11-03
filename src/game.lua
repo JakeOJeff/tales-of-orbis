@@ -79,13 +79,13 @@ function game:update(dt)
         if self.introfadeTimer < 1 then
             self.introfadeTimer = self.introfadeTimer + (.5 * dt)
         end
-        if Joystick then
-            jAxes[1], jAxes[2], jAxes[3], jAxes[4] = Joystick:getAxes() -- lH, lV, rH, rV
-        else
-            for i = 1, 4 do
-                jAxes[i] = 0
-            end
-        end
+        -- if Joystick then
+        --     jAxes[1], jAxes[2], jAxes[3], jAxes[4] = Joystick:getAxes() -- lH, lV, rH, rV
+        -- else
+        --     for i = 1, 4 do
+        --         jAxes[i] = 0
+        --     end
+        -- end
         Camera:update(dt)
         World:update(dt)
         Camera:setPosition(Player.x, Player.y)
