@@ -13,6 +13,13 @@ function Blackhole.new(x, y, attractRadius, offsetRange)
     instance.offsetRange = offsetRange or 3
     instance.damage = 1
 
+    instance.sceneCanvas = love.graphics.newCanvas(wW, wH)
+    instance.tempCanvas = love.graphics.newCanvas(wW, wH)
+
+    instance.shader = love.graphics.newShader("src/shaders/blackhole.glsl")
+    instance.shader:send("screenSize", {wW, wH})
+    instance.shader:send("time", 0.0)
+
     instance.physics = {}
     instance.physics.body = love.physics.newBody(World, instance.x, instance.y, "static")
     instance.physics.shape = love.physics.newRectangleShape(instance.width, instance.height)
