@@ -169,7 +169,7 @@ function game:draw()
     Block.drawAll()
     Relic.drawAll()
     Camera:clear()
-    if self.shaking then
+    if self.shaking  or self.blasting then
         love.graphics.pop()
     end
     GUI:draw()
