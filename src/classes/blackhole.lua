@@ -69,3 +69,20 @@ function Blackhole.clear()
     end
     ActiveHoles = {}
 end
+
+function Blackhole.applyWarp(shader, sourceCanvas, destCanvas, centerX, centerY, radius, strength, twist)
+    love.graphics.setShader(shader)
+    shader:send("center", {centerX, centerY})
+    shader:send("radius", radius)
+    shader:send("strength", strength)
+    shader:send("twist", twist)
+    shader:send("screenSize", {wW, wH})
+    shader:send("time", love.timer.getTime())
+
+    love.graphics.setCanvas(destCanvas)
+    love.graphics.clear()
+    love.graphics.draw(sourceCanvas, 0, 0)
+    love.graphics.setCanvas()
+
+    love.graphics.setShader()
+end
