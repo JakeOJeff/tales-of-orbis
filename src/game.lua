@@ -45,9 +45,15 @@ function game:load()
     Map.layers.solid.visible = false
     Map.layers.entity.visible = false
     Map.layers.checkpoints.visible = false
-        Map.layers.cutscene.visible = false
+    Map.layers.cutscene.visible = false
     MapWidth = Map.layers.Base.width * 32
     MapHeight = Map.layers.Base.height * 32
+
+    DustShader = love.graphics.newShader("src/shaders/dust.glsl")
+    DustShader:send("pixelSize", 2.0)
+    DustShader:send("baseColor", {1, 1, 1})
+
+    self.time = 0
     track:play()
     movementSFX:play()
 
@@ -62,7 +68,10 @@ function game:load()
 end
 
 function game:update(dt)
-        isMobile = true
+    isMobile = true
+    self.time = self.time + dt
+    DustShader:send("time", self.time)
+    DustShader:send("resolution", {wW, wH})
 
     hitCheckpoints()
     cutsceneManager()
@@ -128,6 +137,9 @@ function game:draw()
             end
         end
     end
+    love.graphics.setShader(DustShader)
+    love.graphics.rectangle("fill", 0, 0, wW, wH)
+    love.graphics.setShader()
 
     drawParallax("layer3", 0.05)
     drawParallax("layer2", 0.15)
