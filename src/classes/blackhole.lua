@@ -13,13 +13,6 @@ function Blackhole.new(x, y, attractRadius, offsetRange)
     instance.offsetRange = offsetRange or 3
     instance.damage = 1
 
-    instance.sceneCanvas = love.graphics.newCanvas(wW, wH)
-    instance.tempCanvas = love.graphics.newCanvas(wW, wH)
-
-    instance.shader = love.graphics.newShader("src/shaders/blackhole.glsl")
-    instance.shader:send("screenSize", {wW, wH})
-    instance.shader:send("time", 0.0)
-
     instance.physics = {}
     instance.physics.body = love.physics.newBody(World, instance.x, instance.y, "static")
     instance.physics.shape = love.physics.newRectangleShape(instance.width, instance.height)
@@ -46,24 +39,8 @@ function Blackhole:draw()
     love.graphics.draw(self.img, self.x + offsetX, self.y + offsetY, 0, self.scaleX, 1, self.width / 2, self.height / 2)
 end
 
-function Blackhole:drawAll()
-
-    local src = self.sceneCanvas
-    local dst = self.tempCanvas
-
-
+function Blackhole.drawAll()
     for i, v in ipairs(ActiveHoles) do
-        local cx, cy = v.x, v.y   
-        local radius = v.attractRadius or 120
-        local strength = 1.0         
-        local twist = 4.0            
-
-        self:applyWarp(self.shader, src, dst, cx, cy, radius, strength, twist)
-
-        -- swap src/dst so next blackhole uses output of this pass
-        src, dst = dst, src
-
-         love.graphics.draw(src, 0, 0)
         v:draw()
     end
 end
@@ -84,21 +61,4 @@ function Blackhole.clear()
         v.physics.body:destroy()
     end
     ActiveHoles = {}
-end
-
-function Blackhole:applyWarp(shader, sourceCanvas, destCanvas, centerX, centerY, radius, strength, twist)
-    love.graphics.setShader(shader)
-    shader:send("center", {centerX, centerY})
-    shader:send("radius", radius)
-    shader:send("strength", strength)
-    shader:send("twist", twist)
-    shader:send("screenSize", {wW, wH})
-    shader:send("time", love.timer.getTime())
-
-    love.graphics.setCanvas(destCanvas)
-    love.graphics.clear()
-    love.graphics.draw(sourceCanvas, 0, 0)
-    love.graphics.setCanvas()
-
-    love.graphics.setShader()
 end

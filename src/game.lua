@@ -156,6 +156,7 @@ function game:draw()
         dy = love.math.random(-1, 1)
         love.graphics.push()
     end
+    
     Map:draw(-Camera.x + dx, -Camera.y + dy, self.scale, self.scale)
 
     Camera:apply(self.shaking, dx, dy)
