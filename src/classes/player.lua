@@ -184,8 +184,11 @@ function Player:move(dt)
 
     if Input:pressed 'jump' then
         self:jump()
+    elseif GUI.jumpButton.holding and self.touchJumpDebounce <= 0 then
+        self:jump()
+        self.touchJumpDebounce = 1
     end
-    if Input:pressed 'dive' then
+    if Input:pressed 'dive' or GUI.diveButton.holding then
         self:dive(dt)
     end
     local activeDevice = Input:getActiveDevice()
