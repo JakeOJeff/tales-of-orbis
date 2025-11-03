@@ -208,10 +208,19 @@ function Player:move(dt)
     --     isMobile = false
     -- end
 
-    local activeDevice = Input:getActiveDevice()
-    
+    if Input:down 'right' or GUI.rightButton.holding then
+        self.xVel = math.min(self.xVel + self.acceleration * dt, self.maxSpeed)
+    elseif Input:down 'left' or GUI.leftButton.holding then
+        self.xVel = math.max(self.xVel - self.acceleration * dt, -self.maxSpeed)
+    else
+        self:applyFriction(dt)
+    end
 
-    if (isBoostKeyDown or isJoystickBoost) and self.boost > 0 then
+    local activeDevice = Input:getActiveDevice()
+    local isBoostKeyDown = Input:down 'boost' or GUI.boostButton.holding
+
+
+    if (isBoostKeyDown) and self.boost > 0 then
         self.boost = math.max(0.01, self.boost - 5 * dt)
         self.isBoosting = true
     else
