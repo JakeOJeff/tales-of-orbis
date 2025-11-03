@@ -49,9 +49,6 @@ function game:load()
     MapWidth = Map.layers.Base.width * 32
     MapHeight = Map.layers.Base.height * 32
 
-    DustShader = love.graphics.newShader("src/shaders/dust.glsl")
-    DustShader:send("pixelSize", 1.0)
-    DustShader:send("baseColor", {1, 1, 1})
 
     self.time = 0
     track:play()
@@ -70,8 +67,6 @@ end
 function game:update(dt)
     isMobile = true
     self.time = self.time + dt
-    DustShader:send("time", self.time)
-    DustShader:send("resolution", {wW, wH})
 
     hitCheckpoints()
     cutsceneManager()
