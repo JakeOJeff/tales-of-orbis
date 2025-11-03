@@ -35,6 +35,8 @@ function Player:load()
     self.graceTime = 0
     self.graceDuration = 3
 
+    self.diveTime = 1
+
     self.spritesheet = love.graphics.newImage('assets/vfx/tilesets/player.png')
     self.grid = anim8.newGrid(32, 50, self.spritesheet:getWidth(), self.spritesheet:getHeight())
 
@@ -118,11 +120,6 @@ function Player:update(dt)
         self.maxSpeed = 100 -- 200/4000 = 0.05 seconds
     end
 
-    if GUI.jumpButton.holding and self.touchJumpDebounce <= 0 then
-        self:jump()
-        self.touchJumpDebounce = 1
-    end
-
     if self.health.current <= 0 or self.y > MapHeight then
         self:die()
     end
@@ -188,7 +185,9 @@ function Player:move(dt)
     if Input:pressed 'jump' then
         self:jump()
     end
-
+    if Input:pressed 'dive' then
+        self:dive(dt)
+    end
     local activeDevice = Input:getActiveDevice()
     local isBoostKeyDown = Input:down 'boost' or GUI.boostButton.holding
 
@@ -196,7 +195,9 @@ function Player:move(dt)
         isMobile = false
     end
 
-
+    if self.grounded then
+        self.diveTime = 1
+    end
     if (isBoostKeyDown) and self.boost > 0 then
         self.boost = math.max(0.01, self.boost - 5 * dt)
         self.isBoosting = true
@@ -267,7 +268,15 @@ function Player:jump()
         self.grounded = false
     end
 end
-
+function Player:dive(dt)
+    if not self.grounded then -- or self.graceTime > 0
+        self.particleMaxLife = 2
+        self.particleSize = 10
+        self.particleRadius = 2
+        self.diveTime = self.diveTime + 20 * dt 
+        self.yVel = -self.jumpAmount * (self.diveTime)
+    end
+end
 function Player:beginContact(a, b, collision)
     if self.grounded then
         return
