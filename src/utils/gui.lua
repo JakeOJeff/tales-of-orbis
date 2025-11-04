@@ -29,10 +29,7 @@ end
 
 function GUI:draw()
     if IsMobile and not paused then
-
-
-
-
+        self:drawButton()
     end
 end
 
