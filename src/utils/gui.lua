@@ -81,11 +81,12 @@ function GUI:draw()
     end
 end
 
-function GUI:createButton(src, x, y)
+function GUI:createButton(src, x, y, cond)
     local table = {}
     table.x = x
     table.y = y
     table.src = src
+    table.cond = cond or nil -- func()
     table.holding = false
     table.holdTime = 0
 
