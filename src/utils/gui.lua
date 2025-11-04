@@ -140,7 +140,7 @@ function GUI:load()
 
     }
     self.hud = {
-        src = love.graphics.newImage("assets/vfx/icons/hud.png"),
+        src = love.graphics.newImage("assets/vfx/icons/hudzon.png"),
         x = 30 * scale,
         y = 30 * scale,
     }
@@ -305,8 +305,13 @@ function GUI:draw()
        love.graphics.setColor(1, 1, 1)
        love.graphics.print(Player.collectedRelics, rD.x + (rD.w - rD.img.src:getWidth() * scale) + 20 * scale, rD.y + (rD.h - rD.img.src:getHeight() - paragraph:getHeight()/2 * scale)/2 + 10 * scale)
 
+
+
+        love.graphics.setColor(0.56, 0.23, 0.11)
+        love.graphics.rectangle("fill", 30 + (290 * 0.4) * scale, 30 * scale, (800 * 0.4) * math.max((Player.boost / Player.maxBoost), 0) * scale, 80 * 0.4 * scale , 10, 10)
+
         local hudS = self.hud
-       love.graphics.draw(hudS.src, hudS.x, hudS.y, 0, hudS.w, hudS.h)
+        love.graphics.draw(hudS.src, hudS.x, hudS.y, 0, hudS.w, hudS.h)
     end
 end
 
