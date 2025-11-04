@@ -1,6 +1,9 @@
 GUI = {}
 
 function GUI:load()
+    self.buttons = {}
+
+    self:createButton("")
 
     self.touches = love.touch.getTouches()
 
@@ -83,9 +86,9 @@ end
 
 function GUI:createButton(src, x, y, cond)
     local table = {}
-    table.x = x
-    table.y = y
-    table.src = src
+    table.x = x * scale
+    table.y = y * scale
+    table.src = love.graphics.newImage(src)
     table.cond = cond or nil -- func()
     table.holding = false
     table.holdTime = 0
