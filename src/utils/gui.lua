@@ -80,3 +80,12 @@ function GUI:draw()
 
     end
 end
+
+function GUI:createButton(src, x, y)
+    local table = {}
+    table.x = x
+    table.y = y
+    table.src = src
+    table.holding = false
+    table.holdTime = 0
+end
