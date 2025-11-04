@@ -12,7 +12,7 @@ local intro = {
 
 function intro:load()
     for i = 1, 7 do
-        self.scenes[i] = love.graphics.newImage("assets/vfx/cutscenes/frame" .. i .. ".png")
+        self.scenes[i] = LG.newImage("assets/vfx/cutscenes/frame" .. i .. ".png")
     end
 end
 
@@ -24,12 +24,12 @@ function intro:update(dt)
 end
 
 function intro:draw()
-    love.graphics.setColor(1, 1, 1, self.fadeTimer)
+    LG.setColor(1, 1, 1, self.fadeTimer)
     if self.scenes[self.currentIndex] then
-        love.graphics.push()
-        love.graphics.scale(scale, scale)
-        love.graphics.draw(self.scenes[self.currentIndex], cenW, cenH)
-        love.graphics.pop()
+        LG.push()
+        LG.scale(scale, scale)
+        LG.draw(self.scenes[self.currentIndex], cenW, cenH)
+        LG.pop()
     end
 
     -- Draw text
@@ -37,16 +37,16 @@ function intro:draw()
     local textWidth = paragraph:getWidth(text)
     local textHeight = paragraph:getHeight()
 
-    love.graphics.setFont(paragraph)
+    LG.setFont(paragraph)
 
-    love.graphics.setColor(0, 0, 0, (self.fadeTimer / 0.6))
-    love.graphics.print(text, ((wW - textWidth) / 2) + 4, (wH - textHeight - 50))
-    love.graphics.print(text, ((wW - textWidth) / 2), (wH - textHeight - 50) + 4)
-    love.graphics.print(text, ((wW - textWidth) / 2) - 4, (wH - textHeight - 50))
-    love.graphics.print(text, ((wW - textWidth) / 2), (wH - textHeight - 50) - 4)
+    LG.setColor(0, 0, 0, (self.fadeTimer / 0.6))
+    LG.print(text, ((wW - textWidth) / 2) + 4, (wH - textHeight - 50))
+    LG.print(text, ((wW - textWidth) / 2), (wH - textHeight - 50) + 4)
+    LG.print(text, ((wW - textWidth) / 2) - 4, (wH - textHeight - 50))
+    LG.print(text, ((wW - textWidth) / 2), (wH - textHeight - 50) - 4)
 
-    love.graphics.setColor(1, 1, 1, (self.fadeTimer / 0.6))
-    love.graphics.print(text, (wW - textWidth) / 2, wH - textHeight - 50)
+    LG.setColor(1, 1, 1, (self.fadeTimer / 0.6))
+    LG.print(text, (wW - textWidth) / 2, wH - textHeight - 50)
             print(scale)
 
 end
@@ -56,7 +56,6 @@ function intro:keypressed(key)
 end
 
 function intro:gamepadpressed(joystic, button)
-    isMobile = false
     self:inputReceived()
 end
 

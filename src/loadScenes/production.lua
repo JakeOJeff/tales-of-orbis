@@ -1,6 +1,6 @@
 local production = {
-    imgs = {love.graphics.newImage("assets/vfx/loading/intro.png"),
-            love.graphics.newImage("assets/vfx/loading/night_load.png")},
+    imgs = {LG.newImage("assets/vfx/loading/intro.png"),
+            LG.newImage("assets/vfx/loading/night_load.png")},
     loaded = 0, -- In percentages
     time = 0, -- text loading 
     speed = 10,
@@ -52,17 +52,17 @@ function production:update(dt)
 end
 
 function production:draw()
-    love.graphics.setColor(1, 1, 1, self.alpha)
-    love.graphics.setScissor(wW/2 - self.imgs[1]:getWidth()/2, wH/2 - self.imgs[1]:getHeight()/2, wW, self.loaded / 100 * wH, self.imgs[1]:getWidth(), 232)
-    love.graphics.draw(self.imgs[1], wW/2 - self.imgs[1]:getWidth()/2, wH/2 - self.imgs[1]:getHeight()/2)
-    love.graphics.setScissor()
-    -- love.graphics.setColor(1,1,1, self.alpha)
-    -- love.graphics.setScissor(0, 0, wW, self.loaded / 100 * wH)
-    -- love.graphics.draw(self.imgs[2], 0, 0)
-    -- love.graphics.setColor(1,1,1, 0.5)
-    -- love.graphics.setFont(heading)
-    -- love.graphics.print(self.text, wW / 2 - heading:getWidth(self.text) / 2, wH / 2 - heading:getHeight() / 2)
-    -- love.graphics.setScissor()
+    LG.setColor(1, 1, 1, self.alpha)
+    LG.setScissor(wW/2 - self.imgs[1]:getWidth()/2, wH/2 - self.imgs[1]:getHeight()/2, wW, self.loaded / 100 * wH, self.imgs[1]:getWidth(), 232)
+    LG.draw(self.imgs[1], wW/2 - self.imgs[1]:getWidth()/2, wH/2 - self.imgs[1]:getHeight()/2)
+    LG.setScissor()
+    -- LG.setColor(1,1,1, self.alpha)
+    -- LG.setScissor(0, 0, wW, self.loaded / 100 * wH)
+    -- LG.draw(self.imgs[2], 0, 0)
+    -- LG.setColor(1,1,1, 0.5)
+    -- LG.setFont(heading)
+    -- LG.print(self.text, wW / 2 - heading:getWidth(self.text) / 2, wH / 2 - heading:getHeight() / 2)
+    -- LG.setScissor()
 
 end
 

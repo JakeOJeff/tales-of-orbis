@@ -37,7 +37,7 @@ function Player:load()
 
     self.diveTime = 1
 
-    self.spritesheet = love.graphics.newImage('assets/vfx/tilesets/player.png')
+    self.spritesheet = LG.newImage('assets/vfx/tilesets/player.png')
     self.grid = anim8.newGrid(32, 50, self.spritesheet:getWidth(), self.spritesheet:getHeight())
 
     self.animations = {
@@ -70,7 +70,7 @@ function Player:load()
     self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
     self.physics.body:setGravityScale(0)
 
-    -- self.lightCanvas = love.graphics.newCanvas(love.graphics.getWidth(), love.graphics.getHeight())
+    -- self.lightCanvas = LG.newCanvas(LG.getWidth(), LG.getHeight())
     
 end
 
@@ -174,9 +174,9 @@ end
 -- function Player
 function Player:move(dt)
 
-    if Input:down 'right' or GUI.rightButton.holding then
+    if Input:down 'right' or GUI.buttons.rightButton.holding then
         self.xVel = math.min(self.xVel + self.acceleration * dt, self.maxSpeed)
-    elseif Input:down 'left' or GUI.leftButton.holding then
+    elseif Input:down 'left' or GUI.buttons.leftButton.holding then
         self.xVel = math.max(self.xVel - self.acceleration * dt, -self.maxSpeed)
     else
         self:applyFriction(dt)
@@ -184,18 +184,18 @@ function Player:move(dt)
 
     if Input:pressed 'jump' then
         self:jump()
-    elseif GUI.jumpButton.holding and self.touchJumpDebounce <= 0 then
+    elseif GUI.buttons.jumpButton.holding and self.touchJumpDebounce <= 0 then
         self:jump()
         self.touchJumpDebounce = 1
     end
-    if Input:pressed 'dive' or GUI.diveButton.holding then
+    if Input:pressed 'dive' or GUI.buttons.diveButton.holding then
         self:dive(dt)
     end
     local activeDevice = Input:getActiveDevice()
-    local isBoostKeyDown = Input:down 'boost' or GUI.boostButton.holding
+    local isBoostKeyDown = Input:down 'boost' or GUI.buttons.boostButton.holding
 
     if activeDevice == "kbm" or activeDevice == "joy" then
-        isMobile = false
+        IsMobile = true
     end
 
     if self.grounded then
@@ -412,32 +412,32 @@ function Player:draw()
     if not paused then
         for _, p in ipairs(self.particles) do
             local alpha = p.life / p.maxLife
-            -- love.graphics.setColor(0.79, 0.5, 0.19, alpha)
-            love.graphics.setColor(0.79, 0.5, 0.19, alpha)
+            -- LG.setColor(0.79, 0.5, 0.19, alpha)
+            LG.setColor(0.79, 0.5, 0.19, alpha)
 
-            love.graphics.circle("fill", p.x, p.y, p.size)
+            LG.circle("fill", p.x, p.y, p.size)
         end
         local offset = 0
         if not paused then
             offset = (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed))
         end
-        -- love.graphics.setColor(1, 1, 1, 0.01) -- light
-        -- love.graphics.circle("fill", self.x, self.y, 100 * scale)
+        -- LG.setColor(1, 1, 1, 0.01) -- light
+        -- LG.circle("fill", self.x, self.y, 100 * scale)
 
-        love.graphics.setColor(1, 1, 1, self.maxParticles / self.maxParticleLimit) -- reset color
+        LG.setColor(1, 1, 1, self.maxParticles / self.maxParticleLimit) -- reset color
         local pX = self.x
         local pY = self.y + offset
 
         if self.pickedUpItem then
-            love.graphics.setColor(0.79, 0.5, 0.19, self.pickedUpGrace * 4)
-            love.graphics.circle("fill", pX, pY, 50 * (self.pickedUpGrace * 4))
-            love.graphics.setColor(0.79 + 0.1, 0.5 + 0.1, 0.19 + 0.1, self.pickedUpGrace * 4)
-            love.graphics.circle("fill", pX, pY, 50 * (self.pickedUpGrace * 2))
-            love.graphics.setColor(0.79, 0.5, 0.19, self.maxParticles / self.maxParticleLimit)
+            LG.setColor(0.79, 0.5, 0.19, self.pickedUpGrace * 4)
+            LG.circle("fill", pX, pY, 50 * (self.pickedUpGrace * 4))
+            LG.setColor(0.79 + 0.1, 0.5 + 0.1, 0.19 + 0.1, self.pickedUpGrace * 4)
+            LG.circle("fill", pX, pY, 50 * (self.pickedUpGrace * 2))
+            LG.setColor(0.79, 0.5, 0.19, self.maxParticles / self.maxParticleLimit)
         end
-        -- love.graphics.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
+        -- LG.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
         self.animations.idle:draw(self.spritesheet, pX - 16, pY - 25)
-        -- love.graphics.circle("line", self.x, self.y, self.radius)
-        love.graphics.setColor(1, 1, 1, 1)
+        -- LG.circle("line", self.x, self.y, self.radius)
+        LG.setColor(1, 1, 1, 1)
     end
 end

@@ -6,7 +6,7 @@ function Blackhole.new(x, y, attractRadius, offsetRange)
     local instance = setmetatable({}, Blackhole)
     instance.x = x
     instance.y = y
-    instance.img = love.graphics.newImage("assets/vfx/items/blackhole.png")
+    instance.img = LG.newImage("assets/vfx/items/blackhole.png")
     instance.width = instance.img:getWidth()
     instance.height = instance.img:getHeight()
     instance.attractRadius = attractRadius or 100
@@ -36,7 +36,7 @@ function Blackhole:draw()
     local offsetX = (self.offsetRange * math.cos(love.timer.getTime() * 3))
     local offsetY = (self.offsetRange * math.sin(love.timer.getTime() * 3))
 
-    love.graphics.draw(self.img, self.x + offsetX, self.y + offsetY, 0, self.scaleX, 1, self.width / 2, self.height / 2)
+    LG.draw(self.img, self.x + offsetX, self.y + offsetY, 0, self.scaleX, 1, self.width / 2, self.height / 2)
 end
 
 function Blackhole.drawAll()

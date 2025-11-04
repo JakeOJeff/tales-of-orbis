@@ -6,7 +6,7 @@ function Block.new(x, y)
     local instance = setmetatable({}, Block)
     instance.x = x
     instance.y = y
-    instance.img = love.graphics.newImage("assets/vfx/items/block.png")
+    instance.img = LG.newImage("assets/vfx/items/block.png")
     instance.width = instance.img:getWidth()
     instance.height = instance.img:getHeight()
     instance.r = 0
@@ -37,7 +37,7 @@ function Block.updateAll(dt)
 end
 
 function Block:draw()
-    love.graphics.draw(self.img, self.x, self.y, self.r, self.scaleX, 1, self.width / 2, self.height / 2)
+    LG.draw(self.img, self.x, self.y, self.r, self.scaleX, 1, self.width / 2, self.height / 2)
 end
 
 function Block.drawAll()

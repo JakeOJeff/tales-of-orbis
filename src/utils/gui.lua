@@ -1,343 +1,60 @@
 GUI = {}
 
 function GUI:load()
-    local buttonW = 130 * scale
-    local buttonH = 130 * scale
-    local imgW = love.graphics.newImage("assets/vfx/icons/left.png"):getWidth()
-    local jumpW = 100 * scale
-    local jumpH = 100 * scale
-    local boostW = 80 * scale
-    local boostH = 80 * scale
-
-    local navW = 75 * scale
-    local navH = 75 * scale
-
-    local resumeW = 175 * scale
-    local resumeH = 60 * scale
+    self.buttons = {}
+    self.buttons.leftButton = self:createButton("assets/vfx/icons/left.png", 20, wH - 20 )
+    self.buttons.rightButton = self:createButton("assets/vfx/icons/right.png", 20 + 10 + self.buttons.leftButton.src:getWidth(), wH - 20 )
+    self.buttons.boostButton = self:createButton("assets/vfx/icons/boost.png", 50, 50)
+    self.buttons.jumpButton = self:createButton("assets/vfx/icons/jump.png", 100, 100)
+    self.buttons.resetButton = self:createButton("assets/vfx/icons/reset.png", wW - 100, 20)
+    self.buttons.pauseButton = self:createButton("assets/vfx/icons/pause.png", wW - 200, 20)
+    self.buttons.diveButton = self:createButton("assets/vfx/icons/dive.png", wW - 20, wH - 30)
 
     self.touches = love.touch.getTouches()
-    self.leftButton = {
-        x = 100 * scale,
-        y = wH - buttonH - 75 * scale, -- 40 is padding from bottom
-        w = buttonW,
-        h = buttonH,
-        img = {
-            x = 0,
-            y = 0,
-            w = imgW / scale,
-            h = imgW / scale,
-            src = love.graphics.newImage("assets/vfx/icons/left.png")
-        },
-        holding = false
-    }
-
-    self.rightButton = {
-        x = (100 + 130 + 10) * scale, -- 80 initial + 110 spacing
-        y = wH - buttonH - 75 * scale,
-        w = buttonW,
-        h = buttonH,
-        img = {
-            x = 0,
-            y = 0,
-            w = imgW / scale,
-            h = imgW / scale,
-            src = love.graphics.newImage("assets/vfx/icons/right.png")
-        },
-        holding = false
-    }
-
-    self.boostButton = {
-        x = wW - boostW - 190 * scale, -- 80 is right-side padding
-        y = wH - boostH - 90 * scale,  -- padding from bottom
-        w = boostW,
-        h = boostH,
-        img = {
-            x = 0,
-            y = 0,
-            w = imgW / scale,
-            h = imgW / scale,
-            src = love.graphics.newImage("assets/vfx/icons/boost.png")
-        },
-        holding = false
-    }
-    self.diveButton = {
-        x = wW - boostW - 90 * scale, -- 80 is right-side padding
-        y = wH - boostH - 50 * scale,  -- padding from bottom
-        w = boostW,
-        h = boostH,
-        img = {
-            x = 0,
-            y = 0,
-            w = imgW / scale,
-            h = imgW / scale,
-            src = love.graphics.newImage("assets/vfx/icons/dive.png")
-        },
-        holding = false
-    }
-    self.jumpButton = {
-        x = wW - jumpW - 90 * scale,  -- 80 is right-side padding
-        y = wH - jumpH - 160 * scale, -- padding from bottom
-        w = jumpW,
-        h = jumpH,
-        img = {
-            x = 0,
-            y = 0,
-            w = imgW / scale,
-            h = imgW / scale,
-            src = love.graphics.newImage("assets/vfx/icons/jump.png")
-        },
-        holding = false,
-        holdTime = 0
-    }
-
-    self.pauseButton = {
-        x = wW - navW - 30 * scale, -- 80 is right-side padding
-        y = 30 * scale,             -- padding from bottom
-        w = navW,
-        h = navH,
-        img = {
-            x = 0,
-            y = 0,
-            w = imgW / scale,
-            h = imgW / scale,
-            src = love.graphics.newImage("assets/vfx/icons/pause.png")
-        },
-        holding = false
-    }
-    self.resetButton = {
-        x = wW - (2 * navW) - 40 * scale, -- 80 is right-side padding
-        y = 30 * scale,                   -- padding from bottom
-        w = navW,
-        h = navH,
-        img = {
-            x = 0,
-            y = 0,
-            w = imgW / scale,
-            h = imgW / scale,
-            src = love.graphics.newImage("assets/vfx/icons/reset.png")
-        },
-        holding = false
-    }
-
-    self.resumeButton = {
-        x = (wW / 2 - resumeW / 2) * scale,      -- 80 is right-side padding
-        y = (wH / 2 - resumeH / 2) + 80 * scale, -- padding from bottom
-        w = resumeW,
-        h = resumeH,
-        holding = false
-    }
-
-    
-    self.relicsDisplay = {
-        img = {
-            src = love.graphics.newImage("assets/vfx/items/relic.png"),
-        },
-        x = 45 * scale,
-        y = 50 * scale,
-        w = 75 * scale,
-        h = 75 * scale,
-        scaleX = 1.5,
-
-    }
-    self.hud = {
-        src = love.graphics.newImage("assets/vfx/icons/hudzon.png"),
-        x = 30 * scale,
-        y = 30 * scale,
-    }
-    self.hud.w = 0.4 * scale
-    self.hud.h = 0.4 * scale
-
-
 end
 
 function GUI:update(dt)
-    local lB = self.leftButton
-    local rB = self.rightButton
-    local bB = self.boostButton
-    local jB = self.jumpButton
-    local rtB = self.resetButton
-    local pB = self.pauseButton
-    local rsB = self.resumeButton
-    local dB = self.diveButton
-
-    -- Reset all holding states
-    lB.holding = false
-    rB.holding = false
-    bB.holding = false
-    jB.holding = false
-    rtB.holding = false
-    pB.holding = false
-    rsB.holding = false
-    dB.holding = false
-
-
-    if jB.holdTime and jB.holdTime > 0 then
-        jB.holdTime = 0 -- Reset hold time after jump
-    end
-
-    self.relicsDisplay.scaleX = math.sin(5 + love.timer.getTime() * 2)
-
     self.touches = love.touch.getTouches()
     -- Check each touch
     for _, id in pairs(self.touches) do
         local x, y = love.touch.getPosition(id)
-        if distRect(x, y, lB.x, lB.y, lB.w, lB.h) then
-            lB.holding = true
+        for _, v in pairs(self.buttons) do
+            if distRect(x, y, v.x, v.y, v.w, v.h) and v.cond() then
+                v.holding = true
+                v.holdTime = (v.holdTime or 0) + dt
+            end
         end
-        if distRect(x, y, rB.x, rB.y, rB.w, rB.h) then
-            rB.holding = true
-        end
-        if distRect(x, y, bB.x, bB.y, bB.w, bB.h) then
-            bB.holding = true
-        end
-        if distRect(x, y, jB.x, jB.y, jB.w, jB.h) then
-            jB.holding = true
-            jB.holdTime = (jB.holdTime or 0) + dt
-        end
-        if distRect(x, y, dB.x, dB.y, dB.w, dB.h) and not Player.grounded then
-            dB.holding = true
-        end
-    end
-    if distRect(love.mouse.getX(), love.mouse.getY(), rsB.x, rsB.y, rsB.w, rsB.h) then
-        rsB.holding = true
     end
 end
 
 function GUI:draw()
-
-
-
-    if isMobile and not paused then
-        love.graphics.setColor(0, 0, 0, 0.6)
-        local lB = self.leftButton
-        local rB = self.rightButton
-        local jB = self.jumpButton
-        local bB = self.boostButton
-        local dB = self.diveButton
-
-        if lB.holding then
-            love.graphics.setColor(0.1, 0.1, 0.1, 0.6)
-        end
-        love.graphics.rectangle("fill", lB.x, lB.y, lB.w, lB.h, 10, 10)
-        love.graphics.setColor(1, 1, 1)
-        self:drawButtonImage(lB)
-        love.graphics.setColor(0, 0, 0, 0.6)
-
-        if rB.holding then
-            love.graphics.setColor(0.1, 0.1, 0.1, 0.6)
-        end
-        love.graphics.rectangle("fill", rB.x, rB.y, rB.w, rB.h, 10, 10)
-        love.graphics.setColor(1, 1, 1)
-        self:drawButtonImage(rB)
-        love.graphics.setColor(0, 0, 0, 0.6)
-
-        if bB.holding then
-            love.graphics.setColor(0.1, 0.1, 0.1, 0.6)
-        end
-        love.graphics.rectangle("fill", bB.x, bB.y, bB.w, bB.h, 40, 40)
-        love.graphics.setColor(1, 1, 1)
-        self:drawButtonImage(bB)
-        love.graphics.setColor(0, 0, 0, 0.6)
-
-        if jB.holding then
-            love.graphics.setColor(0.1, 0.1, 0.1, 0.6)
-        end
-        love.graphics.rectangle("fill", jB.x, jB.y, jB.w, jB.h, 40, 40)
-        love.graphics.setColor(1, 1, 1)
-        self:drawButtonImage(jB)
-        love.graphics.setColor(0, 0, 0, 0.6)
-
-        if not Player.grounded  then
-            if dB.holding then
-                love.graphics.setColor(0.1, 0.1, 0.1, 0.6)
-            end
-            love.graphics.rectangle("fill", dB.x, dB.y, dB.w, dB.h, 40, 40)
-            love.graphics.setColor(1, 1, 1)
-            self:drawButtonImage(dB)
-            love.graphics.setColor(0, 0, 0, 0.6)
-        end
-
-        love.graphics.setColor(1, 1, 1)
-    end
-
-    if paused then
-        local pauseText = "Paused"
-        love.graphics.setColor(1, 1, 1, 0.8)
-        love.graphics.setFont(heading)
-        love.graphics.print(pauseText, wW / 2 - heading:getWidth(pauseText) / 2, wH / 2 - heading:getHeight() / 2)
-    else
-        local rtB = self.resetButton
-        local pB = self.pauseButton
-
-        local rD = self.relicsDisplay
-
-
-        love.graphics.setColor(0, 0, 0, 0.6)
-        love.graphics.rectangle("fill", rtB.x, rtB.y, rtB.w, rtB.h, 10, 10)
-        love.graphics.setColor(1, 1, 1)
-        self:drawButtonImage(rtB)
-
-        love.graphics.setColor(0, 0, 0, 0.6)
-        love.graphics.rectangle("fill", pB.x, pB.y, pB.w, pB.h, 10, 10)
-        love.graphics.setColor(1, 1, 1)
-        self:drawButtonImage(pB)
-
-
-        -- Boost Bar
-        love.graphics.setColor(0, 0, 0, 0.5)
-        love.graphics.rectangle("fill", wW - 60 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
-            200 * scale, 5 * scale, 5 * scale)
-        love.graphics.setColor(0.56, 0.23, 0.11)
-        love.graphics.rectangle("fill", wW - 60 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
-            200 * scale * math.max((Player.boost / Player.maxBoost), 0), 5, 5)
-        -- Health Bar
-        love.graphics.setColor(0, 0, 0, 0.5)
-        love.graphics.rectangle("fill", wW - 85 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
-            200 * scale, 5 * scale, 5 * scale)
-        love.graphics.setColor(0.79, 0.50, 0.19)
-        love.graphics.rectangle("fill", wW - 85 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
-            200 * scale * math.max((Player.health.current / Player.health.max), 0), 5, 5)
-        love.graphics.setColor(1, 1, 1)
-
-        -- Relics Display
-        love.graphics.setFont(paragraph)
-       self:drawButtonImage(rD, self.relicsDisplay.scaleX)
-       love.graphics.setColor(1, 1, 1)
-       love.graphics.print(Player.collectedRelics, rD.x + (rD.w - rD.img.src:getWidth() * scale) + 20 * scale, rD.y + (rD.h - rD.img.src:getHeight() - paragraph:getHeight()/2 * scale)/2 + 10 * scale)
-
-
-
-        love.graphics.setColor(0.56, 0.23, 0.11)
-        love.graphics.rectangle("fill", 30 + (290 * 0.4) * scale, 30 * scale, (800 * 0.4) * math.max((Player.boost / Player.maxBoost), 0) * scale, 80 * 0.4 * scale , 10, 10)
-
-        local hudS = self.hud
-        love.graphics.draw(hudS.src, hudS.x, hudS.y, 0, hudS.w, hudS.h)
+    if IsMobile and not paused then
+        local b = self.buttons
+        self:drawButton(b.leftButton, 1.5, 20)
     end
 end
 
-function GUI:drawButtonImage(button, sX)
-    local img = button.img.src
-    local iw, ih = img:getWidth(), img:getHeight()
-    local scale = math.min(button.w / iw, button.h / ih)
-    local scaleX = sX or scale
-    local dx = button.x + (button.w - iw * scale) / 2
-    local dy = button.y + (button.h - ih * scale) / 2
-    love.graphics.draw(img, dx, dy + scaleX, 0, scale, scale)
+function GUI:createButton(src, x, y, cond)
+    local table = {}
+    table.x = x * scale
+    table.y = y * scale
+    table.src = LG.newImage(src)
+    table.cond = cond or function ()
+        return true
+    end
+    table.holding = false
+    table.holdTime = 0
+
+    return table
 end
 
-function GUI:mousepressed(x, y, button)
-    local distP = distRect(x, y, self.pauseButton.x, self.pauseButton.y, self.pauseButton.w, self.pauseButton.h)
-    local distR = distRect(x, y, self.resetButton.x, self.resetButton.y, self.resetButton.w, self.resetButton.h)
-
-    if button == 1 then
-        if paused then
-            paused = false
-        end
-        if distP and not paused then
-            paused = true
-        end
-        if distR and not paused then
-            Player:die()
-        end
+function GUI:drawButton(v, size, round)
+    if v.holding then
+        LG.setColor(0.1, 0.1, 0.1, 0.6)
     end
+    local w, h = v.src:getWidth() * size * scale, v.src:getHeight() * size  * scale
+    LG.rectangle("fill", v.x, v.y, w, h, round, round)
+    LG.setColor(1, 1, 1)
+    LG.draw(v.src, v.x + w/2 + (v.src:getWidth()/2 * scale), v.y + h/2 + (v.src:getHeight()/2 * scale), 0, scale, scale)
+    LG.setColor(0, 0, 0, 0.6)
 end

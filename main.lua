@@ -6,7 +6,7 @@ baseW = 1280
 baseH = 720
 
 -- Android/Mobile 
-isMobile = false
+IsMobile = true
 
 wW = love.graphics.getWidth()
 wH = love.graphics.getHeight()
@@ -14,10 +14,16 @@ wH = love.graphics.getHeight()
 -- Global Libs
 Baton = require "src.libs.baton"
 
+-- Setting LOVE
+LG = love.graphics
+LK = love.keyboard
+LM = love.mouse
+LA = love.audio
+
 -- Set fullscreen for mobile and trigger resize logic
-if isMobile and not love.window.getFullscreen() then
-    love.window.setFullscreen(true, "desktop")
-end
+-- if IsMobile and not love.window.getFullscreen() then
+--     love.window.setFullscreen(true, "desktop")
+-- end
 
 -- Use the minimum scale that fits the full base resolution in screen
 scale = math.min(wW / baseW, wH / baseH)
@@ -53,7 +59,7 @@ jAxes = {0, 0, 0, 0}
 
 paused = false
 
--- if isMobile then
+-- if IsMobile then
 --    love.window.setFullscreen(true)
 -- end
 
