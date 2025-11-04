@@ -70,7 +70,6 @@ function game:load()
 end
 
 function game:update(dt)
-    isMobile = true
     self.time = self.time + dt
 
     hitCheckpoints()
