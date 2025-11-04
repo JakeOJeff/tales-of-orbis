@@ -1,9 +1,9 @@
 local title = {
-    imgs = {love.graphics.newImage("assets/vfx/loading/titles/background.png"),
-            love.graphics.newImage("assets/vfx/loading/titles/tales-of-text.png"),
-            love.graphics.newImage("assets/vfx/loading/titles/orb-light.png"),
-            love.graphics.newImage("assets/vfx/loading/titles/orb-text.png"),
-            love.graphics.newImage("assets/vfx/loading/titles/play.png") -- Play button is last
+    imgs = {LG.newImage("assets/vfx/loading/titles/background.png"),
+            LG.newImage("assets/vfx/loading/titles/tales-of-text.png"),
+            LG.newImage("assets/vfx/loading/titles/orb-light.png"),
+            LG.newImage("assets/vfx/loading/titles/orb-text.png"),
+            LG.newImage("assets/vfx/loading/titles/play.png") -- Play button is last
     },
     timer = 0,
     fadeTime = 1, -- seconds to fade each image
@@ -13,8 +13,8 @@ local title = {
     play_y = 340,
     play_width = 240,
     play_height = 90,
-    normal_play = love.graphics.newImage("assets/vfx/loading/titles/play.png"),
-    hover_play = love.graphics.newImage("assets/vfx/loading/titles/play-hover.png")
+    normal_play = LG.newImage("assets/vfx/loading/titles/play.png"),
+    hover_play = LG.newImage("assets/vfx/loading/titles/play-hover.png")
 }
 
 function title:load()
@@ -42,26 +42,26 @@ function title:draw()
         local appearTime = (i - 1) * self.delayBetween
         local t = self.timer - appearTime
         if i ~= 1 then
-            love.graphics.push()
-            love.graphics.scale(scale, scale)
-            love.graphics.translate(cenW, cenH)
+            LG.push()
+            LG.scale(scale, scale)
+            LG.translate(cenW, cenH)
             if t >= 0 then
                 local alpha = math.min(t / self.fadeTime, 1)
-                love.graphics.setColor(1, 1, 1, alpha)
-                love.graphics.draw(img, 0, 0)
+                LG.setColor(1, 1, 1, alpha)
+                LG.draw(img, 0, 0)
             end
-            love.graphics.pop()
+            LG.pop()
 
         else
             if t >= 0 then
                 local alpha = math.min(t / self.fadeTime, 1)
-                love.graphics.setColor(1, 1, 1, alpha)
-            love.graphics.draw(img, 0, 0, 0, wW / img:getWidth(), scale)
+                LG.setColor(1, 1, 1, alpha)
+            LG.draw(img, 0, 0, 0, wW / img:getWidth(), scale)
             end
         end
     end
 
-    love.graphics.setColor(1, 1, 1, 1)
+    LG.setColor(1, 1, 1, 1)
 end
 
 function title:keypressed(key)

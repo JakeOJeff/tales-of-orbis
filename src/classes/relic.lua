@@ -6,7 +6,7 @@ function Relic.new(x, y)
     local instance = setmetatable({}, Relic)
     instance.x = x
     instance.y = y
-    instance.img = love.graphics.newImage("assets/vfx/items/relic.png")
+    instance.img = LG.newImage("assets/vfx/items/relic.png")
     instance.width = instance.img:getWidth()
     instance.height = instance.img:getHeight()
 
@@ -63,7 +63,7 @@ function Relic:checkRemoved(dt)
     end
 end
 function Relic:draw()
-    love.graphics.draw(self.img, self.x, self.y + self.scaleX * 4, 0, self.scaleX, 1, self.width / 2, self.height / 2)
+    LG.draw(self.img, self.x, self.y + self.scaleX * 4, 0, self.scaleX, 1, self.width / 2, self.height / 2)
 end
 
 function Relic.drawAll()

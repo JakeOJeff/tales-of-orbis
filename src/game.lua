@@ -1,14 +1,14 @@
 game = {
-    background = love.graphics.newImage("assets/vfx/loading/background.png"),
+    background = LG.newImage("assets/vfx/loading/background.png"),
     scale = scale + 1.5,
     shaking = false,
     blasting = false,
     blastTime = 0,
     downBlast = 1,
     backgroundLayers = {
-        layer3 = love.graphics.newImage("assets/vfx/parallex/layer3.png"),
-        layer2 = love.graphics.newImage("assets/vfx/parallex/layer2.png"),
-        layer1 = love.graphics.newImage("assets/vfx/parallex/layer1.png"),
+        layer3 = LG.newImage("assets/vfx/parallex/layer3.png"),
+        layer2 = LG.newImage("assets/vfx/parallex/layer2.png"),
+        layer1 = LG.newImage("assets/vfx/parallex/layer1.png"),
     },
     introfadeTimer = 0
 }
@@ -52,7 +52,7 @@ function game:load()
     MapWidth = Map.layers.Base.width * 32
     MapHeight = Map.layers.Base.height * 32
 
-    MovementShader = love.graphics.newShader("src/shaders/movement.glsl")
+    MovementShader = LG.newShader("src/shaders/movement.glsl")
 
 
     self.time = 0
@@ -108,21 +108,21 @@ function game:draw()
 
 
     -- Draw text
-    love.graphics.push()
+    LG.push()
     local text = "Escape the Void. Reach the Core. Don't fight it, RUN!"
     local textWidth = paragraph:getWidth(text)
     local textHeight = paragraph:getHeight()
 
-    love.graphics.setFont(paragraph)
-    love.graphics.setColor(1, 1, 1, self.introfadeTimer/1)
-    love.graphics.print(text, (wW - textWidth) / 2, wH - textHeight - 50)
+    LG.setFont(paragraph)
+    LG.setColor(1, 1, 1, self.introfadeTimer/1)
+    LG.print(text, (wW - textWidth) / 2, wH - textHeight - 50)
 
 
-    love.graphics.draw(self.background, 0, 0, 0, self.scale, self.scale)
+    LG.draw(self.background, 0, 0, 0, self.scale, self.scale)
     local px = Player.x
     local py = Player.y
-    local screenWidth = love.graphics.getWidth()
-    local screenHeight = love.graphics.getHeight()
+    local screenWidth = LG.getWidth()
+    local screenHeight = LG.getHeight()
 
     local function drawParallax(layer, factor)
         local img = self.backgroundLayers[layer]
@@ -139,11 +139,11 @@ function game:draw()
         -- Draw 4 tiles to fill screen (to handle scrolling)
         for i = -1, 1 do
             for j = -1, 1 do
-                love.graphics.draw(img, offsetX + i * imgWidth * scaleX, j * imgHeight * scaleY, 0, scaleX, scaleY)
+                LG.draw(img, offsetX + i * imgWidth * scaleX, j * imgHeight * scaleY, 0, scaleX, scaleY)
             end
         end
     end
-    love.graphics.setBlendMode("alpha", "premultiplied")
+    LG.setBlendMode("alpha", "premultiplied")
 
 
 
@@ -151,14 +151,14 @@ function game:draw()
     drawParallax("layer2", 0.2)
     drawParallax("layer1", 0.4)
 
-    love.graphics.setBlendMode("alpha")
+    LG.setBlendMode("alpha")
     local dx = 0
     local dy = 0
 
     if self.shaking or self.blasting then
         dx = love.math.random(-1 * game.downBlast, 1 * game.downBlast)
         dy = love.math.random(-1, 1)
-        love.graphics.push()
+        LG.push()
     end
     
     Map:draw(-Camera.x + dx, -Camera.y + dy, self.scale, self.scale)
@@ -167,11 +167,11 @@ function game:draw()
     MovementShader:send("time", self.time)
 
     for _, v in ipairs(Map.layers.checkpoints.objects) do
-        love.graphics.setColor(0,1,0, 0.1)
-        love.graphics.setShader(MovementShader)
-        love.graphics.rectangle("fill", v.x, v.y, v.width, v.height)
-        love.graphics.setShader()
-        love.graphics.setColor(1,1,1)
+        LG.setColor(0,1,0, 0.1)
+        LG.setShader(MovementShader)
+        LG.rectangle("fill", v.x, v.y, v.width, v.height)
+        LG.setShader()
+        LG.setColor(1,1,1)
     end
     Player:draw()
     Blackhole.drawAll()
@@ -180,11 +180,11 @@ function game:draw()
     Fire.drawAll()
     Camera:clear()
     if self.shaking  or self.blasting then
-        love.graphics.pop()
+        LG.pop()
     end
 
     GUI:draw()
-    love.graphics.pop()
+    LG.pop()
 end
 
 function game:keypressed(key)

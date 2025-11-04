@@ -1,6 +1,6 @@
 local loading = {
-    imgs = {love.graphics.newImage("assets/vfx/loading/light_load.png"),
-            love.graphics.newImage("assets/vfx/loading/night_load.png")},
+    imgs = {LG.newImage("assets/vfx/loading/light_load.png"),
+            LG.newImage("assets/vfx/loading/night_load.png")},
     loaded = 0, -- In percentages
     time = 0, -- text loading 
     speed = 10,
@@ -79,42 +79,42 @@ function loading:update(dt)
 end
 
 function loading:draw()
-    love.graphics.push()
-    love.graphics.setColor(1, 1, 1, self.alpha)
-    love.graphics.draw(self.imgs[1], 0, 0, 0, wW / self.imgs[1]:getWidth(), scale)
-    love.graphics.scale(scale, scale)
-    love.graphics.translate(cenW, cenH)
+    LG.push()
+    LG.setColor(1, 1, 1, self.alpha)
+    LG.draw(self.imgs[1], 0, 0, 0, wW / self.imgs[1]:getWidth(), scale)
+    LG.scale(scale, scale)
+    LG.translate(cenW, cenH)
 
-    love.graphics.setColor(0.79, 0.5, 0.19, self.alpha)
-    love.graphics.setFont(heading)
-    love.graphics.print(self.text, baseW / 2 - heading:getWidth(self.text) / 2, baseH / 2 - heading:getHeight() / 2)
-    love.graphics.pop()
+    LG.setColor(0.79, 0.5, 0.19, self.alpha)
+    LG.setFont(heading)
+    LG.print(self.text, baseW / 2 - heading:getWidth(self.text) / 2, baseH / 2 - heading:getHeight() / 2)
+    LG.pop()
 
-    love.graphics.setScissor(0, 0, wW, (self.loaded / 100) * baseH * scale)
-            love.graphics.push()
+    LG.setScissor(0, 0, wW, (self.loaded / 100) * baseH * scale)
+            LG.push()
 
-    love.graphics.setColor(1, 1, 1, self.alpha)
-    love.graphics.draw(self.imgs[2], 0, 0, 0, wW / self.imgs[2]:getWidth(), scale)
+    LG.setColor(1, 1, 1, self.alpha)
+    LG.draw(self.imgs[2], 0, 0, 0, wW / self.imgs[2]:getWidth(), scale)
 
-    love.graphics.scale(scale, scale)
-    love.graphics.translate(cenW, cenH)
+    LG.scale(scale, scale)
+    LG.translate(cenW, cenH)
 
-    love.graphics.setColor(1, 1, 1, 0.5)
-    love.graphics.setFont(heading)
-    love.graphics.print(self.text, baseW / 2 - heading:getWidth(self.text) / 2, baseH / 2 - heading:getHeight() / 2)
+    LG.setColor(1, 1, 1, 0.5)
+    LG.setFont(heading)
+    LG.print(self.text, baseW / 2 - heading:getWidth(self.text) / 2, baseH / 2 - heading:getHeight() / 2)
 
     -- if love.system.getOS() ~= "Android" then
-    love.graphics.pop()
-    love.graphics.setScissor()
+    LG.pop()
+    LG.setScissor()
 
-    love.graphics.push()
-        love.graphics.scale(scale, scale)
+    LG.push()
+        LG.scale(scale, scale)
     for _, p in ipairs(self.particles) do
         local alpha = p.life / p.maxLife
-        love.graphics.setColor(1, 1, 1, alpha)
-        love.graphics.circle("fill", p.x, p.y, 3)
+        LG.setColor(1, 1, 1, alpha)
+        LG.circle("fill", p.x, p.y, 3)
     end
-    love.graphics.pop()
+    LG.pop()
 
     -- end
 

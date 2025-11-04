@@ -41,7 +41,7 @@ function GUI:createButton(src, x, y, cond)
     local table = {}
     table.x = x * scale
     table.y = y * scale
-    table.src = love.graphics.newImage(src)
+    table.src = LG.newImage(src)
     table.cond = cond or function ()
         return true
     end
@@ -54,10 +54,10 @@ end
 function GUI:drawButton(size, round)
 
     if lB.holding then
-        love.graphics.setColor(0.1, 0.1, 0.1, 0.6)
+        LG.setColor(0.1, 0.1, 0.1, 0.6)
     end
-    love.graphics.rectangle("fill", lB.x, lB.y, lB.w, lB.h, 10, 10)
-    love.graphics.setColor(1, 1, 1)
+    LG.rectangle("fill", lB.x, lB.y, lB.w, lB.h, 10, 10)
+    LG.setColor(1, 1, 1)
     self:drawButtonImage(lB)
-    love.graphics.setColor(0, 0, 0, 0.6)
+    LG.setColor(0, 0, 0, 0.6)
 end
