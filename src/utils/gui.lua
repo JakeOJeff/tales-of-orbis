@@ -22,13 +22,16 @@ function GUI:load()
     self.hudS = {src = love.graphics.newImage("assets/vfx/icons/hudsquare.png"), x = 20 * scale, y = 20 * scale, w = 300/2.5 * scale, h = 300/2.5 * scale}
     self.hudB = {src = love.graphics.newImage("assets/vfx/icons/hudbars.png"), x = 20 * scale + self.hudS.w, y = 20 * scale, w = 790/2.5 * scale, h = 190/2.5 * scale}
     self.hudC = {src = love.graphics.newImage("assets/vfx/icons/hudcounter.png"), x = 20 * scale + self.hudS.w, y = 20 * scale + self.hudB.h, w = 110/2.5 * scale, h = 110/2.5 * scale}
-    self.relicsDisplay = { src = love.graphics.newImage("assets/vfx/items/relic.png"), x = self.hudS.x + self.hudS.w / (4 * scale) , y = self.hudS.y + self.hudS.h / (4 * scale), w = self.hudS.w / (2 * scale), h = self.hudS.h / (2 * scale) }
+    self.relicsDisplay = { src = love.graphics.newImage("assets/vfx/items/relic.png"), x = self.hudS.x + (self.hudS.w / 4) , y = self.hudS.y + (self.hudS.h / 4), w = (self.hudS.w / 2), h = (self.hudS.h / 2) }
+        self.relicsDisplay.baseY = self.relicsDisplay.y
 
     self.touches = love.touch.getTouches()
 end
 
 function GUI:update(dt)
     self.touches = love.touch.getTouches()
+    -- Animations
+    self.relicsDisplay.y = self.relicsDisplay.baseY + math.sin(game.time * 2) * 5
     -- Check each touch
     for _, id in pairs(self.touches) do
         local x, y = love.touch.getPosition(id)
@@ -56,11 +59,20 @@ function GUI:draw()
         self:drawButton(b.resetButton,20)
         self:drawButton(b.pauseButton,20)
 
+        -- Boost and Health Bar
+        LG.setColor(0.7,0.7,0.7)
+        LG.rectangle("fill", self.hudB.x, self.hudB.y + self.hudB.h/2, self.hudB.w * (Player.health.current/Player.health.max), self.hudB.h/2, 30, 30)
+        LG.setColor(1,1,1)
+        LG.rectangle("fill", self.hudB.x, self.hudB.y, self.hudB.w * (Player.boost/Player.maxBoost), self.hudB.h/2, 30, 30)
+
+        LG.setColor(1, 1, 1, 0.4)
+        self:drawNormalizedImage(self.relicsDisplay)
+
+        LG.setColor(1,1,1,1)
+        LG.print(Player.collectedRelics, self.relicsDisplay.x, self.relicsDisplay.baseY)
         self:drawNormalizedImage(self.hudS)
         self:drawNormalizedImage(self.hudB)
         self:drawNormalizedImage(self.hudC)
-
-        self:drawNormalizedImage(self.relicsDisplay)
     end
 end
 

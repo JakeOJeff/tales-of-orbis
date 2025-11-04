@@ -36,11 +36,32 @@ local scaledH = wH / scale
 cenW = (scaledW - baseW) / 2
 cenH = (scaledH - baseH) / 2
 
--- [FONT DECLARATION]
-heading = love.graphics.newFont("assets/fonts/nihonium.ttf", 90 * scale)
-subheading = love.graphics.newFont("assets/fonts/nihonium.ttf", 64* scale)
-paragraph = love.graphics.newFont("assets/fonts/nihonium.ttf", 48 * scale)
+-- [GLOBAL FUNCTIONS]
 
+function dist(x1, y1, x2, y2)
+    return math.sqrt((x2 - x1) ^ 2 - (y2 - y1) ^ 2)
+end
+
+function distRect(mx, my, x, y, width, height)
+    return mx > x and mx < x + width and my > y and my < y + height
+end
+function normalizeCoords(x, y)
+    return (x / scale) - cenW / scale, (y / scale) - cenH / scale
+end
+function lerp(a, b, t)
+    return a + (b - a) * t
+end
+
+function updateFontSize()
+    heading = love.graphics.newFont("assets/fonts/nihonium.ttf", 90 * scale)
+    subheading = love.graphics.newFont("assets/fonts/nihonium.ttf", 64* scale)
+    paragraph = love.graphics.newFont("assets/fonts/nihonium.ttf", 48 * scale)  
+end
+-- [FONT DECLARATION]
+heading = nil
+subheading = nil
+paragraph = nil
+updateFontSize()
 -- Input Connections 
 Input = Baton.new {
     controls = {
@@ -111,21 +132,7 @@ function love.resize(w, h)
     -- Reload GUI elements if necessary
     if GUI then
         GUI:load()
+        updateFontSize()
     end
 end
 
--- [GLOBAL FUNCTIONS]
-
-function dist(x1, y1, x2, y2)
-    return math.sqrt((x2 - x1) ^ 2 - (y2 - y1) ^ 2)
-end
-
-function distRect(mx, my, x, y, width, height)
-    return mx > x and mx < x + width and my > y and my < y + height
-end
-function normalizeCoords(x, y)
-    return (x / scale) - cenW / scale, (y / scale) - cenH / scale
-end
-function lerp(a, b, t)
-    return a + (b - a) * t
-end
