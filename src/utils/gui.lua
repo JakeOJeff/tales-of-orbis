@@ -127,29 +127,27 @@ function GUI:load()
         holding = false
     }
 
+    
     self.relicsDisplay = {
         img = {
             src = love.graphics.newImage("assets/vfx/items/relic.png"),
-            x = 0,
-            y = 0,
-            w = imgW * scale,
-            h = imgW * scale
         },
-        x = 20 * scale,
-        y = 20 * scale,
+        x = 45 * scale,
+        y = 50 * scale,
         w = 75 * scale,
         h = 75 * scale,
         scaleX = 1.5,
 
     }
-
     self.hud = {
         src = love.graphics.newImage("assets/vfx/icons/hud.png"),
-        x = 20 * scale,
-        y = 20 * scale,
+        x = 30 * scale,
+        y = 30 * scale,
     }
-    self.hud.w = 0.5 * scale
-    self.hud.h = 0.5 * scale
+    self.hud.w = 0.4 * scale
+    self.hud.h = 0.4 * scale
+
+
 end
 
 function GUI:update(dt)
@@ -308,7 +306,7 @@ function GUI:draw()
        love.graphics.print(Player.collectedRelics, rD.x + (rD.w - rD.img.src:getWidth() * scale) + 20 * scale, rD.y + (rD.h - rD.img.src:getHeight() - paragraph:getHeight()/2 * scale)/2 + 10 * scale)
 
         local hudS = self.hud
-       love.graphics.draw(hudS.src, hudS.x, hudS.y)
+       love.graphics.draw(hudS.src, hudS.x, hudS.y, 0, hudS.w, hudS.h)
     end
 end
 
