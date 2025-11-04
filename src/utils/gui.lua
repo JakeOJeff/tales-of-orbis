@@ -142,6 +142,14 @@ function GUI:load()
         scaleX = 1.5,
 
     }
+
+    self.hud = {
+        src = love.graphics.newImage("assets/vfx/icons/hud.png"),
+        x = 20 * scale,
+        y = 20 * scale,
+    }
+    self.hud.w = 0.5 * scale
+    self.hud.h = 0.5 * scale
 end
 
 function GUI:update(dt)
@@ -198,21 +206,6 @@ function GUI:update(dt)
 end
 
 function GUI:draw()
-    -- Boost Bar
-    love.graphics.setColor(0, 0, 0, 0.5)
-    love.graphics.rectangle("fill", wW - 60 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
-        200 * scale, 5 * scale, 5 * scale)
-    love.graphics.setColor(0.56, 0.23, 0.11)
-    love.graphics.rectangle("fill", wW - 60 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
-        200 * scale * math.max((Player.boost / Player.maxBoost), 0), 5, 5)
-    -- Health Bar
-    love.graphics.setColor(0, 0, 0, 0.5)
-    love.graphics.rectangle("fill", wW - 85 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
-        200 * scale, 5 * scale, 5 * scale)
-    love.graphics.setColor(0.79, 0.50, 0.19)
-    love.graphics.rectangle("fill", wW - 85 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
-        200 * scale * math.max((Player.health.current / Player.health.max), 0), 5, 5)
-    love.graphics.setColor(1, 1, 1)
 
 
 
@@ -292,12 +285,30 @@ function GUI:draw()
         self:drawButtonImage(pB)
 
 
+        -- Boost Bar
+        love.graphics.setColor(0, 0, 0, 0.5)
+        love.graphics.rectangle("fill", wW - 60 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
+            200 * scale, 5 * scale, 5 * scale)
+        love.graphics.setColor(0.56, 0.23, 0.11)
+        love.graphics.rectangle("fill", wW - 60 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
+            200 * scale * math.max((Player.boost / Player.maxBoost), 0), 5, 5)
+        -- Health Bar
+        love.graphics.setColor(0, 0, 0, 0.5)
+        love.graphics.rectangle("fill", wW - 85 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
+            200 * scale, 5 * scale, 5 * scale)
+        love.graphics.setColor(0.79, 0.50, 0.19)
+        love.graphics.rectangle("fill", wW - 85 * scale, love.graphics.getHeight() / 2 - (200 * scale) / 2, 20 * scale,
+            200 * scale * math.max((Player.health.current / Player.health.max), 0), 5, 5)
+        love.graphics.setColor(1, 1, 1)
+
         -- Relics Display
         love.graphics.setFont(paragraph)
        self:drawButtonImage(rD, self.relicsDisplay.scaleX)
        love.graphics.setColor(1, 1, 1)
        love.graphics.print(Player.collectedRelics, rD.x + (rD.w - rD.img.src:getWidth() * scale) + 20 * scale, rD.y + (rD.h - rD.img.src:getHeight() - paragraph:getHeight()/2 * scale)/2 + 10 * scale)
 
+        local hudS = self.hud
+       love.graphics.draw(hudS.src, hudS.x, hudS.y)
     end
 end
 
