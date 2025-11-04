@@ -34,10 +34,12 @@ function GUI:draw()
     end
 end
 
-function GUI:createButton(src, x, y, cond)
+function GUI:createButton(src, x, y, w, h, cond)
     local table = {}
     table.x = x * scale
     table.y = y * scale
+    table.w = w * scale or 50 * scale
+    table.h = h * scale or 50 * scale
     table.src = LG.newImage(src)
     table.cond = cond or function ()
         return true
@@ -48,13 +50,21 @@ function GUI:createButton(src, x, y, cond)
     return table
 end
 
-function GUI:drawButton(v, size, round)
+function GUI:drawButton(v, round)
     if v.holding then
         LG.setColor(0.1, 0.1, 0.1, 0.6)
     end
-    local w, h = v.src:getWidth() * size * scale, v.src:getHeight() * size  * scale
+    local w, h = v.src:getWidth() * scale, v.src:getHeight()  * scale
     LG.rectangle("fill", v.x, v.y, w, h, round, round)
     LG.setColor(1, 1, 1)
-    LG.draw(v.src, v.x + w/2 + (v.src:getWidth()/2 * scale), v.y + h/2 + (v.src:getHeight()/2 * scale), 0, scale, scale)
+    LG.draw(v.src, v.x + w/2 + (v.src:getWidth()/2), v.y + h/2 + (v.src:getHeight()/2 ), 0, scale, scale)
     LG.setColor(0, 0, 0, 0.6)
+end
+function GUI:drawButtonImage(button)
+    local img = button.src
+    local iw, ih = img:getWidth(), img:getHeight()
+    local scale = math.min(button.w / iw, button.h / ih)
+    local dx = button.x + (button.w - iw * scale) / 2
+    local dy = button.y + (button.h - ih * scale) / 2
+    love.graphics.draw(img, dx, dy, 0, scale, scale)
 end
