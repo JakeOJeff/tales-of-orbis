@@ -1,17 +1,20 @@
 GUI = {}
 
 function GUI:load()
-    local navW, navH = 60 * scale, 60 * scale
-
+    local navW, navH = 100 * scale, 100 * scale -- left, right, jump 
+    local velW, velH = 70 * scale, 70 * scale -- boost, dive, 
+    local setW, setH = 85 * scale, 80 * scale -- reset, pause
 
     self.buttons = {}
-    self.buttons.leftButton = self:createButton("assets/vfx/icons/left.png", 20 * scale, wH - navH - (20 * scale), navW, navH )
-    self.buttons.rightButton = self:createButton("assets/vfx/icons/right.png", 20 + 10 + self.buttons.leftButton.src:getWidth(), wH - 20 )
-    self.buttons.boostButton = self:createButton("assets/vfx/icons/boost.png", 50, 50)
-    self.buttons.jumpButton = self:createButton("assets/vfx/icons/jump.png", 100, 100)
-    self.buttons.resetButton = self:createButton("assets/vfx/icons/reset.png", wW - 100, 20)
-    self.buttons.pauseButton = self:createButton("assets/vfx/icons/pause.png", wW - 200, 20)
-    self.buttons.diveButton = self:createButton("assets/vfx/icons/dive.png", wW - 20, wH - 30)
+    self.buttons.leftButton = self:createButton("assets/vfx/icons/left.png", 50 * scale, wH - navH - (50 * scale), navW, navH )
+    self.buttons.rightButton = self:createButton("assets/vfx/icons/right.png", navW + (50 + 10) * scale, wH - navH - (50 * scale), navW, navH )
+    self.buttons.jumpButton = self:createButton("assets/vfx/icons/jump.png", wW - navW - 100 * scale, wH - navH - 150 * scale, navW, navH)
+
+    self.buttons.diveButton = self:createButton("assets/vfx/icons/dive.png", wW - velW - (50 * scale), wH - velH - (70 * scale), velW, velH)
+    self.buttons.boostButton = self:createButton("assets/vfx/icons/boost.png", wW - (velW * 2) - (100 * scale), wH - velH - (50 * scale), velW, velH)
+    
+    self.buttons.resetButton = self:createButton("assets/vfx/icons/reset.png", wW - setW*2 - 30 * scale, 20 * scale, setW, setH)
+    self.buttons.pauseButton = self:createButton("assets/vfx/icons/pause.png", wW - setW - 20 * scale, 20 * scale, setW, setH)
 
     self.touches = love.touch.getTouches()
 end
@@ -34,6 +37,14 @@ function GUI:draw()
     if IsMobile and not paused then
         local b = self.buttons
         self:drawButton(b.leftButton,20)
+        self:drawButton(b.rightButton,20)
+        self:drawButton(b.jumpButton,80)
+
+        self:drawButton(b.diveButton,100)
+        self:drawButton(b.boostButton,100)
+
+        self:drawButton(b.resetButton,20)
+        self:drawButton(b.pauseButton,20)
     end
 end
 
@@ -62,11 +73,11 @@ function GUI:drawButton(v, round)
     LG.setColor(1, 1, 1)
     self:drawButtonImage(v)
 end
-function GUI:drawButtonImage(button)
-    local img = button.src
+function GUI:drawButtonImage(v)
+    local img = v.src
     local iw, ih = img:getWidth(), img:getHeight()
-    local scale = math.min(button.w / iw, button.h / ih)
-    local dx = button.x + (button.w - iw * scale) / 2
-    local dy = button.y + (button.h - ih * scale) / 2
+    local scale = math.min(v.w / iw, v.h / ih)
+    local dx = v.x + (v.w - iw * scale) / 2
+    local dy = v.y + (v.h - ih * scale) / 2
     love.graphics.draw(img, dx, dy, 0, scale, scale)
 end
