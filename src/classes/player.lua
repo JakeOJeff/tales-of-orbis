@@ -195,7 +195,7 @@ function Player:move(dt)
     local isBoostKeyDown = Input:down 'boost' or GUI.buttons.boostButton.holding
 
     if activeDevice == "kbm" or activeDevice == "joy" then
-        IsMobile = false
+        IsMobile = true
     end
 
     if self.grounded then

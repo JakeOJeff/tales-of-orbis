@@ -59,9 +59,9 @@ jAxes = {0, 0, 0, 0}
 
 paused = false
 
-if IsMobile then
-   love.window.setFullscreen(true)
-end
+-- if IsMobile then
+--    love.window.setFullscreen(true)
+-- end
 
 -- Manually call resize logic for correct GUI and canvas scaling
 if love.resize then
