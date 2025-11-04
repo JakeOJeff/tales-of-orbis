@@ -1,7 +1,7 @@
 GUI = {}
 
 function GUI:load()
-    
+
     self.touches = love.touch.getTouches()
 
 end
@@ -168,13 +168,3 @@ function GUI:draw()
         love.graphics.draw(hudS.src, hudS.x, hudS.y, 0, hudS.w, hudS.h)
     end
 end
-
--- function GUI:drawButtonImage(button, sX)
---     local img = button.img.src
---     local iw, ih = img:getWidth(), img:getHeight()
---     local scale = math.min(button.w / iw, button.h / ih)
---     local scaleX = sX or scale
---     local dx = button.x + (button.w - iw * scale) / 2
---     local dy = button.y + (button.h - ih * scale) / 2
---     love.graphics.draw(img, dx, dy + scaleX, 0, scale, scale)
--- end
