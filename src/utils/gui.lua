@@ -316,15 +316,15 @@ function GUI:draw()
     end
 end
 
-function GUI:drawButtonImage(button, sX)
-    local img = button.img.src
-    local iw, ih = img:getWidth(), img:getHeight()
-    local scale = math.min(button.w / iw, button.h / ih)
-    local scaleX = sX or scale
-    local dx = button.x + (button.w - iw * scale) / 2
-    local dy = button.y + (button.h - ih * scale) / 2
-    love.graphics.draw(img, dx, dy + scaleX, 0, scale, scale)
-end
+-- function GUI:drawButtonImage(button, sX)
+--     local img = button.img.src
+--     local iw, ih = img:getWidth(), img:getHeight()
+--     local scale = math.min(button.w / iw, button.h / ih)
+--     local scaleX = sX or scale
+--     local dx = button.x + (button.w - iw * scale) / 2
+--     local dy = button.y + (button.h - ih * scale) / 2
+--     love.graphics.draw(img, dx, dy + scaleX, 0, scale, scale)
+-- end
 
 function GUI:mousepressed(x, y, button)
     local distP = distRect(x, y, self.pauseButton.x, self.pauseButton.y, self.pauseButton.w, self.pauseButton.h)
