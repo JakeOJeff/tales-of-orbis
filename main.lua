@@ -129,6 +129,12 @@ function love.resize(w, h)
     cenW = (scaledW - baseW) / 2
     cenH = (scaledH - baseH) / 2
 
+    --
+    if wW/wH > 1 then
+        game.scale = scale * 2
+        Camera.scale = scale * 2
+    end
+
     -- Reload GUI elements if necessary
     if GUI then
         GUI:load()

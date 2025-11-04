@@ -12,9 +12,7 @@ game = {
     },
     introfadeTimer = 0
 }
-if wW / wH > 2 then
-    game.scale = scale + 1.8
-end
+
 local STI = require("src.libs.sti")
 -- REQUIRE LIBRARIES
 anim8 = require 'src.libs.anim8'
