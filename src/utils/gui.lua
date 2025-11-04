@@ -17,8 +17,6 @@ function GUI:load()
 end
 
 function GUI:update(dt)
-
-
     self.touches = love.touch.getTouches()
     -- Check each touch
     for _, id in pairs(self.touches) do
@@ -31,7 +29,6 @@ function GUI:update(dt)
             end
         end
     end
-
 end
 
 function GUI:draw()
