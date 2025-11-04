@@ -2,39 +2,22 @@ GUI = {}
 
 function GUI:load()
     self.buttons = {}
+    self.buttons.leftButton = self:createButton("assets/vfx/icons/left.png", 20, wH - 20 )
+    self.buttons.rightButton = self:createButton("assets/vfx/icons/right.png", 20 + 10 + self.buttons.leftButton.src:getWidth(), wH - 20 )
+    self.buttons.boostButton = self:createButton("assets/vfx/icons/boost.png", 50, 50)
+    self.buttons.jumpButton = self:createButton("assets/vfx/icons/jump.png", 100, 100)
+    self.buttons.resetButton = self:createButton("assets/vfx/icons/reset.png", wW - 100, 20)
+    self.buttons.pauseButton = self:createButton("assets/vfx/icons/pause.png", wW - 200, 20)
+    self.buttons.diveButton = self:createButton("assets/vfx/icons/dive.png", wW - 20, wH - 30)
 
-    self:createButton("")
+    
 
     self.touches = love.touch.getTouches()
 
 end
 
 function GUI:update(dt)
-    local lB = self.leftButton
-    local rB = self.rightButton
-    local bB = self.boostButton
-    local jB = self.jumpButton
-    local rtB = self.resetButton
-    local pB = self.pauseButton
-    local rsB = self.resumeButton
-    local dB = self.diveButton
 
-    -- Reset all holding states
-    lB.holding = false
-    rB.holding = false
-    bB.holding = false
-    jB.holding = false
-    rtB.holding = false
-    pB.holding = false
-    rsB.holding = false
-    dB.holding = false
-
-
-    if jB.holdTime and jB.holdTime > 0 then
-        jB.holdTime = 0 -- Reset hold time after jump
-    end
-
-    self.relicsDisplay.scaleX = math.sin(5 + love.timer.getTime() * 2)
 
     self.touches = love.touch.getTouches()
     -- Check each touch
@@ -57,9 +40,7 @@ function GUI:update(dt)
             dB.holding = true
         end
     end
-    if distRect(love.mouse.getX(), love.mouse.getY(), rsB.x, rsB.y, rsB.w, rsB.h) then
-        rsB.holding = true
-    end
+
 end
 
 function GUI:draw()
