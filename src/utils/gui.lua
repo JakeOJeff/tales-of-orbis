@@ -31,13 +31,7 @@ function GUI:draw()
 
     if IsMobile and not paused then
 
-        if lB.holding then
-            love.graphics.setColor(0.1, 0.1, 0.1, 0.6)
-        end
-        love.graphics.rectangle("fill", lB.x, lB.y, lB.w, lB.h, 10, 10)
-        love.graphics.setColor(1, 1, 1)
-        self:drawButtonImage(lB)
-        love.graphics.setColor(0, 0, 0, 0.6)
+
 
 
     end
@@ -59,5 +53,11 @@ end
 
 function GUI:drawButton(size, round)
 
-
+    if lB.holding then
+        love.graphics.setColor(0.1, 0.1, 0.1, 0.6)
+    end
+    love.graphics.rectangle("fill", lB.x, lB.y, lB.w, lB.h, 10, 10)
+    love.graphics.setColor(1, 1, 1)
+    self:drawButtonImage(lB)
+    love.graphics.setColor(0, 0, 0, 0.6)
 end
