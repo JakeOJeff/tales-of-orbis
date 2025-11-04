@@ -6,7 +6,7 @@ baseW = 1280
 baseH = 720
 
 -- Android/Mobile 
-IsMobile = false
+IsMobile = true
 
 wW = love.graphics.getWidth()
 wH = love.graphics.getHeight()
@@ -21,9 +21,9 @@ LM = love.mouse
 LA = love.audio
 
 -- Set fullscreen for mobile and trigger resize logic
-if IsMobile and not love.window.getFullscreen() then
-    love.window.setFullscreen(true, "desktop")
-end
+-- if IsMobile and not love.window.getFullscreen() then
+--     love.window.setFullscreen(true, "desktop")
+-- end
 
 -- Use the minimum scale that fits the full base resolution in screen
 scale = math.min(wW / baseW, wH / baseH)

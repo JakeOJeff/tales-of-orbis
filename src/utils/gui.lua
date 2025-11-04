@@ -29,7 +29,8 @@ end
 
 function GUI:draw()
     if IsMobile and not paused then
-        self:drawButton()
+        local b = self.buttons
+        self:drawButton(b.leftButton, 1.5, 20)
     end
 end
 

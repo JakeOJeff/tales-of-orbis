@@ -174,9 +174,9 @@ end
 -- function Player
 function Player:move(dt)
 
-    if Input:down 'right' or GUI.rightButton.holding then
+    if Input:down 'right' or GUI.buttons.rightButton.holding then
         self.xVel = math.min(self.xVel + self.acceleration * dt, self.maxSpeed)
-    elseif Input:down 'left' or GUI.leftButton.holding then
+    elseif Input:down 'left' or GUI.buttons.leftButton.holding then
         self.xVel = math.max(self.xVel - self.acceleration * dt, -self.maxSpeed)
     else
         self:applyFriction(dt)
@@ -184,15 +184,15 @@ function Player:move(dt)
 
     if Input:pressed 'jump' then
         self:jump()
-    elseif GUI.jumpButton.holding and self.touchJumpDebounce <= 0 then
+    elseif GUI.buttons.jumpButton.holding and self.touchJumpDebounce <= 0 then
         self:jump()
         self.touchJumpDebounce = 1
     end
-    if Input:pressed 'dive' or GUI.diveButton.holding then
+    if Input:pressed 'dive' or GUI.buttons.diveButton.holding then
         self:dive(dt)
     end
     local activeDevice = Input:getActiveDevice()
-    local isBoostKeyDown = Input:down 'boost' or GUI.boostButton.holding
+    local isBoostKeyDown = Input:down 'boost' or GUI.buttons.boostButton.holding
 
     if activeDevice == "kbm" or activeDevice == "joy" then
         IsMobile = false
