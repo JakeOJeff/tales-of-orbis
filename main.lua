@@ -14,6 +14,12 @@ wH = love.graphics.getHeight()
 -- Global Libs
 Baton = require "src.libs.baton"
 
+-- Setting LOVE
+LG = love.graphics
+LK = love.keyboard
+LM = love.mouse
+LA = love.audio
+
 -- Set fullscreen for mobile and trigger resize logic
 if IsMobile and not love.window.getFullscreen() then
     love.window.setFullscreen(true, "desktop")
