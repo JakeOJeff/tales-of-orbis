@@ -28,7 +28,6 @@ function GUI:update(dt)
 end
 
 function GUI:draw()
-
     if IsMobile and not paused then
 
 
@@ -51,13 +50,13 @@ function GUI:createButton(src, x, y, cond)
     return table
 end
 
-function GUI:drawButton(size, round)
-
-    if lB.holding then
+function GUI:drawButton(v, size, round)
+    if v.holding then
         LG.setColor(0.1, 0.1, 0.1, 0.6)
     end
-    LG.rectangle("fill", lB.x, lB.y, lB.w, lB.h, 10, 10)
+    local w, h = v.img:getWidth() * size, v.img:getHeight() * size
+    LG.rectangle("fill", v.x, v.y, w, h, round, round)
     LG.setColor(1, 1, 1)
-    self:drawButtonImage(lB)
+    LG.
     LG.setColor(0, 0, 0, 0.6)
 end
