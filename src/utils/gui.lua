@@ -71,9 +71,9 @@ function GUI:drawButton(v, round)
     end
     LG.rectangle("fill", v.x, v.y, v.w, v.h, round, round)
     LG.setColor(1, 1, 1)
-    self:drawButtonImage(v)
+    self:drawNormalizedImage(v)
 end
-function GUI:drawButtonImage(v)
+function GUI:drawNormalizedImage(v)
     local img = v.src
     local iw, ih = img:getWidth(), img:getHeight()
     local scale = math.min(v.w / iw, v.h / ih)
