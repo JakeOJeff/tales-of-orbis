@@ -88,4 +88,6 @@ function GUI:createButton(src, x, y)
     table.src = src
     table.holding = false
     table.holdTime = 0
+
+    return table
 end
