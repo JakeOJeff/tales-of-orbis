@@ -10,10 +10,7 @@ function GUI:load()
     self.buttons.pauseButton = self:createButton("assets/vfx/icons/pause.png", wW - 200, 20)
     self.buttons.diveButton = self:createButton("assets/vfx/icons/dive.png", wW - 20, wH - 30)
 
-    
-
     self.touches = love.touch.getTouches()
-
 end
 
 function GUI:update(dt)
@@ -21,7 +18,6 @@ function GUI:update(dt)
     -- Check each touch
     for _, id in pairs(self.touches) do
         local x, y = love.touch.getPosition(id)
-
         for _, v in pairs(self.buttons) do
             if distRect(x, y, v.x, v.y, v.w, v.h) and v.cond() then
                 v.holding = true
@@ -59,4 +55,9 @@ function GUI:createButton(src, x, y, cond)
     table.holdTime = 0
 
     return table
+end
+
+function GUI:drawButton(size, round)
+
+
 end
