@@ -23,21 +23,12 @@ function GUI:update(dt)
     -- Check each touch
     for _, id in pairs(self.touches) do
         local x, y = love.touch.getPosition(id)
-        if distRect(x, y, lB.x, lB.y, lB.w, lB.h) then
-            lB.holding = true
-        end
-        if distRect(x, y, rB.x, rB.y, rB.w, rB.h) then
-            rB.holding = true
-        end
-        if distRect(x, y, bB.x, bB.y, bB.w, bB.h) then
-            bB.holding = true
-        end
-        if distRect(x, y, jB.x, jB.y, jB.w, jB.h) then
-            jB.holding = true
-            jB.holdTime = (jB.holdTime or 0) + dt
-        end
-        if distRect(x, y, dB.x, dB.y, dB.w, dB.h) and not Player.grounded then
-            dB.holding = true
+
+        for _, v in pairs(self.buttons) do
+            if distRect(x, y, v.x, v.y, v.w, v.h) and v.cond() then
+                v.holding = true
+                v.holdTime = (v.holdTime or 0) + dt
+            end
         end
     end
 
@@ -70,7 +61,9 @@ function GUI:createButton(src, x, y, cond)
     table.x = x * scale
     table.y = y * scale
     table.src = love.graphics.newImage(src)
-    table.cond = cond or nil -- func()
+    table.cond = cond or function ()
+        return true
+    end
     table.holding = false
     table.holdTime = 0
 
