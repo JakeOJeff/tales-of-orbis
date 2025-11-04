@@ -71,14 +71,13 @@ function title:keypressed(key)
 end
 
 function title:gamepadpressed(joystick, button)
-    isMobile = false
     if button == "a" then
         title.setScene("intro")
     end
 end
 
 function title:touchpressed(id, x, y)
-    isMobile = true
+    IsMobile = true
     local tx, ty = normalizeCoords(x, y)
     local inPlay = distRect(tx, ty, self.play_x, self.play_y, self.play_width, self.play_height)
     self.imgs[5] = inPlay and self.hover_play or self.normal_play

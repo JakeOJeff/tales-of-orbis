@@ -56,7 +56,6 @@ function intro:keypressed(key)
 end
 
 function intro:gamepadpressed(joystic, button)
-    isMobile = false
     self:inputReceived()
 end
 

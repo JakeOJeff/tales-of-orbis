@@ -6,7 +6,7 @@ baseW = 1280
 baseH = 720
 
 -- Android/Mobile 
-isMobile = false
+IsMobile = false
 
 wW = love.graphics.getWidth()
 wH = love.graphics.getHeight()
@@ -15,7 +15,7 @@ wH = love.graphics.getHeight()
 Baton = require "src.libs.baton"
 
 -- Set fullscreen for mobile and trigger resize logic
-if isMobile and not love.window.getFullscreen() then
+if IsMobile and not love.window.getFullscreen() then
     love.window.setFullscreen(true, "desktop")
 end
 
@@ -53,9 +53,9 @@ jAxes = {0, 0, 0, 0}
 
 paused = false
 
--- if isMobile then
---    love.window.setFullscreen(true)
--- end
+if IsMobile then
+   love.window.setFullscreen(true)
+end
 
 -- Manually call resize logic for correct GUI and canvas scaling
 if love.resize then

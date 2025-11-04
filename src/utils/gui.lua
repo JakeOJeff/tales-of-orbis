@@ -206,7 +206,7 @@ end
 
 function GUI:draw()
 
-    if isMobile and not paused then
+    if IsMobile and not paused then
         love.graphics.setColor(0, 0, 0, 0.6)
         local lB = self.leftButton
         local rB = self.rightButton

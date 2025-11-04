@@ -54,7 +54,6 @@ function a1s1:keypressed(key)
 end
 
 function a1s1:gamepadpressed(joystic, button)
-    isMobile = false
     self:inputReceived()
 end
 
