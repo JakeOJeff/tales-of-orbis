@@ -54,9 +54,9 @@ function GUI:drawButton(v, size, round)
     if v.holding then
         LG.setColor(0.1, 0.1, 0.1, 0.6)
     end
-    local w, h = v.img:getWidth() * size, v.img:getHeight() * size
+    local w, h = v.img:getWidth() * size * scale, v.img:getHeight() * size  * scale
     LG.rectangle("fill", v.x, v.y, w, h, round, round)
     LG.setColor(1, 1, 1)
-    LG.
+    LG.draw(v.src, v.x + w/2 + (v.img:getWidth()/2 * scale), v.y + h/2 + (v.img:getHeight()/2 * scale), 0, scale, scale)
     LG.setColor(0, 0, 0, 0.6)
 end
