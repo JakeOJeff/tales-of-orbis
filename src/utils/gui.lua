@@ -1,8 +1,11 @@
 GUI = {}
 
 function GUI:load()
+    local navW, navH = 60 * scale, 60 * scale
+
+
     self.buttons = {}
-    self.buttons.leftButton = self:createButton("assets/vfx/icons/left.png", 20, wH - 80 )
+    self.buttons.leftButton = self:createButton("assets/vfx/icons/left.png", 20 * scale, wH - navH - (20 * scale), navW, navH )
     self.buttons.rightButton = self:createButton("assets/vfx/icons/right.png", 20 + 10 + self.buttons.leftButton.src:getWidth(), wH - 20 )
     self.buttons.boostButton = self:createButton("assets/vfx/icons/boost.png", 50, 50)
     self.buttons.jumpButton = self:createButton("assets/vfx/icons/jump.png", 100, 100)
@@ -36,10 +39,10 @@ end
 
 function GUI:createButton(src, x, y, w, h, cond)
     local table = {}
-    table.x = x * scale
-    table.y = y * scale
-    table.w = (w  or 50 ) * scale
-    table.h = (h  or 50) * scale
+    table.x = x
+    table.y = y
+    table.w = w or (50  * scale)
+    table.h = h or (50 * scale)
     table.src = LG.newImage(src)
     table.cond = cond or function ()
         return true
@@ -51,13 +54,13 @@ function GUI:createButton(src, x, y, w, h, cond)
 end
 
 function GUI:drawButton(v, round)
+    LG.setColor(0, 0, 0, 0.6)
     if v.holding then
         LG.setColor(0.1, 0.1, 0.1, 0.6)
     end
     LG.rectangle("fill", v.x, v.y, v.w, v.h, round, round)
     LG.setColor(1, 1, 1)
     self:drawButtonImage(v)
-    LG.setColor(0, 0, 0, 0.6)
 end
 function GUI:drawButtonImage(button)
     local img = button.src
