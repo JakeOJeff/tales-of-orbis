@@ -50,7 +50,7 @@ end
 
 function Relic:checkRemoved(dt) 
     if self.toBeRemoved then 
-        local img = GUI.relicsDisplay.img.src 
+        local img = GUI.relicsDisplay.src 
         local iw, ih = img:getWidth(), img:getHeight() 
         local dx = GUI.relicsDisplay.x + (GUI.relicsDisplay.w - iw * scale) / 2 + 128
         local dy = GUI.relicsDisplay.y + (GUI.relicsDisplay.h - ih * scale) / 2 + 20 + self.scaleX + 72 

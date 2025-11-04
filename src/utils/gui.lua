@@ -5,16 +5,24 @@ function GUI:load()
     local velW, velH = 70 * scale, 70 * scale -- boost, dive, 
     local setW, setH = 85 * scale, 80 * scale -- reset, pause
 
+
     self.buttons = {}
     self.buttons.leftButton = self:createButton("assets/vfx/icons/left.png", 50 * scale, wH - navH - (50 * scale), navW, navH )
     self.buttons.rightButton = self:createButton("assets/vfx/icons/right.png", navW + (50 + 10) * scale, wH - navH - (50 * scale), navW, navH )
     self.buttons.jumpButton = self:createButton("assets/vfx/icons/jump.png", wW - navW - 100 * scale, wH - navH - 150 * scale, navW, navH)
 
-    self.buttons.diveButton = self:createButton("assets/vfx/icons/dive.png", wW - velW - (50 * scale), wH - velH - (70 * scale), velW, velH)
+    self.buttons.diveButton = self:createButton("assets/vfx/icons/dive.png", wW - velW - (50 * scale), wH - velH - (70 * scale), velW, velH, function ()
+        return not Player.grounded
+    end)
     self.buttons.boostButton = self:createButton("assets/vfx/icons/boost.png", wW - (velW * 2) - (100 * scale), wH - velH - (50 * scale), velW, velH)
     
     self.buttons.resetButton = self:createButton("assets/vfx/icons/reset.png", wW - setW*2 - 30 * scale, 20 * scale, setW, setH)
     self.buttons.pauseButton = self:createButton("assets/vfx/icons/pause.png", wW - setW - 20 * scale, 20 * scale, setW, setH)
+
+    self.hudS = {src = love.graphics.newImage("assets/vfx/icons/hudsquare.png"), x = 20 * scale, y = 20 * scale, w = 300/2.5 * scale, h = 300/2.5 * scale}
+    self.hudB = {src = love.graphics.newImage("assets/vfx/icons/hudbars.png"), x = 20 * scale + self.hudS.w, y = 20 * scale, w = 790/2.5 * scale, h = 190/2.5 * scale}
+    self.hudC = {src = love.graphics.newImage("assets/vfx/icons/hudcounter.png"), x = 20 * scale + self.hudS.w, y = 20 * scale + self.hudB.h, w = 110/2.5 * scale, h = 110/2.5 * scale}
+    self.relicsDisplay = { src = love.graphics.newImage("assets/vfx/items/relic.png"), x = self.hudS.x + self.hudS.w / (4 * scale) , y = self.hudS.y + self.hudS.h / (4 * scale), w = self.hudS.w / (2 * scale), h = self.hudS.h / (2 * scale) }
 
     self.touches = love.touch.getTouches()
 end
@@ -28,6 +36,8 @@ function GUI:update(dt)
             if distRect(x, y, v.x, v.y, v.w, v.h) and v.cond() then
                 v.holding = true
                 v.holdTime = (v.holdTime or 0) + dt
+            else
+                v.holdTime = 0
             end
         end
     end
@@ -45,6 +55,12 @@ function GUI:draw()
 
         self:drawButton(b.resetButton,20)
         self:drawButton(b.pauseButton,20)
+
+        self:drawNormalizedImage(self.hudS)
+        self:drawNormalizedImage(self.hudB)
+        self:drawNormalizedImage(self.hudC)
+
+        self:drawNormalizedImage(self.relicsDisplay)
     end
 end
 
@@ -65,13 +81,15 @@ function GUI:createButton(src, x, y, w, h, cond)
 end
 
 function GUI:drawButton(v, round)
-    LG.setColor(0, 0, 0, 0.6)
-    if v.holding then
-        LG.setColor(0.1, 0.1, 0.1, 0.6)
+    if v.cond() then
+        LG.setColor(0, 0, 0, 0.6)
+        if v.holding then
+            LG.setColor(0.1, 0.1, 0.1, 0.6)
+        end
+        LG.rectangle("fill", v.x, v.y, v.w, v.h, round, round)
+        LG.setColor(1, 1, 1)
+        self:drawNormalizedImage(v)
     end
-    LG.rectangle("fill", v.x, v.y, v.w, v.h, round, round)
-    LG.setColor(1, 1, 1)
-    self:drawNormalizedImage(v)
 end
 function GUI:drawNormalizedImage(v)
     local img = v.src
