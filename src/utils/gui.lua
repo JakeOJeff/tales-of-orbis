@@ -37,12 +37,6 @@ end
 function GUI:draw()
 
     if IsMobile and not paused then
-        love.graphics.setColor(0, 0, 0, 0.6)
-        local lB = self.leftButton
-        local rB = self.rightButton
-        local jB = self.jumpButton
-        local bB = self.boostButton
-        local dB = self.diveButton
 
         if lB.holding then
             love.graphics.setColor(0.1, 0.1, 0.1, 0.6)
