@@ -10,7 +10,7 @@ return {
   tilewidth = 32,
   tileheight = 32,
   nextlayerid = 12,
-  nextobjectid = 204,
+  nextobjectid = 205,
   properties = {},
   tilesets = {
     {
@@ -919,6 +919,19 @@ return {
           shape = "ellipse",
           x = 2688,
           y = 384,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 204,
+          name = "Torch",
+          type = "",
+          shape = "ellipse",
+          x = 1744,
+          y = 224,
           width = 32,
           height = 32,
           rotation = 0,

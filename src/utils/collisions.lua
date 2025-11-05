@@ -3,7 +3,9 @@ local collisions = {}
 function collisions:beginContact(a, b, collision) 
     if Fire.beginContact(a, b, collision) then return end
     if Blackhole.beginContact(a, b, collision) then return end
-        if Relic.beginContact(a, b, collision) then return end
+    if Relic.beginContact(a, b, collision) then return end
+    if Torch.beginContact(a, b, collision) then return end
+
     Player:beginContact(a, b, collision)
 end
 

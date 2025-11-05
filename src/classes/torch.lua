@@ -6,7 +6,7 @@ function Torch.new(x, y)
     local instance = setmetatable({}, Torch)
     instance.x = x
     instance.y = y
-    instance.img = LG.newImage("assets/vfx/items/relic.png")
+    instance.img = LG.newImage("assets/vfx/items/torch.png")
     instance.width = instance.img:getWidth()
     instance.height = instance.img:getHeight()
 
@@ -33,7 +33,7 @@ function Torch:remove()
         if v == self then
             self.physics.body:destroy()
             table.remove(ActiveTorches, i)
-            Play.torchTimer = Player.torchTimer + (60)
+            Player.torchTimer = Player.torchTimer + (60)
         end
     end
 end

@@ -24,6 +24,7 @@ require("src.classes.fire")
 require("src.classes.blackhole")
 require("src.classes.block")
 require("src.classes.relic")
+require("src.classes.torch")
 
 -- REQUIRE UTILS
 utils = {}
@@ -94,6 +95,8 @@ function game:update(dt)
         Blackhole.updateAll(dt)
         Block.updateAll(dt)
         Relic.updateAll(dt)
+        Torch.updateAll(dt)
+
         GUI:update(dt)
     end
 end
@@ -162,6 +165,7 @@ function game:draw()
         Blackhole.drawAll()
         Block.drawAll()
         Relic.drawAll()
+        Torch.drawAll()
         Fire.drawAll()
     camera:detach()
     if self.shaking  or self.blasting then

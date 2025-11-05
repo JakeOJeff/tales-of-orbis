@@ -11,6 +11,8 @@ function spawnEntities(args)
     for i, v in ipairs(Map.layers.entity.objects) do
         if v.name == "Fire" then
             Fire.new(v.x + v.width / 2, v.y + v.height / 2)
+        elseif v.name == "Torch" then
+            Torch.new(v.x + v.width / 2, v.y + v.height / 2)
         elseif v.name == "Blackhole" then
             Blackhole.new(v.x + v.width / 2, v.y + v.height / 2, math.random(50, 100), math.random(1, 5))
         elseif v.name == "Block" then
