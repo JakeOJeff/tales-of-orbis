@@ -17,6 +17,7 @@ local STI = require("src.libs.sti")
 -- REQUIRE LIBRARIES
 anim8 = require 'src.libs.anim8'
 Camera = require 'src.libs.camera'
+
 -- REQUIRE CLASSES
 require("src.classes.player")
 require("src.classes.fire")
@@ -28,6 +29,7 @@ require("src.classes.relic")
 local utils = {}
 utils.collisions = require("src.utils.collisions")
 require("src.utils.gui")
+require("src.utils.manager")
 
 -- Sounds and Tracks
 introTrack = love.audio.newSource("assets/sfx/intro.wav", "stream")
