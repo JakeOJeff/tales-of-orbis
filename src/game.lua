@@ -93,14 +93,13 @@ function game:update(dt)
         -- Camera:update(dt)
         World:update(dt)
         local desiredX = Player.x
-    local desiredY = Player.y
+        local desiredY = Player.y
 
         -- Clamp
         desiredX = math.max(wW/ self.scale / 2, math.min(desiredX, MapWidth - wW/ self.scale / 2))
         desiredY = math.max(wH/self.scale / 2, math.min(desiredY, MapHeight - wH/self.scale / 2))
 
         camera:move((desiredX - camera.x) * 0.1, (desiredY - camera.y) * 0.1)
-
         Player:update(dt)
         Fire.updateAll(dt)
         Blackhole.updateAll(dt)
@@ -160,6 +159,8 @@ function game:draw()
     LG.setBlendMode("alpha")
     local dx = 0
     local dy = 0
+    local lightX = (Player.x - camera.x) * self.scale  + (dx or 0)
+    local lightY = (Player.y - camera.y) * self.scale  + (dy or 0)
 
     if self.shaking or self.blasting then
         dx = love.math.random(-1 * game.downBlast, 1 * game.downBlast)
@@ -169,21 +170,19 @@ function game:draw()
 
     
     -- DarknessShader:send("ambient", 0.2)
-    love.graphics.setShader()
-    love.graphics.setColor(1, 0, 0)
-    love.graphics.circle("fill", lightX, lightY, 10)
-    love.graphics.setColor(1, 1, 1)
+
     camera:attach()
 
         love.graphics.setShader(DarknessShader)
-
-        local lightX = (Player.x - camera.x) * self.scale  + (dx or 0)
-        local lightY = (Player.y - camera.y) * self.scale  + (dy or 0)
-
         DarknessShader:send("lightPos", {lightX, lightY})
         DarknessShader:send("lightRadius", Player.lightIntensity * scale)
         Map:drawLayer(Map.layers["BGTiles"])
         Map:drawLayer(Map.layers["Base"])
+        love.graphics.setShader()
+        love.graphics.setColor(1, 0, 0)
+        love.graphics.circle("fill", lightX, lightY, 10)
+        love.graphics.setColor(1, 1, 1)
+
         Player:draw()
         Blackhole.drawAll()
         Block.drawAll()
