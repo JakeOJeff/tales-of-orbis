@@ -159,25 +159,28 @@ function game:draw()
         LG.push()
     end
     love.graphics.setShader(DarknessShader)
-    local lightX = (Player.x - Camera.x) * self.scale
-    local lightY = (Player.y - Camera.y) * self.scale
+
+    local lightX = (Player.x - Camera.x) * self.scale  + (dx or 0)
+    local lightY = (Player.y - Camera.y) * self.scale  + (dy or 0)
 
     DarknessShader:send("lightPos", {lightX, lightY})
     DarknessShader:send("lightRadius", Player.lightIntensity * scale)
-    DarknessShader:send("ambient", 0.5)
+    DarknessShader:send("softness", 200 * scale)
+    DarknessShader:send("darknessColor", {0.0,0.0,0.0})
 
     Map:draw(-Camera.x + dx, -Camera.y + dy, self.scale, self.scale)
+    love.graphics.setShader()
 
     Camera:apply(self.shaking, dx, dy)
     MovementShader:send("time", self.time)
 
-    for _, v in ipairs(Map.layers.checkpoints.objects) do
-        LG.setColor(0,1,0, 0.1)
-        LG.setShader(MovementShader)
-        LG.rectangle("fill", v.x, v.y, v.width, v.height)
-        LG.setShader()
-        LG.setColor(1,1,1)
-    end
+    -- for _, v in ipairs(Map.layers.checkpoints.objects) do
+    --     LG.setColor(0,1,0, 0.1)
+    --     LG.setShader(MovementShader)
+    --     LG.rectangle("fill", v.x, v.y, v.width, v.height)
+    --     LG.setShader()
+    --     LG.setColor(1,1,1)
+    -- end
 
     Player:draw()
     Blackhole.drawAll()
@@ -188,7 +191,6 @@ function game:draw()
     if self.shaking  or self.blasting then
         LG.pop()
     end
-    love.graphics.setShader()
     GUI:draw()
     LG.pop()
 end
