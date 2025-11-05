@@ -83,19 +83,10 @@ function game:update(dt)
             self.blasting = false
             self.downBlast = 1
         end
-        -- if Joystick then
-        --     jAxes[1], jAxes[2], jAxes[3], jAxes[4] = Joystick:getAxes() -- lH, lV, rH, rV
-        -- else
-        --     for i = 1, 4 do
-        --         jAxes[i] = 0
-        --     end
-        -- end
-        -- Camera:update(dt)
         World:update(dt)
         local desiredX = Player.x
         local desiredY = Player.y
 
-        -- Clamp
         desiredX = math.max(wW/ self.scale / 2, math.min(desiredX, MapWidth - wW/ self.scale / 2))
         desiredY = math.max(wH/self.scale / 2, math.min(desiredY, MapHeight - wH/self.scale / 2))
 
@@ -110,9 +101,6 @@ function game:update(dt)
 end
 
 function game:draw()
-
-
-    -- Draw text
     LG.push()
     local text = "Escape the Void. Reach the Core. Don't fight it, RUN!"
     local textWidth = paragraph:getWidth(text)
@@ -133,15 +121,11 @@ function game:draw()
         local img = self.backgroundLayers[layer]
         local imgWidth, imgHeight = img:getDimensions()
 
-        -- Calculate scaling to fit screen
         local scaleX = screenWidth / imgWidth
         local scaleY = screenHeight / imgHeight
 
-        -- Parallax offset
         local offsetX = -px * factor % imgWidth
-        -- local offsetY = -py * factor % imgHeight
 
-        -- Draw 4 tiles to fill screen (to handle scrolling)
         for i = -1, 1 do
             for j = -1, 1 do
                 LG.draw(img, offsetX + i * imgWidth * scaleX, j * imgHeight * scaleY, 0, scaleX, scaleY)
@@ -149,8 +133,6 @@ function game:draw()
         end
     end
     LG.setBlendMode("alpha", "premultiplied")
-
-
 
     drawParallax("layer3", 0.1)
     drawParallax("layer2", 0.2)
@@ -167,9 +149,6 @@ function game:draw()
         dy = love.math.random(-1, 1)
         LG.push()
     end
-
-    
-    -- DarknessShader:send("ambient", 0.2)
 
     camera:attach()
 
