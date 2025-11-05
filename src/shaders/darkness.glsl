@@ -7,7 +7,10 @@ vec4 effect(vec4 color, Image tex, vec2 texCoord, vec2 screenCoord) {
     float intensity = clamp(1.0 - dist / lightRadius, 0.0, 1.0);
     float brightness = clamp(ambient + intensity, 0.0, 1.0);
     vec4 texColor = Texel(tex, texCoord);
-    return texColor * vec4(vec3(brightness), 1.0);
+
+    vec3 lightColor = vec3(0.79, 0.5, 0.19);
+
+    return texColor * vec4(lightColor * brightness, 1.0);
 }
 
     // uniform vec2 lightPos;    
