@@ -58,6 +58,7 @@ function game:load()
 
 
     self.time = 0
+
     track:play()
     movementSFX:play()
 
@@ -160,6 +161,7 @@ function game:draw()
         Map:drawLayer(Map.layers["Base"])
         Block.drawAll()
         Relic.drawAll()
+
         love.graphics.setShader()
 
 
