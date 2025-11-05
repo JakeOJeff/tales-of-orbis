@@ -156,9 +156,7 @@ function game:draw()
         Map:drawLayer(Map.layers["BGTiles"])
         Map:drawLayer(Map.layers["Base"])
         love.graphics.setShader()
-        love.graphics.setColor(1, 0, 0)
-        love.graphics.circle("fill", lightX, lightY, 10)
-        love.graphics.setColor(1, 1, 1)
+
 
         Player:draw()
         Blackhole.drawAll()

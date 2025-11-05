@@ -78,7 +78,7 @@ end
 
 function Player:update(dt)
     self.health.current = self.maxParticles / self.maxParticleLimit * 100
-        -- self.lightIntensity = 300 * (self.pickedUpGrace + 1)
+        self.lightIntensity = 300 * (self.pickedUpGrace + 2)
 
     if self.pickedUpGrace <= 0 then
         self.pickedUpItem = false
