@@ -3,7 +3,7 @@ local Camera = {
     y = 0,
     targetX = 0,
     targetY = 0,
-    scale = scale + 1.5,
+    scale = scale * 2,
     lerpSpeed = 6 -- Adjust this for smoother/slower movement
 }
 

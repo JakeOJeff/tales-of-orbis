@@ -1,6 +1,6 @@
 game = {
     background = LG.newImage("assets/vfx/loading/background.png"),
-    scale = scale + 1.5,
+    scale = scale * 2,
     shaking = false,
     blasting = false,
     blastTime = 0,
@@ -170,6 +170,7 @@ function game:draw()
         LG.setShader()
         LG.setColor(1,1,1)
     end
+    
     Player:draw()
     Blackhole.drawAll()
     Block.drawAll()

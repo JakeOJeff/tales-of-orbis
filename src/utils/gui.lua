@@ -22,7 +22,7 @@ function GUI:load()
     self.hudS = {src = love.graphics.newImage("assets/vfx/icons/hudsquare.png"), x = 20 * scale, y = 20 * scale, w = 300/2.5 * scale, h = 300/2.5 * scale}
     self.hudB = {src = love.graphics.newImage("assets/vfx/icons/hudbars.png"), x = 20 * scale + self.hudS.w, y = 20 * scale, w = 790/2.5 * scale, h = 190/2.5 * scale}
     self.hudC = {src = love.graphics.newImage("assets/vfx/icons/hudcounter.png"), x = 20 * scale + self.hudS.w, y = 20 * scale + self.hudB.h, w = 110/2.5 * scale, h = 110/2.5 * scale}
-    self.relicsDisplay = { src = love.graphics.newImage("assets/vfx/items/relic.png"), x = self.hudS.x + (self.hudS.w / 4) , y = self.hudS.y + (self.hudS.h / 4), w = (self.hudS.w / 2), h = (self.hudS.h / 2) }
+    self.relicsDisplay = { src = love.graphics.newImage("assets/vfx/items/relic.png"), x = self.hudS.x + (self.hudS.w / 4) , y = self.hudS.y + (self.hudS.h / 4), w = (self.hudS.w / 2), h = (self.hudS.h / 2), alpha = 0.6 }
         self.relicsDisplay.baseY = self.relicsDisplay.y
 
     self.touches = love.touch.getTouches()
@@ -61,11 +61,11 @@ function GUI:draw()
 
         -- Boost and Health Bar
         LG.setColor(0.7,0.7,0.7)
-        LG.rectangle("fill", self.hudB.x, self.hudB.y + self.hudB.h/2, self.hudB.w * (Player.health.current/Player.health.max), self.hudB.h/2, 30, 30)
+        LG.rectangle("fill", self.hudB.x, self.hudB.y + self.hudB.h/2, self.hudB.w * math.min(Player.health.current / Player.health.max, 1), self.hudB.h/2, 30, 30)
         LG.setColor(1,1,1)
-        LG.rectangle("fill", self.hudB.x, self.hudB.y, self.hudB.w * (Player.boost/Player.maxBoost), self.hudB.h/2, 30, 30)
+        LG.rectangle("fill", self.hudB.x, self.hudB.y, self.hudB.w * math.min(Player.boost / Player.maxBoost, 1), self.hudB.h/2, 30, 30)
 
-        LG.setColor(1, 1, 1, 0.4)
+        LG.setColor(1, 1, 1, self.relicsDisplay.alpha)
         self:drawNormalizedImage(self.relicsDisplay)
 
         LG.setColor(1,1,1,1)

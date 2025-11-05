@@ -57,7 +57,9 @@ function Relic:checkRemoved(dt)
         if self.x > dx  * scale and self.y > dy  * scale then 
             self.x = self.x - 30 * wW/100 * dt 
             self.y = self.y - 30 * wH/100 * dt 
+            GUI.relicsDisplay.alpha = 1
         else 
+            GUI.relicsDisplay.alpha = 0.6
             self:remove() 
         end
     end
