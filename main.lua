@@ -138,6 +138,7 @@ function love.resize(w, h)
     -- Reload GUI elements if necessary
     if GUI then
         GUI:load()
+        game:load()
         updateFontSize()
     end
 end

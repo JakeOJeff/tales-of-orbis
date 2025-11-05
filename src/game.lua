@@ -52,6 +52,7 @@ function game:load()
 
     DarknessShader = love.graphics.newShader("src/shaders/darkness.glsl")
 
+    camera = Camera(Player.x, Player.y, game.scale)
 
     self.time = 0
     track:play()
@@ -89,9 +90,17 @@ function game:update(dt)
         --         jAxes[i] = 0
         --     end
         -- end
-        Camera:update(dt)
+        -- Camera:update(dt)
         World:update(dt)
-        Camera:setPosition(Player.x, Player.y)
+        local desiredX = Player.x
+    local desiredY = Player.y
+
+        -- Clamp
+        desiredX = math.max(wW/ self.scale / 2, math.min(desiredX, MapWidth - wW/ self.scale / 2))
+        desiredY = math.max(wH/self.scale / 2, math.min(desiredY, MapHeight - wH/self.scale / 2))
+
+        camera:move((desiredX - camera.x) * 0.1, (desiredY - camera.y) * 0.1)
+
         Player:update(dt)
         Fire.updateAll(dt)
         Blackhole.updateAll(dt)
@@ -157,36 +166,30 @@ function game:draw()
         dy = love.math.random(-1, 1)
         LG.push()
     end
-    love.graphics.setShader(DarknessShader)
 
-    local lightX = (Player.x - Camera.x) * self.scale  + (dx or 0)
-    local lightY = (Player.y - Camera.y) * self.scale  + (dy or 0)
-
-    DarknessShader:send("lightPos", {lightX, lightY})
-    DarknessShader:send("lightRadius", Player.lightIntensity * scale)
     
     -- DarknessShader:send("ambient", 0.2)
-    Map:draw(-Camera.x + dx, -Camera.y + dy, self.scale, self.scale)
     love.graphics.setShader()
     love.graphics.setColor(1, 0, 0)
     love.graphics.circle("fill", lightX, lightY, 10)
     love.graphics.setColor(1, 1, 1)
-    Camera:apply(self.shaking, dx, dy)
+    camera:attach()
 
-    -- for _, v in ipairs(Map.layers.checkpoints.objects) do
-    --     LG.setColor(0,1,0, 0.1)
-    --     LG.setShader(MovementShader)
-    --     LG.rectangle("fill", v.x, v.y, v.width, v.height)
-    --     LG.setShader()
-    --     LG.setColor(1,1,1)
-    -- end
+        love.graphics.setShader(DarknessShader)
 
-    Player:draw()
-    Blackhole.drawAll()
-    Block.drawAll()
-    Relic.drawAll()
-    Fire.drawAll()
-    Camera:clear()
+        local lightX = (Player.x - camera.x) * self.scale  + (dx or 0)
+        local lightY = (Player.y - camera.y) * self.scale  + (dy or 0)
+
+        DarknessShader:send("lightPos", {lightX, lightY})
+        DarknessShader:send("lightRadius", Player.lightIntensity * scale)
+        Map:drawLayer(Map.layers["BGTiles"])
+        Map:drawLayer(Map.layers["Base"])
+        Player:draw()
+        Blackhole.drawAll()
+        Block.drawAll()
+        Relic.drawAll()
+        Fire.drawAll()
+    camera:detach()
     if self.shaking  or self.blasting then
         LG.pop()
     end
