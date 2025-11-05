@@ -139,8 +139,8 @@ function game:draw()
     LG.setBlendMode("alpha")
     local dx = 0
     local dy = 0
-    local lightX = (Player.x - camera.x) * scale  + (dx or 0)
-    local lightY = (Player.y - camera.y) * scale  + (dy or 0)
+    local lightX = (Player.x - camera.x) * self.scale + wW / 2
+    local lightY = (Player.y - camera.y) * self.scale + wH / 2
 
     if self.shaking or self.blasting then
         dx = love.math.random(-1 * game.downBlast, 1 * game.downBlast)
@@ -152,6 +152,7 @@ function game:draw()
         love.graphics.setShader(DarknessShader)
         DarknessShader:send("lightPos", {lightX, lightY})
         DarknessShader:send("lightRadius", Player.lightIntensity * scale)
+        -- DarknessShader:send("ambient", 0.2)
         Map:drawLayer(Map.layers["BGTiles"])
         Map:drawLayer(Map.layers["Base"])
         love.graphics.setShader()
