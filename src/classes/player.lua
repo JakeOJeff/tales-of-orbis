@@ -80,8 +80,8 @@ end
 function Player:update(dt)
     self.health.current = self.maxParticles / self.maxParticleLimit * 100
     local emitAmt = 1
-    if self.torchTimer > 0 then emitAmt = 4 else emitAmt = 1 end
-    self.torchTimer = self.torchTimer - 1 * dt
+    if self.torchTimer > 0 then self.torchTimer = self.torchTimer - 1 * dt emitAmt = 4 else emitAmt = 1 end
+    
     self.lightIntensity = 100 * emitAmt *(self.pickedUpGrace + 2)
 
     if self.pickedUpGrace <= 0 then

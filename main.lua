@@ -56,11 +56,13 @@ function updateFontSize()
     heading = love.graphics.newFont("assets/fonts/nihonium.ttf", 90 * scale)
     subheading = love.graphics.newFont("assets/fonts/nihonium.ttf", 64* scale)
     paragraph = love.graphics.newFont("assets/fonts/nihonium.ttf", 48 * scale)  
+    tag = love.graphics.newFont("assets/fonts/nihonium.ttf", 18 * scale)  
 end
 -- [FONT DECLARATION]
 heading = nil
 subheading = nil
 paragraph = nil
+tag = nil
 updateFontSize()
 -- Input Connections 
 Input = Baton.new {

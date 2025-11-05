@@ -70,8 +70,10 @@ function GUI:draw()
         LG.setColor(1,1,1,1)
         LG.setFont(paragraph)   
         LG.print(Player.collectedRelics, self.hudS.x + self.hudS.w/2 - paragraph:getWidth(Player.collectedRelics)/2, self.hudS.y + self.hudS.h/2 - paragraph:getHeight()/2)
-        LG.setFont(paragraph)
-        
+        LG.setFont(tag)
+        local tTimer = math.abs(math.floor(Player.torchTimer))
+        local tTimerString = math.floor(tTimer/60).. ":"..tTimer%60
+        LG.print(tTimerString, self.hudC.x + self.hudC.w/2 - tag:getWidth(tTimerString)/2 + 2 * scale, self.hudC.y + self.hudC.h/2 - tag:getHeight()/2 + 2 * scale)
         self:drawNormalizedImage(self.hudS)
         self:drawNormalizedImage(self.hudB)
         self:drawNormalizedImage(self.hudC)
