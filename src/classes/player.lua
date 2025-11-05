@@ -64,6 +64,7 @@ function Player:load()
     self.touchJumpDebounce = 1
 
     self.lightIntensity = 400
+    self.torch = { value = 1, default = 1}
 
     self.physics = {}
     self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
@@ -78,7 +79,7 @@ end
 
 function Player:update(dt)
     self.health.current = self.maxParticles / self.maxParticleLimit * 100
-        self.lightIntensity = 300 * (self.pickedUpGrace + 2)
+        self.lightIntensity = 100 * (self.pickedUpGrace + 2)
 
     if self.pickedUpGrace <= 0 then
         self.pickedUpItem = false
