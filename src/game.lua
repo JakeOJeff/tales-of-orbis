@@ -104,7 +104,6 @@ end
 
 function game:draw()
 
-
     -- Draw text
     LG.push()
     local text = "Escape the Void. Reach the Core. Don't fight it, RUN!"
@@ -119,16 +118,14 @@ function game:draw()
     LG.draw(self.background, 0, 0, 0, self.scale, self.scale)
     local px = Player.x
     local py = Player.y
-    local screenWidth = LG.getWidth()
-    local screenHeight = LG.getHeight()
 
     local function drawParallax(layer, factor)
         local img = self.backgroundLayers[layer]
         local imgWidth, imgHeight = img:getDimensions()
 
         -- Calculate scaling to fit screen
-        local scaleX = screenWidth / imgWidth
-        local scaleY = screenHeight / imgHeight
+        local scaleX = wW / imgWidth
+        local scaleY = wH / imgHeight
 
         -- Parallax offset
         local offsetX = -px * factor % imgWidth
@@ -142,14 +139,11 @@ function game:draw()
         end
     end
     LG.setBlendMode("alpha", "premultiplied")
-
-
-
     drawParallax("layer3", 0.1)
     drawParallax("layer2", 0.2)
     drawParallax("layer1", 0.4)
-
     LG.setBlendMode("alpha")
+
     local dx = 0
     local dy = 0
 
@@ -158,30 +152,20 @@ function game:draw()
         dy = love.math.random(-1, 1)
         LG.push()
     end
-    love.graphics.setShader(DarknessShader)
-
+    
     local lightX = (Player.x - Camera.x) * self.scale  + (dx or 0)
     local lightY = (Player.y - Camera.y) * self.scale  + (dy or 0)
 
+    love.graphics.setShader(DarknessShader)
+
     DarknessShader:send("lightPos", {lightX, lightY})
     DarknessShader:send("lightRadius", Player.lightIntensity * scale)
-    DarknessShader:send("softness", 200 * scale)
-    DarknessShader:send("darknessColor", {0.0,0.0,0.0})
 
     Map:draw(-Camera.x + dx, -Camera.y + dy, self.scale, self.scale)
     love.graphics.setShader()
 
     Camera:apply(self.shaking, dx, dy)
     MovementShader:send("time", self.time)
-
-    -- for _, v in ipairs(Map.layers.checkpoints.objects) do
-    --     LG.setColor(0,1,0, 0.1)
-    --     LG.setShader(MovementShader)
-    --     LG.rectangle("fill", v.x, v.y, v.width, v.height)
-    --     LG.setShader()
-    --     LG.setColor(1,1,1)
-    -- end
-
     Player:draw()
     Blackhole.drawAll()
     Block.drawAll()
