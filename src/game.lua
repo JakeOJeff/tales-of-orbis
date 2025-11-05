@@ -51,6 +51,7 @@ function game:load()
     MapHeight = Map.layers.Base.height * 32
 
     MovementShader = LG.newShader("src/shaders/movement.glsl")
+    DarknessShader = love.graphics.newShader("src/shaders/darkness.glsl")
 
 
     self.time = 0
@@ -157,7 +158,14 @@ function game:draw()
         dy = love.math.random(-1, 1)
         LG.push()
     end
-    
+    love.graphics.setShader(DarknessShader)
+    local lightX = (Player.x - Camera.x) * self.scale
+    local lightY = (Player.y - Camera.y) * self.scale
+
+    DarknessShader:send("lightPos", {lightX, lightY})
+    DarknessShader:send("lightRadius", Player.lightIntensity * scale)
+    DarknessShader:send("ambient", 0.5)
+
     Map:draw(-Camera.x + dx, -Camera.y + dy, self.scale, self.scale)
 
     Camera:apply(self.shaking, dx, dy)
@@ -170,7 +178,7 @@ function game:draw()
         LG.setShader()
         LG.setColor(1,1,1)
     end
-    
+
     Player:draw()
     Blackhole.drawAll()
     Block.drawAll()
@@ -180,7 +188,7 @@ function game:draw()
     if self.shaking  or self.blasting then
         LG.pop()
     end
-
+    love.graphics.setShader()
     GUI:draw()
     LG.pop()
 end

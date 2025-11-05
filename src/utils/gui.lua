@@ -67,9 +67,10 @@ function GUI:draw()
 
         LG.setColor(1, 1, 1, self.relicsDisplay.alpha)
         self:drawNormalizedImage(self.relicsDisplay)
-
         LG.setColor(1,1,1,1)
-        LG.print(Player.collectedRelics, self.relicsDisplay.x, self.relicsDisplay.baseY)
+        LG.setFont(paragraph)   
+        LG.print(Player.collectedRelics, self.hudS.x + self.hudS.w/2 - paragraph:getWidth(Player.collectedRelics)/2, self.hudS.y + self.hudS.h/2 - paragraph:getHeight()/2)
+        
         self:drawNormalizedImage(self.hudS)
         self:drawNormalizedImage(self.hudB)
         self:drawNormalizedImage(self.hudC)

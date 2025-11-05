@@ -63,6 +63,8 @@ function Player:load()
     self.collectedRelics = 0
     self.touchJumpDebounce = 1
 
+    self.lightIntensity = 300
+
     self.physics = {}
     self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
     self.physics.body:setFixedRotation(true)
@@ -76,9 +78,11 @@ end
 
 function Player:update(dt)
     self.health.current = self.maxParticles / self.maxParticleLimit * 100
+        self.lightIntensity = 300 * (self.pickedUpGrace + 1)
 
     if self.pickedUpGrace <= 0 then
         self.pickedUpItem = false
+        self.lightIntensity = 300
     else
         self.pickedUpGrace = self.pickedUpGrace - 1 * dt
         self.pickedUpItem = true
