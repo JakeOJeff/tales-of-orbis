@@ -26,7 +26,7 @@ require("src.classes.block")
 require("src.classes.relic")
 
 -- REQUIRE UTILS
-local utils = {}
+utils = {}
 utils.collisions = require("src.utils.collisions")
 require("src.utils.gui")
 require("src.utils.manager")
@@ -53,8 +53,8 @@ function game:load()
     MapHeight = Map.layers.Base.height * 32
 
     DarknessShader = love.graphics.newShader("src/shaders/darkness.glsl")
-
     camera = Camera(Player.x, Player.y, game.scale)
+
 
     self.time = 0
     track:play()
@@ -68,7 +68,6 @@ end
 
 function game:update(dt)
     self.time = self.time + dt
-
     hitCheckpoints()
     cutsceneManager()
     if not paused then
@@ -140,8 +139,8 @@ function game:draw()
     LG.setBlendMode("alpha")
     local dx = 0
     local dy = 0
-    local lightX = (Player.x - camera.x) * self.scale  + (dx or 0)
-    local lightY = (Player.y - camera.y) * self.scale  + (dy or 0)
+    local lightX = (Player.x - camera.x) * scale  + (dx or 0)
+    local lightY = (Player.y - camera.y) * scale  + (dy or 0)
 
     if self.shaking or self.blasting then
         dx = love.math.random(-1 * game.downBlast, 1 * game.downBlast)
@@ -150,7 +149,6 @@ function game:draw()
     end
 
     camera:attach()
-
         love.graphics.setShader(DarknessShader)
         DarknessShader:send("lightPos", {lightX, lightY})
         DarknessShader:send("lightRadius", Player.lightIntensity * scale)
@@ -195,7 +193,6 @@ end
 function game:gamepadpressed(joystick, button)
     Player:gamepadInput(button)
 end
-
 
 function game:touchpressed(id, x, y, dx, dy, pressure)
     IsMobile = true

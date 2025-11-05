@@ -132,13 +132,13 @@ function love.resize(w, h)
     --
     -- if wW/wH > 1 then
         game.scale = scale * 2
-        Camera.scale = scale * 2
+        camera:zoomTo(game.scale)
     -- end
+    -- camera = Camera(Player.x, Player.y, game.scale)
 
     -- Reload GUI elements if necessary
     if GUI then
         GUI:load()
-        game:load()
         updateFontSize()
     end
 end
