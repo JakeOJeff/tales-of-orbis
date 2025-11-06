@@ -200,66 +200,6 @@
   <object id="204" name="Torch" x="1744" y="224" width="32" height="32">
    <ellipse/>
   </object>
-  <object id="205" name="Torch" x="752" y="576" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="206" name="Torch" x="872" y="544" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="207" name="Torch" x="912" y="512" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="208" name="Torch" x="944" y="480" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="209" name="Torch" x="976" y="448" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="210" name="Torch" x="1016" y="424" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="211" name="Torch" x="1064" y="424" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="212" name="Torch" x="1112" y="440" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="213" name="Torch" x="1144" y="464" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="214" name="Torch" x="1176" y="496" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="215" name="Torch" x="1208" y="528" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="216" name="Torch" x="1248" y="568" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="217" name="Torch" x="1296" y="528" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="218" name="Torch" x="1328" y="472" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="219" name="Torch" x="1336" y="416" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="220" name="Torch" x="1352" y="360" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="221" name="Torch" x="1376" y="312" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="222" name="Torch" x="1408" y="328" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="223" name="Torch" x="1440" y="368" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="224" name="Torch" x="1480" y="416" width="32" height="32">
-   <ellipse/>
-  </object>
  </objectgroup>
  <objectgroup color="#e30004" id="2" name="solid">
   <properties>

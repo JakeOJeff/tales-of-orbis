@@ -190,11 +190,7 @@ function game:draw()
         Map:drawLayer(Map.layers["Base"])
         Block.drawAll()
         Relic.drawAll()
-
-
-
         love.graphics.setShader()
-
 
         Player:draw()
         Blackhole.drawAll()
