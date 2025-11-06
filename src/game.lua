@@ -62,9 +62,9 @@ function game:load()
     self.dust = {}
     for i = 1, 100 do
         table.insert(self.dust, {
-            x = love.math.random(0, love.graphics.getWidth()),
-            y = love.math.random(0, love.graphics.getHeight()),
-            size = love.math.random(0.1, 1.0),
+            x = love.math.random(0, wW),
+            y = love.math.random(0, wH),
+            size = love.math.random(1 , 10)/10,
             speedX = love.math.random(-5, 5) / 20,  -- gentle horizontal drift
             speedY = love.math.random(-5, 5) / 20,  -- gentle vertical drift
         })
@@ -178,14 +178,14 @@ function game:draw()
             LG.setColor(1, 1, 1, d.size)
             local camOffsetX = camera.x * 0.02
             local camOffsetY = camera.y * 0.02
-            LG.circle("fill", d.x - camOffsetX, d.y - camOffsetY, d.size)
+            LG.circle("fill", d.x - camOffsetX, d.y - camOffsetY, d.size * 1.5)
         end
         LG.setColor(1, 1, 1, 1)
         love.graphics.setShader(DarknessShader)
         DarknessShader:send("lightPos", {lightX, lightY})
         DarknessShader:send("lightRadius", Player.lightIntensity * scale)
         DarknessShader:send("ambient", 0.2)
-       
+
         Map:drawLayer(Map.layers["BGTiles"])
         Map:drawLayer(Map.layers["Base"])
         Block.drawAll()
