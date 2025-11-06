@@ -160,9 +160,11 @@ function Player:respawn()
         self.health.current = self.health.max
         self.boost = self.maxBoost
         self.maxParticles = self.maxParticleLimit
+        self.torchTimer = 0
         self.alive = true
         deleteEntities()
         spawnEntities()
+
     end
 end
 
