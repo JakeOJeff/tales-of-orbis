@@ -5,12 +5,19 @@ extern float ambient;
 vec4 effect(vec4 color, Image tex, vec2 texCoord, vec2 screenCoord) {
     float dist = distance(screenCoord, lightPos);
     float intensity = clamp(1.0 - dist / lightRadius, 0.0, 1.0);
-    float brightness = clamp(ambient + intensity, 0.0, 1.0);
+
     vec4 texColor = Texel(tex, texCoord);
 
+    // ambient light (white)
+    vec3 ambientColor = vec3(1.0, 1.0, 1.0);
+
+    // light color (orange)
     vec3 lightColor = vec3(0.79, 0.5, 0.19);
 
-    return texColor * vec4(lightColor * brightness, 1.0);
+    // total brightness = ambient + orange light influence
+    vec3 finalLight = ambient * ambientColor + intensity * lightColor;
+
+    return texColor * vec4(finalLight, 1.0);
 }
 
     // uniform vec2 lightPos;    
