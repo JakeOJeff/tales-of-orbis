@@ -31,6 +31,7 @@ end
 
 function deleteEntities()
     Fire.clear()
+    Torch.clear()
     Blackhole.clear()
     Block.clear()
 end

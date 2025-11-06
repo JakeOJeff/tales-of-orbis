@@ -86,3 +86,9 @@ function Torch.beginContact(a, b, collision)
     end
 end
 
+function Torch.clear()
+    for i, v in ipairs(ActiveTorches) do
+        v.physics.body:destroy()
+    end
+    ActiveTorches = {}
+end

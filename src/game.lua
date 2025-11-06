@@ -58,6 +58,17 @@ function game:load()
 
 
     self.time = 0
+    -- Dust particles
+    self.dust = {}
+    for i = 1, 100 do
+        table.insert(self.dust, {
+            x = love.math.random(0, love.graphics.getWidth()),
+            y = love.math.random(0, love.graphics.getHeight()),
+            size = love.math.random(0.1, 1.0),
+            speedX = love.math.random(-5, 5) / 20,  -- gentle horizontal drift
+            speedY = love.math.random(-5, 5) / 20,  -- gentle vertical drift
+        })
+    end
 
     track:play()
     movementSFX:play()
@@ -99,6 +110,16 @@ function game:update(dt)
         Torch.updateAll(dt)
 
         GUI:update(dt)
+        for _, d in ipairs(self.dust) do
+            d.x = d.x + d.speedX
+            d.y = d.y + d.speedY
+
+            -- wrap around edges
+            if d.x < 0 then d.x = love.graphics.getWidth() end
+            if d.x > love.graphics.getWidth() then d.x = 0 end
+            if d.y < 0 then d.y = love.graphics.getHeight() end
+            if d.y > love.graphics.getHeight() then d.y = 0 end
+        end
     end
 end
 
@@ -153,14 +174,24 @@ function game:draw()
     end
 
     camera:attach()
+        for _, d in ipairs(self.dust) do
+            LG.setColor(1, 1, 1, d.size)
+            local camOffsetX = camera.x * 0.02
+            local camOffsetY = camera.y * 0.02
+            LG.circle("fill", d.x - camOffsetX, d.y - camOffsetY, d.size)
+        end
+        LG.setColor(1, 1, 1, 1)
         love.graphics.setShader(DarknessShader)
         DarknessShader:send("lightPos", {lightX, lightY})
         DarknessShader:send("lightRadius", Player.lightIntensity * scale)
         DarknessShader:send("ambient", 0.2)
+       
         Map:drawLayer(Map.layers["BGTiles"])
         Map:drawLayer(Map.layers["Base"])
         Block.drawAll()
         Relic.drawAll()
+
+
 
         love.graphics.setShader()
 
