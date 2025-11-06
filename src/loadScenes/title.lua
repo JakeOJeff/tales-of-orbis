@@ -7,7 +7,7 @@ local title = {
     },
     timer = 0,
     fadeTime = 1, -- seconds to fade each image
-    delayBetween = 3, -- delay between each image
+    delayBetween = 1, -- delay between each image
     startTime = nil,
     play_x = 527,
     play_y = 340,

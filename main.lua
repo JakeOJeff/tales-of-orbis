@@ -51,6 +51,12 @@ end
 function lerp(a, b, t)
     return a + (b - a) * t
 end
+function scaleGame()
+    if game and camera then
+        game.scale = scale * 2
+        camera:zoomTo(game.scale)
+    end
+end
 
 function updateFontSize()
     heading = love.graphics.newFont("assets/fonts/nihonium.ttf", 90 * scale)
@@ -82,10 +88,6 @@ jAxes = {0, 0, 0, 0}
 
 paused = false
 
--- if IsMobile then
---    love.window.setFullscreen(true)
--- end
-
 -- Manually call resize logic for correct GUI and canvas scaling
 if love.resize then
     love.resize(wW, wH)
@@ -95,7 +97,8 @@ end
 local SceneryInit = require("src.libs.scenery")
 local scenery = SceneryInit({
     path = "src.loading",
-    key = "loading"
+    key = "loading",
+    default = true 
 }, {
     path = "src.loadScenes.production",
     key = "production"
@@ -110,8 +113,7 @@ local scenery = SceneryInit({
 
 }, {
     path = "src.game",
-    key = "game",
-    default = true
+    key = "game"
 }, 
 
 {
@@ -133,8 +135,7 @@ function love.resize(w, h)
 
     --
     -- if wW/wH > 1 then
-        game.scale = scale * 2
-        camera:zoomTo(game.scale)
+        scaleGame()
     -- end
     -- camera = Camera(Player.x, Player.y, game.scale)
 
@@ -144,4 +145,5 @@ function love.resize(w, h)
         updateFontSize()
     end
 end
+
 

@@ -77,6 +77,11 @@ function game:load()
     Player:load()
     spawnEntities()
     spawnOnceEntities()
+
+    if IsMobile then
+        love.window.setFullscreen(true)
+        scaleGame()
+    end
 end
 
 function game:update(dt)

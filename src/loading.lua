@@ -3,7 +3,7 @@ local loading = {
             LG.newImage("assets/vfx/loading/night_load.png")},
     loaded = 0, -- In percentages
     time = 0, -- text loading 
-    speed = 10,
+    speed = 20,
     assets = 0,
     alpha = 1,
     text = "loading.", -- loading text
@@ -13,6 +13,12 @@ local loading = {
 }
 
 function loading:load()
+    
+    if IsMobile then
+        love.window.setFullscreen(true)
+        scaleGame()
+    end
+
     introTrack:play()
     self.loaded = 0 -- In percentages
     self.time = 0 -- text loading 
