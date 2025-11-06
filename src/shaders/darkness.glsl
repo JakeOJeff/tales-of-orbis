@@ -12,7 +12,7 @@ vec4 effect(vec4 color, Image tex, vec2 texCoord, vec2 screenCoord) {
     vec3 ambientColor = vec3(1.0, 1.0, 1.0);
 
     // light color (orange)
-    vec3 lightColor = vec3(0.79, 0.5, 0.19);
+    vec3 lightColor = vec3(0.796078431372549, 0.5098039215686274, 0.19607843137254902);
 
     // total brightness = ambient + orange light influence
     vec3 finalLight = ambient * ambientColor + intensity * lightColor;
