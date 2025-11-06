@@ -47,15 +47,16 @@ function GUI:update(dt)
 end
 
 function GUI:draw()
-    if IsMobile and not paused then
+    if not paused then
         local b = self.buttons
-        self:drawButton(b.leftButton,20)
-        self:drawButton(b.rightButton,20)
-        self:drawButton(b.jumpButton,80)
+        if IsMobile then
+            self:drawButton(b.leftButton,20)
+            self:drawButton(b.rightButton,20)
+            self:drawButton(b.jumpButton,80)
 
-        self:drawButton(b.diveButton,100)
-        self:drawButton(b.boostButton,100)
-
+            self:drawButton(b.diveButton,100)
+            self:drawButton(b.boostButton,100)
+        end
         self:drawButton(b.resetButton,20)
         self:drawButton(b.pauseButton,20)
 
@@ -78,6 +79,7 @@ function GUI:draw()
         self:drawNormalizedImage(self.hudB)
         self:drawNormalizedImage(self.hudC)
     end
+
 end
 
 function GUI:createButton(src, x, y, w, h, cond)
