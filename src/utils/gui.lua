@@ -34,7 +34,7 @@ function GUI:update(dt)
     self.relicsDisplay.y = self.relicsDisplay.baseY + math.sin(game.time * 2) * 5
     -- Setting all holding to false
     for _, v in pairs(self.buttons) do
-        v.holding = false
+        v.holding = false   
     end
     -- Check each touch
     for _, id in pairs(self.touches) do
