@@ -127,7 +127,7 @@ function Player:update(dt)
         self.maxSpeed = 100 -- 200/4000 = 0.05 seconds
     end
 
-    if self.health.current <= 0 or self.y > MapHeight then
+    if self.health.current <= 0 or self.y > Struct.MapHeight then
         self:die()
     end
 
@@ -135,9 +135,9 @@ function Player:update(dt)
     self.animations.idle:update(dt)
     self:updateTrail(dt)
     self:respawn()
-    self:syncPhysics()
     self:applyGravity(dt)
     self:move(dt)
+    self:syncPhysics()
     self:decreaseGraceTime(dt)
 end
 
@@ -228,16 +228,17 @@ function Player:applyGravity(dt)
 end
 
 function Player:applyFriction(dt)
-    if self.xVel > 0 then
-        self.xVel = math.min(self.xVel - self.friction * dt, 0)
-    elseif self.xVel < 0 then
-        self.xVel = math.max(self.xVel + self.friction * dt, 0)
+    local decel = self.friction * dt
+    if math.abs(self.xVel) <= decel then
+        self.xVel = 0
+    else
+        self.xVel = self.xVel - decel * (self.xVel > 0 and 1 or -1)
     end
 end
 
 function Player:decreaseGraceTime(dt)
     if not self.grounded then
-        self.graceTime = self.graceTime - dt
+        self.graceTime = math.max(0, self.graceTime - dt)
     end
 end
 
@@ -290,9 +291,6 @@ function Player:dive(dt)
     end
 end
 function Player:beginContact(a, b, collision)
-    if self.grounded then
-        return
-    end
     local nx, ny = collision:getNormal()
 
     if self.yVel > 400 then
@@ -317,6 +315,7 @@ end
 function Player:endContact(a, b, collision)
     if a == self.physics.fixture or b == self.physics.fixture then
         if self.currentGroundCollision == collision then
+            self.currentGroundCollision = nil
             self.grounded = false
         end
     end
