@@ -127,7 +127,7 @@ function Player:update(dt)
         self.maxSpeed = 100 -- 200/4000 = 0.05 seconds
     end
 
-    if self.health.current <= 0 or self.y > MapHeight then
+    if self.health.current <= 0 or self.y > Struct.MapHeight then
         self:die()
     end
 
