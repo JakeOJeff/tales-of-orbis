@@ -13,7 +13,7 @@ game = {
     introfadeTimer = 0
 }
 
-local STI = require("src.libs.sti")
+STI = require("src.libs.sti")
 -- REQUIRE LIBRARIES
 anim8 = require 'src.libs.anim8'
 Camera = require 'src.libs.camera'
@@ -31,6 +31,7 @@ utils = {}
 utils.collisions = require("src.utils.collisions")
 require("src.utils.gui")
 require("src.utils.manager")
+require("src.utils.struct")
 
 -- Sounds and Tracks
 introTrack = love.audio.newSource("assets/sfx/intro.wav", "stream")
@@ -42,26 +43,10 @@ movementSFX:setVolume(0.5)
 movementSFX:setLooping(true)
 
 function game:load()
-    Map = STI("assets/map/1.lua", { "box2d" })
     World = love.physics.newWorld(0, 2000)
     World:setCallbacks(beginContact, endContact)
-    Map:box2d_init(World)
-    Map.layers.solid.visible = false
-    Map.layers.entity.visible = false
-    Map.layers.checkpoints.visible = false
-    Map.layers.cutscene.visible = false
+    Struct:load(World)
 
-    local tileSetAnim = Map.tilesets[4]
-    Map.animatedTiles = {}
-    for i, tile in ipairs(tileSetAnim) do
-        Map.animatedTiles[tile.id] = tile
-    end
-
-    Map.frame = 0
-    Map.timer = 0
-    Map.maxTimer = 0.1
-    MapWidth = Map.layers.Base.width * 32
-    MapHeight = Map.layers.Base.height * 32
 
     DarknessShader = love.graphics.newShader("src/shaders/darkness.glsl")
     CloudShader = love.graphics.newShader("src/shaders/cloud.glsl")
@@ -93,11 +78,8 @@ end
 
 function game:update(dt)
     self.time = self.time + dt
-    if Map.timer > Map.maxTimer then
-        Map.frame = Map.frame + 1
-        Map.timer = 0
-    end
-    Map.timer = Map.timer + dt
+    Struct:update(dt)
+
     CloudShader:send("iTime", self.time)
     CloudShader:send("iResolution", {wW, wH})
     hitCheckpoints()
@@ -117,8 +99,8 @@ function game:update(dt)
         local desiredX = Player.x
         local desiredY = Player.y
 
-        desiredX = math.max(wW/ self.scale / 2, math.min(desiredX, MapWidth - wW/ self.scale / 2))
-        desiredY = math.max(wH/self.scale / 2, math.min(desiredY, MapHeight - wH/self.scale / 2))
+        desiredX = math.max(wW/ self.scale / 2, math.min(desiredX, Struct.MapWidth - wW/ self.scale / 2))
+        desiredY = math.max(wH/self.scale / 2, math.min(desiredY, Struct.MapHeight - wH/self.scale / 2))
 
         camera:move((desiredX - camera.x) * 0.1, (desiredY - camera.y) * 0.1)
         Player:update(dt)
