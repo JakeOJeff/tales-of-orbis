@@ -50,6 +50,16 @@ function game:load()
     Map.layers.entity.visible = false
     Map.layers.checkpoints.visible = false
     Map.layers.cutscene.visible = false
+
+    local tileSetAnim = Map.tilesets[4]
+    Map.animatedTiles = {}
+    for i, tile in ipairs(tileSetAnim) do
+        Map.animatedTiles[tile.id] = tile
+    end
+
+    Map.frame = 0
+    Map.timer = 0
+    Map.maxTimer = 0.1
     MapWidth = Map.layers.Base.width * 32
     MapHeight = Map.layers.Base.height * 32
 
@@ -83,6 +93,11 @@ end
 
 function game:update(dt)
     self.time = self.time + dt
+    if Map.timer > Map.maxTimer then
+        Map.frame = Map.frame + 1
+        Map.timer = 0
+    end
+    Map.timer = Map.timer + dt
     CloudShader:send("iTime", self.time)
     CloudShader:send("iResolution", {wW, wH})
     hitCheckpoints()
