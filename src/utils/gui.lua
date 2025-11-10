@@ -66,9 +66,9 @@ function GUI:draw()
 
         -- Boost and Health Bar
         LG.setColor(0.79, 0.50, 0.19)
-        LG.rectangle("fill", self.hudB.x, self.hudB.y + self.hudB.h/2, self.hudB.w * math.min(Player.health.current / Player.health.max, 1), self.hudB.h/2, 30, 30)
+        LG.rectangle("fill", self.hudB.x, self.hudB.y + self.hudB.h/2, self.hudB.w * math.min(Player.health.current / Player.health.max, 1), self.hudB.h/2, 10, 10)
         LG.setColor(0.56, 0.23, 0.11)
-        LG.rectangle("fill", self.hudB.x, self.hudB.y, self.hudB.w * math.min(Player.boost / Player.maxBoost, 1), self.hudB.h/2, 30, 30)
+        LG.rectangle("fill", self.hudB.x, self.hudB.y, self.hudB.w * math.min(Player.boost / Player.maxBoost, 1), self.hudB.h/2, 10, 10)
 
         LG.setColor(1, 1, 1, self.relicsDisplay.alpha)
         self:drawNormalizedImage(self.relicsDisplay)
