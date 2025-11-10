@@ -6,7 +6,7 @@ baseW = 1280
 baseH = 720
 
 -- Android/Mobile 
-IsMobile = true
+IsMobile = false
 
 wW = love.graphics.getWidth()
 wH = love.graphics.getHeight()
@@ -108,12 +108,12 @@ local scenery = SceneryInit({
 
 }, {
     path = "src.cutscenes.intro",
-    key = "intro"
+    key = "intro",
+    default = true 
 
 }, {
     path = "src.game",
-    key = "game",
-    default = true 
+    key = "game"
 }, 
 
 {

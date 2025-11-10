@@ -13,6 +13,8 @@ function Torch.new(x, y)
     instance.scaleX = 1
     instance.randomTimeOffset = math.random(0, 100)
     instance.toBeRemoved = false
+    instance.grid = anim8.newGrid(24, 24, instance.img:getWidth(), instance.img:getHeight())
+    instance.animations = anim8.newAnimation(instance.grid('1-3', 1), .3)
 
     instance.physics = {}
     instance.physics.body = love.physics.newBody(World, instance.x, instance.y, "static")
@@ -25,6 +27,8 @@ function Torch.new(x, y)
 end
 
 function Torch:update(dt)
+    self.animations:update(dt)
+
     self:spin(dt)
     self:checkRemoved(dt)
 end
@@ -66,7 +70,7 @@ function Torch:checkRemoved(dt)
     end
 end
 function Torch:draw()
-    LG.draw(self.img, self.x, self.y + self.scaleX * 4, 0, self.scaleX, 1, self.width / 2, self.height / 2)
+    self.animations:draw(self.img,  self.x, self.y + self.scaleX * 4, 0, self.scaleX, 1, self.width / 2, self.height / 2)
 end
 
 function Torch.drawAll()
