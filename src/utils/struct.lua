@@ -31,6 +31,7 @@ function Struct:update(dt)
 end
 
 function Struct:draw()
-    
+    self.map:drawLayer(self.map.layers["BGTiles"])
+    self.map:drawLayer(self.map.layers["Base"])
 end
 
