@@ -54,6 +54,7 @@ function game:load()
     MapHeight = Map.layers.Base.height * 32
 
     DarknessShader = love.graphics.newShader("src/shaders/darkness.glsl")
+    CloudShader = love.graphics.newShader("src/shaders/cloud.glsl")
     camera = Camera(Player.x, Player.y, game.scale)
 
 
@@ -82,6 +83,8 @@ end
 
 function game:update(dt)
     self.time = self.time + dt
+    CloudShader:send("iTime", self.time)
+    CloudShader:send("iResolution", {wW, wH})
     hitCheckpoints()
     cutsceneManager()
     if not paused then
@@ -157,7 +160,9 @@ function game:draw()
         end
     end
     LG.setBlendMode("alpha", "premultiplied")
-
+    love.graphics.setShader(CloudShader)
+    love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
+    love.graphics.setShader()
     drawParallax("layer3", 0.1)
     drawParallax("layer2", 0.2)
     drawParallax("layer1", 0.4)

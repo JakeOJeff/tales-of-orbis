@@ -42,8 +42,8 @@ vec4 effect(vec4 color, Image tex, vec2 tc, vec2 sc) {
     float n = fbm(p * 3.0);
 
     // Cloud color and sky blend
-    vec3 skyColor = vec3(0.4, 0.7, 1.0);
-    vec3 cloudColor = vec3(1.0);
+    vec3 skyColor = vec3(0.04, 0.02, 0.15);
+    vec3 cloudColor = vec3(0.23, 0.13, 0.76);
     float clouds = smoothstep(0.4, 0.7, n);
 
     vec3 finalColor = mix(skyColor, cloudColor, clouds);
