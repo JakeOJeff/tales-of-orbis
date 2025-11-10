@@ -14,6 +14,7 @@ function Struct:load(world)
 end
 
 function Struct:update(dt)
+    self.map:update(dt)
 
 end
 
