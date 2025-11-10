@@ -23,11 +23,11 @@ function Struct:load(world)
 end
 
 function Struct:update(dt)
-    if self.map.timer > self.map.maxTimer then
-        self.map.frame = self.map.frame + 1
-        self.map.timer = 0
+    if self.timer > self.maxTimer then
+        self.frame = self.frame + 1
+        self.timer = 0
     end
-    self.map.timer = self.map.timer + dt
+    self.timer = self.timer + dt
 end
 
 function Struct:draw()
