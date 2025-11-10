@@ -21,12 +21,6 @@ end
 function Struct:draw()
     self.map:drawLayer(self.map.layers["BGTiles"])
     self.map:drawLayer(self.map.layers["Base"])
-    -- local normalLayer = self.map.layers["TreeNormal"]
-    -- if normalLayer and normalLayer.image then
-    --     DarknessShader:send("normalMap", normalLayer.image)
-    -- end
-
-    -- Draw Tree layer (this one uses the shader)
     self.map:drawLayer(self.map.layers["Tree"])
 end
 
