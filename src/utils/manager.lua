@@ -14,7 +14,7 @@ function spawnEntities(args)
         elseif v.name == "Torch" then
             Torch.new(v.x + v.width / 2, v.y + v.height / 2)
         elseif v.name == "Blackhole" then
-            Blackhole.new(v.x + v.width / 2, v.y + v.height / 2, math.random(50, 100), math.random(1, 5))
+            Blackhole.new(v.x + v.width / 2, v.y + v.height / 2, math.random(120, 180), math.random(1, 5))
         elseif v.name == "Block" then
             Block.new(v.x + v.width / 2, v.y + v.height / 2)
         end
