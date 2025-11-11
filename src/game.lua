@@ -187,7 +187,7 @@ function game:draw()
         love.graphics.setShader(DarknessShader)
         DarknessShader:send("lightPos", {lightX, lightY})
         DarknessShader:send("lightRadius", Player.lightIntensity * scale)
-        DarknessShader:send("ambient", 0.2)
+        DarknessShader:send("ambient", 0.3)
 
         Struct:draw()
         Block.drawAll()
