@@ -158,7 +158,7 @@ function game:draw()
     end
     LG.setBlendMode("alpha", "premultiplied")
     love.graphics.setShader(CloudShader)
-    love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
+    love.graphics.rectangle("fill", 0, 0, wW, wH)
     love.graphics.setShader()
     drawParallax("layer3", 0.1)
     drawParallax("layer2", 0.2)
@@ -181,7 +181,7 @@ function game:draw()
             LG.setColor(1, 1, 1, d.size)
             local camOffsetX = camera.x * 0.02
             local camOffsetY = camera.y * 0.02
-            LG.circle("fill", d.x - camOffsetX, d.y - camOffsetY, d.size * 1.5)
+            LG.rectangle("fill", d.x - camOffsetX, d.y - camOffsetY, d.size * 1.5, d.size * 1.5)
         end
         LG.setColor(1, 1, 1, 1)
         love.graphics.setShader(DarknessShader)
