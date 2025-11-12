@@ -1,6 +1,6 @@
 game = {
     background = LG.newImage("assets/vfx/loading/background.png"),
-    scale = scale * 2,
+    scale = scale * 3,
     shaking = false,
     blasting = false,
     blastTime = 0,
@@ -195,6 +195,7 @@ function game:draw()
         love.graphics.setShader()
 
         Player:draw()
+
         Blackhole.drawAll()
         Torch.drawAll()
         Fire.drawAll()

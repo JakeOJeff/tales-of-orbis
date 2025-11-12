@@ -53,7 +53,7 @@ function lerp(a, b, t)
 end
 function scaleGame()
     if game and camera then
-        game.scale = scale * 2
+        game.scale = scale * 3
         camera:zoomTo(game.scale)
     end
 end

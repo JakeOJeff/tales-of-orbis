@@ -22,5 +22,6 @@ function Struct:draw()
     self.map:drawLayer(self.map.layers["BGTiles"])
     self.map:drawLayer(self.map.layers["Base"])
     self.map:drawLayer(self.map.layers["Tree"])
+
 end
 
