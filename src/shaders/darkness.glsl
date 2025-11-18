@@ -21,7 +21,11 @@ vec4 effect(vec4 color, Image texture, vec2 texCoords, vec2 screenCoords) {
     // Combine - the max() ensures we never go below ambient level
     float finalBrightness = max(mainBrightness, ambient);
     
-    vec3 litColor = texColor.rgb * finalBrightness;
+    // Apply light color to the brightness
+    vec3 tintedLight = vec3(1.0, 0.5, 0.2) * finalBrightness;
+    
+    // Multiply texture color with the tinted light
+    vec3 litColor = texColor.rgb * tintedLight;
     return vec4(litColor, texColor.a);
 }
     // uniform vec2 lightPos;    
