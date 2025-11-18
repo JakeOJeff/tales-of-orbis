@@ -5,6 +5,7 @@ game = {
     blasting = false,
     blastTime = 0,
     downBlast = 1,
+    canvas = love.graphics.newCanvas(),
     backgroundLayers = {
         layer3 = LG.newImage("assets/vfx/parallex/layer3.png"),
         layer2 = LG.newImage("assets/vfx/parallex/layer2.png"),
@@ -122,10 +123,18 @@ function game:update(dt)
             if d.y > love.graphics.getHeight() then d.y = 0 end
         end
     end
+
+    love.graphics.setCanvas(self.canvas)
+    self:drawGame()
+    love.graphics.setCanvas()
 end
 
 function game:draw()
-    LG.push()
+    self:drawGame()
+    love.graphics.draw(self.canvas, wW/2, 0)
+end
+function game:drawGame()
+    
     local text = "Escape the Void. Reach the Core. Don't fight it, RUN!"
     local textWidth = paragraph:getWidth(text)
     local textHeight = paragraph:getHeight()
@@ -157,6 +166,7 @@ function game:draw()
         end
     end
     LG.setBlendMode("alpha", "premultiplied")
+
     love.graphics.setShader(CloudShader)
     love.graphics.rectangle("fill", 0, 0, wW, wH)
     love.graphics.setShader()
@@ -206,9 +216,7 @@ function game:draw()
         LG.pop()
     end
     GUI:draw()
-    LG.pop()
 end
-
 function game:keypressed(key)
     Player:keyboardInput(key)
     if key == "r" then
