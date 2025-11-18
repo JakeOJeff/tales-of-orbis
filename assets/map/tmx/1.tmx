@@ -23,8 +23,8 @@
    </animation>
   </tile>
  </tileset>
- <tileset firstgid="62" name="minitreeanim" tilewidth="64" tileheight="64" tilecount="1" columns="1">
-  <image source="../../vfx/props/minitreeanim.png" width="64" height="64"/>
+ <tileset firstgid="62" name="minitreeanim" tilewidth="64" tileheight="64" tilecount="2" columns="1">
+  <image source="../../vfx/props/minitreeanim.png" width="64" height="128"/>
  </tileset>
  <layer id="9" name="BGTiles" width="260" height="45">
   <data encoding="csv">

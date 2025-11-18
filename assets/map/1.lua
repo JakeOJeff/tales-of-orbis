@@ -117,7 +117,7 @@ return {
       columns = 1,
       image = "../vfx/props/minitreeanim.png",
       imagewidth = 64,
-      imageheight = 64,
+      imageheight = 128,
       objectalignment = "unspecified",
       tilerendersize = "tile",
       fillmode = "stretch",
@@ -132,7 +132,7 @@ return {
       },
       properties = {},
       wangsets = {},
-      tilecount = 1,
+      tilecount = 2,
       tiles = {}
     }
   },
