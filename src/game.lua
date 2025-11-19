@@ -216,6 +216,25 @@ function game:drawGame()
     end
     GUI:draw()
 end
+
+function game:drawMinimap()
+    local mapW = Struct.MapWidth
+    local mapH = Struct.MapHeight
+    local scale = self.minimapScale
+
+    love.graphics.setCanvas(self.minimapCanvas)
+    love.graphics.clear()
+
+    love.graphics.push()
+    love.graphics.scale(scale, scale) 
+
+    love.graphics.setColor(0.4, 0.4, 0.4)
+    Struct:drawMinimap()
+
+
+    love.graphics.setColor(1,1,0)
+    Relic:drawMinimapAll()
+end
 function game:keypressed(key)
     Player:keyboardInput(key)
     if key == "r" then
