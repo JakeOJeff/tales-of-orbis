@@ -5,7 +5,10 @@ game = {
     blasting = false,
     blastTime = 0,
     downBlast = 1,
-    canvas = love.graphics.newCanvas(),
+     minimapScale = 0.12,         -- how small the minimap is
+    minimapSize = 200,           -- pixel size on screen
+    minimapCanvas = love.graphics.newCanvas(200, 200),
+
     backgroundLayers = {
         layer3 = LG.newImage("assets/vfx/parallex/layer3.png"),
         layer2 = LG.newImage("assets/vfx/parallex/layer2.png"),
@@ -123,15 +126,11 @@ function game:update(dt)
             if d.y > love.graphics.getHeight() then d.y = 0 end
         end
     end
-
-    love.graphics.setCanvas(self.canvas)
-    self:drawGame()
-    love.graphics.setCanvas()
 end
 
 function game:draw()
     self:drawGame()
-    love.graphics.draw(self.canvas, wW/2, 0)
+
 end
 function game:drawGame()
     
