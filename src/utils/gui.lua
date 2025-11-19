@@ -26,7 +26,7 @@ function GUI:load()
     self.relicsDisplay = { src = love.graphics.newImage("assets/vfx/items/relic.png"), x = self.hudS.x + (self.hudS.w / 4) , y = self.hudS.y + (self.hudS.h / 4), w = (self.hudS.w / 2), h = (self.hudS.h / 2), alpha = 0.6 }
         self.relicsDisplay.baseY = self.relicsDisplay.y
 
-    self.msg = Textbox:new(wW/2, wH/2, 0, 100, 30)
+    self.msg = Textbox:new(wW/2, wH/2, 0, 100, 100)
     
     self.touches = love.touch.getTouches()
 end

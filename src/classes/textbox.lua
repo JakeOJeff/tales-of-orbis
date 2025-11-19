@@ -42,15 +42,15 @@ function Textbox:draw()
     local is = imageset
 
     LG.draw(is.tlc, self.x, self.y)
-    LG.draw(is.te, self.x + is.tlc:getWidth(), self.y)
+    LG.draw(is.te, self.x + is.tlc:getWidth(), self.y, 0, self.width/is.te:getWidth())
     LG.draw(is.trc, self.x +(self.width - is.trc:getWidth()), self.y)
 
-    LG.draw(is.le, self.x, self.y + is.tlc:getHeight())
-    LG.draw(is.cen, self.x + is.le:getWidth(), self.y + is.te:getHeight())
-    LG.draw(is.re, self.x + (self.width - is.re:getWidth()), self.y + is.te:getHeight())
+    LG.draw(is.le, self.x, self.y + is.tlc:getHeight(), 0, 1, self.height/is.le:getHeight())
+    LG.draw(is.cen, self.x + is.le:getWidth(), self.y + is.te:getHeight(), 0, self.width/is.cen:getWidth(), self.height/is.cen:getHeight())
+    LG.draw(is.re, self.x + (self.width - is.re:getWidth()), self.y + is.te:getHeight(), 0, 1, self.height/is.re:getHeight())
 
     LG.draw(is.blc, self.x, self.y + (self.height - is.blc:getHeight()))
-    LG.draw(is.be, self.x + is.blc:getWidth(), self.y+ (self.height - is.be:getHeight()))
+    LG.draw(is.be, self.x + is.blc:getWidth(), self.y+ (self.height - is.be:getHeight()), 0, self.width/is.be:getWidth())
     LG.draw(is.brc, self.x +(self.width - is.brc:getWidth()), self.y+ (self.height - is.brc:getHeight()))
 
 end
