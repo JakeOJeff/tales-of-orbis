@@ -25,3 +25,9 @@ function Struct:draw()
 
 end
 
+function Struct:drawMinimap()
+    for i, block in ipairs(self.Blocks or {}) do
+        local b = block.body 
+        love.graphics.rectangle("fill", b:getX(), b:getY(), block.w, block.h)
+    end
+end
