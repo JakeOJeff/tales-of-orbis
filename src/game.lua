@@ -130,7 +130,6 @@ end
 
 function game:draw()
     self:drawGame()
-
 end
 function game:drawGame()
     
@@ -214,6 +213,7 @@ function game:drawGame()
     if self.shaking  or self.blasting then
         LG.pop()
     end
+    self:drawMinimap()
     GUI:draw()
 end
 
@@ -234,6 +234,19 @@ function game:drawMinimap()
 
     love.graphics.setColor(1,1,0)
     Relic:drawMinimapAll()
+
+    love.graphics.pop()
+    love.graphics.setCanvas()
+
+
+    love.graphics.draw(
+        self.minimapCanvas,
+        wW - self.minimapSize - 20,
+        20,
+        0,
+        self.minimapSize / 200,
+        self.minimapSize / 200
+    )
 end
 function game:keypressed(key)
     Player:keyboardInput(key)

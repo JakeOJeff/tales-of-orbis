@@ -86,3 +86,8 @@ function Relic.beginContact(a, b, collision)
     end
 end
 
+function Relic.drawMinimapAll()
+    for _, r in ipairs(ActiveRelics) do
+        love.graphics.rectangle("fill", r.x - 3, r.y - 3, 6, 6)
+    end
+end
