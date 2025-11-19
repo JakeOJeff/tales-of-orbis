@@ -1,4 +1,5 @@
 GUI = {}
+require("src.classes.textbox")
 
 function GUI:load()
     local navW, navH = 100 * scale, 100 * scale -- left, right, jump 
@@ -25,6 +26,8 @@ function GUI:load()
     self.relicsDisplay = { src = love.graphics.newImage("assets/vfx/items/relic.png"), x = self.hudS.x + (self.hudS.w / 4) , y = self.hudS.y + (self.hudS.h / 4), w = (self.hudS.w / 2), h = (self.hudS.h / 2), alpha = 0.6 }
         self.relicsDisplay.baseY = self.relicsDisplay.y
 
+    self.msg = Textbox:new(wW/2, wH/2, 0, 100, 30)
+    
     self.touches = love.touch.getTouches()
 end
 
@@ -48,6 +51,8 @@ function GUI:update(dt)
             end
         end
     end
+
+    Textbox.updateAll(dt)
 end
 
 function GUI:draw()
@@ -82,6 +87,9 @@ function GUI:draw()
         self:drawNormalizedImage(self.hudS)
         self:drawNormalizedImage(self.hudB)
         self:drawNormalizedImage(self.hudC)
+
+
+        Textbox.drawAll()
     end
 
 end
