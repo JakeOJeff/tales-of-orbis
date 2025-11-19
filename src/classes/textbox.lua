@@ -41,7 +41,7 @@ end
 function Textbox:draw()
     local is = imageset
     local x, y = self.x, self.y
-    local w, h = self.width, self.height
+    local w, h = self.width * scale, self.height * scale
 
 
     local tlw, tlh = is.tlc:getWidth(), is.tlc:getHeight()
