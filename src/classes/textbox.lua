@@ -73,4 +73,8 @@ function Textbox.drawAll()
         v:draw()
     end
 end
+
+function Textbox:clear()
+    Textboxes = {}
+end
 return Textbox
