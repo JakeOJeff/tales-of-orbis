@@ -20,6 +20,7 @@ function Player:load()
 
     self.maxBoost = 35
     self.boost = self.maxBoost
+    self.stillTime = 0
     self.isBoosting = false
 
     -- Blackhole attraction
@@ -80,6 +81,9 @@ function Player:load()
 end
 
 function Player:update(dt)
+    if self.xVel <= 0 and self.yVel <= 0 and self.boost < self.maxBoost then
+        self.stillTime = self.stillTime + 1 * dt
+    end
     self.health.current = self.maxParticles / self.maxParticleLimit * 100
     if self.torchTimer > 0 then self.torchTimer = self.torchTimer - 1 * dt emitAmt = 4 else emitAmt = 1 end
     
@@ -216,7 +220,11 @@ function Player:move(dt)
     else
         self.isBoosting = false
         if self.boost < self.maxBoost then -- Add a Boost debounce
-            self.boost = math.min(self.maxBoost, self.boost + 3 * dt)
+            local incrementValue = 1 
+            if self.stillTime > 2 then incrementValue = 5 end
+            self.boost = math.min(self.maxBoost, self.boost + 3 * incrementValue * dt)
+        else
+            self.stillTime = 0 
         end
     end
 end
