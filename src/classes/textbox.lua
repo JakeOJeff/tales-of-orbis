@@ -14,13 +14,26 @@ local imageset = {
     cen = love.graphics.newImage("assets/vfx/textbox/center.png")
 }
 
-function Textbox:new(x, y, width, height)
+function Textbox:new(x, y, r, width, height)
     local instance = setmetatable({}, Textbox)
 
     instance.x = x
     instance.y = y
+    instance.r = r 
     instance.width = width
     instance.height = height
+    instance.canvas = love.graphics.newCanvas(width, height)
 
+end
+
+function Textbox:update(dt)
     
 end
+
+function Textbox:draw()
+    local is = imageset
+    LG.draw(is.tlc, self.x, self.y)
+    LG.draw(is.te, self.x + is.tlc:getWidth() + 10)
+end
+
+return Textbox
