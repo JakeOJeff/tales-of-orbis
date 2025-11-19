@@ -40,19 +40,33 @@ function Textbox.updateAll(dt)
 end
 function Textbox:draw()
     local is = imageset
+    local x, y = self.x, self.y
+    local w, h = self.width, self.height
 
-    LG.draw(is.tlc, self.x, self.y)
-    LG.draw(is.te, self.x + is.tlc:getWidth(), self.y, 0, self.width/is.te:getWidth())
-    LG.draw(is.trc, self.x +(self.width - is.trc:getWidth()), self.y)
 
-    LG.draw(is.le, self.x, self.y + is.tlc:getHeight(), 0, 1, self.height/is.le:getHeight())
-    LG.draw(is.cen, self.x + is.le:getWidth(), self.y + is.te:getHeight(), 0, self.width/is.cen:getWidth(), self.height/is.cen:getHeight())
-    LG.draw(is.re, self.x + (self.width - is.re:getWidth()), self.y + is.te:getHeight(), 0, 1, self.height/is.re:getHeight())
+    local tlw, tlh = is.tlc:getWidth(), is.tlc:getHeight()
+    local trw, trh = is.trc:getWidth(), is.trc:getHeight()
+    local blw, blh = is.blc:getWidth(), is.blc:getHeight()
+    local brw, brh = is.brc:getWidth(), is.brc:getHeight()
 
-    LG.draw(is.blc, self.x, self.y + (self.height - is.blc:getHeight()))
-    LG.draw(is.be, self.x + is.blc:getWidth(), self.y+ (self.height - is.be:getHeight()), 0, self.width/is.be:getWidth())
-    LG.draw(is.brc, self.x +(self.width - is.brc:getWidth()), self.y+ (self.height - is.brc:getHeight()))
+    local innerX = x + tlw
+    local innerY = y + tlh
+    local innerW = w - tlw - trw
+    local innerH = h - tlh - blh
 
+
+
+    LG.draw(is.tlc, x, y)
+    LG.draw(is.te, innerX, y, 0, innerW/is.te:getWidth(), 1)
+    LG.draw(is.trc, x + (w - trw), y)
+
+    LG.draw(is.le, x, y + tlh, 0, 1, innerH/is.le:getHeight())
+    LG.draw(is.cen, innerX, innerY, 0, innerW/ is.cen:getWidth(), innerH/ is.cen:getHeight())
+    LG.draw(is.re, x + (w - trw), y + trh, 0, 1, innerH/ is.re:getHeight())
+
+    LG.draw(is.blc, x, y + (h - blh))
+    LG.draw(is.be, innerX, y + (h - blh), 0, innerW / is.be:getWidth(), 1)
+    LG.draw(is.brc, x + ( w - brw), y + (h - brh))
 end
 function Textbox.drawAll()
     for i, v in ipairs(Textboxes) do
