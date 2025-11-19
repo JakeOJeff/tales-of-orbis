@@ -66,6 +66,8 @@ function Player:load()
     self.torchTimer = 0
     self.lightIntensity = 300
 
+    self.fireShader = love.graphics.newShader("src/shaders/fire.glsl")
+
     self.physics = {}
     self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
     self.physics.body:setFixedRotation(true)
@@ -435,11 +437,14 @@ function Player:draw()
         local pY = self.y + offset
 
         if self.pickedUpItem then
+            self.fireShader:send("iTime", love.timer.getTime())
+            LG.setShader(self.fireShader)
             LG.setColor(0.79, 0.5, 0.19, self.pickedUpGrace * 4)
             LG.circle("fill", pX, pY, 50 * (self.pickedUpGrace * 4))
             LG.setColor(0.79 + 0.1, 0.5 + 0.1, 0.19 + 0.1, self.pickedUpGrace * 4)
             LG.circle("fill", pX, pY, 50 * (self.pickedUpGrace * 2))
             LG.setColor(0.79, 0.5, 0.19, self.maxParticles / self.maxParticleLimit)
+            LG.setShader()
         end
         -- LG.rectangle("fill", self.x - self.width / 2, self.y - self.height / 2, self.width, self.height)
         self.animations.idle:draw(self.spritesheet, pX - 16, pY - 25)
