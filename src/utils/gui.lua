@@ -27,7 +27,7 @@ function GUI:load()
         self.relicsDisplay.baseY = self.relicsDisplay.y
 
     Textbox:clear()
-    self.msg = Textbox:new(wW/2 - 150, 200, 10, 300, 60)
+    self.msg = Textbox:new("text", wW/2 - 150, 200, 0, 300, 60)
     
     self.touches = love.touch.getTouches()
 end

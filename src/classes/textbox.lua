@@ -14,17 +14,22 @@ local imageset = {
     cen = LG.newImage("assets/vfx/textbox/center.png")
 }
 
-function Textbox:new(x, y, r, width, height)
+function Textbox:new(text, x, y, r, width, height)
     local instance = setmetatable({}, Textbox)
 
     instance.x = x
     instance.y = y
     instance.r = r 
-    instance.width = width
-    instance.height = height
-    instance.canvas = LG.newCanvas(width * scale, height * scale)
-    instance.font = LG.newFont()
+    instance.width = width * scale
+    instance.height = height * scale
+    instance.canvas = LG.newCanvas(instance.width, instance.height)
+    instance.text = text or "text"
+    instance.font = LG.newFont("assets/fonts/nihonium.ttf", instance.height/1.5)
     instance.visible = false
+
+    if instance.font:getWidth(instance.text) > (instance.width - (16 * scale)) then
+        instance.width = instance.font:getWidth(instance.text) + (16 * scale)
+    end
 
     table.insert(Textboxes, instance)
     return instance
@@ -43,7 +48,7 @@ end
 function Textbox:draw()
     local is = imageset
     local x, y = 0, 0
-    local w, h = self.width * scale, self.height * scale
+    local w, h = self.width, self.height
 
 
     local tlw, tlh = is.tlc:getWidth(), is.tlc:getHeight()
@@ -70,6 +75,9 @@ function Textbox:draw()
     LG.draw(is.blc, x, y + (h - blh))
     LG.draw(is.be, innerX, y + (h - blh), 0, innerW / is.be:getWidth(), 1)
     LG.draw(is.brc, x + ( w - brw), y + (h - brh))
+
+    LG.setFont(self.font)
+    LG.print(self.text, w/2 - self.font:getWidth(self.text)/2, h/2 - self.font:getHeight()/2)
 
     LG.setCanvas()
 
