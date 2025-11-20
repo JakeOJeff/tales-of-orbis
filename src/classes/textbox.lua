@@ -23,8 +23,8 @@ function Textbox:new(text, x, y, r, width, height)
     instance.width = width * scale
     instance.height = height * scale
     instance.text = text or "text"
-    instance.font = LG.newFont("assets/fonts/nihonium.ttf", instance.height/1.5)
-    instance.visible = false
+    instance.font = LG.newFont("assets/fonts/nihonium.ttf", instance.height/2)
+    instance.visible = true
 
     instance.time = 0
     instance.playAnim = false
@@ -44,15 +44,15 @@ function Textbox:update(dt)
         self.time = self.time + 1 * dt
     end
     if self.time > 3 then
-        self.visible = false
+        self.visible = true
         self.playAnim = false
         self.time = 0
     elseif self.time > 1.5 then
-        self.rotation = 0
+        self.r = 0
     elseif self.time > 1 then
-        self.rotation = math.rad(20)
+        self.r = math.rad(20)
     elseif self.time > 0.5 then
-        self.rotation = math.rad(-20)
+        self.r = math.rad(-20)
     end
 end
 
@@ -93,6 +93,9 @@ function Textbox:draw()
     LG.draw(is.brc, x + ( w - brw), y + (h - brh))
 
     LG.setFont(self.font)
+    LG.setColor(0,0,0,0.5)
+    LG.print(self.text, w/2 - self.font:getWidth(self.text)/2, h/2 - self.font:getHeight()/2 + 3 * scale)
+    LG.setColor(1,1,1,1)
     LG.print(self.text, w/2 - self.font:getWidth(self.text)/2, h/2 - self.font:getHeight()/2)
 
     LG.setCanvas()
@@ -100,16 +103,17 @@ function Textbox:draw()
 
     if self.visible then
         LG.push()
-        local cx = self.x + (self.width * scale) / 2
-        local cy = self.y + (self.height * scale) / 2
+        local cx = self.x + w/2
+        local cy = self.y + h/2
+        LG.origin()   
         LG.translate(cx, cy)
         LG.rotate(self.r)
-        LG.draw(self.canvas, - (self.width * scale) / 2, - (self.height * scale) / 2)
+        LG.draw(self.canvas, -w/2, -h/2)
         LG.pop()
     end
 end
 
-function Textbox:playAnim()
+function Textbox:project()
     self.visible = true
     self.playAnim = true
 end

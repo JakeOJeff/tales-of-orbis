@@ -42,6 +42,7 @@ function hitCheckpoints()
             if Player.checkpointX == v.x + v.width / 2 and Player.checkpointY == v.y + v.height / 2 then
                 return
             end
+            GUI.msg:project()
             Player.checkpointX = v.x + v.width / 2
             Player.checkpointY = v.y + v.height / 2
         end
