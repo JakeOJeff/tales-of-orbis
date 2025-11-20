@@ -22,7 +22,6 @@ function Textbox:new(text, x, y, r, width, height)
     instance.r = r 
     instance.width = width * scale
     instance.height = height * scale
-    instance.canvas = LG.newCanvas(instance.width, instance.height)
     instance.text = text or "text"
     instance.font = LG.newFont("assets/fonts/nihonium.ttf", instance.height/1.5)
     instance.visible = false
@@ -30,6 +29,7 @@ function Textbox:new(text, x, y, r, width, height)
     if instance.font:getWidth(instance.text) > (instance.width - (16 * scale)) then
         instance.width = instance.font:getWidth(instance.text) + (16 * scale)
     end
+    instance.canvas = LG.newCanvas(instance.width, instance.height)
 
     table.insert(Textboxes, instance)
     return instance
