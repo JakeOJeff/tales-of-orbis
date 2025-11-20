@@ -22,7 +22,9 @@ function Textbox:new(x, y, r, width, height)
     instance.r = r 
     instance.width = width
     instance.height = height
-    instance.canvas = LG.newCanvas(width, height)
+    instance.canvas = LG.newCanvas(width * scale, height * scale)
+    instance.font = LG.newFont()
+    instance.visible = false
 
     table.insert(Textboxes, instance)
     return instance
@@ -40,7 +42,7 @@ function Textbox.updateAll(dt)
 end
 function Textbox:draw()
     local is = imageset
-    local x, y = self.x, self.y
+    local x, y = 0, 0
     local w, h = self.width * scale, self.height * scale
 
 
@@ -54,7 +56,8 @@ function Textbox:draw()
     local innerW = w - tlw - trw
     local innerH = h - tlh - blh
 
-
+    LG.setCanvas(self.canvas)
+    LG.clear()
 
     LG.draw(is.tlc, x, y)
     LG.draw(is.te, innerX, y, 0, innerW/is.te:getWidth(), 1)
@@ -67,6 +70,16 @@ function Textbox:draw()
     LG.draw(is.blc, x, y + (h - blh))
     LG.draw(is.be, innerX, y + (h - blh), 0, innerW / is.be:getWidth(), 1)
     LG.draw(is.brc, x + ( w - brw), y + (h - brh))
+
+    LG.setCanvas()
+
+    LG.push()
+    local cx = self.x + (self.width * scale) / 2
+    local cy = self.y + (self.height * scale) / 2
+    LG.translate(cx, cy)
+    LG.rotate(self.r)
+    LG.draw(self.canvas, - (self.width * scale) / 2, - (self.height * scale) / 2)
+    LG.pop()
 end
 function Textbox.drawAll()
     for i, v in ipairs(Textboxes) do
