@@ -24,10 +24,11 @@ function Textbox:new(text, x, y, r, width, height)
     instance.height = height * scale
     instance.text = text or "text"
     instance.font = LG.newFont("assets/fonts/nihonium.ttf", instance.height/2)
-    instance.visible = true
+    instance.visible = false
 
     instance.time = 0
     instance.playAnim = false
+    
 
     if instance.font:getWidth(instance.text) > (instance.width - (16 * scale)) then
         instance.width = instance.font:getWidth(instance.text) + (16 * scale)
@@ -43,16 +44,16 @@ function Textbox:update(dt)
     if self.playAnim then
         self.time = self.time + 1 * dt
     end
-    if self.time > 3 then
-        self.visible = true
+
+    if self.time < 1 then
+        self.r = math.rad(10) * math.sin(love.timer.getTime())
+    elseif self.time < 2 then
+        self.r = self.r + 0.9
+    elseif self.time < 3 then
+        self.r = 0
+        self.visible = false
         self.playAnim = false
         self.time = 0
-    elseif self.time > 1.5 then
-        self.r = 0
-    elseif self.time > 1 then
-        self.r = math.rad(20)
-    elseif self.time > 0.5 then
-        self.r = math.rad(-20)
     end
 end
 

@@ -55,8 +55,8 @@ function Player:load()
     self.maxParticleLimit = 800
     self.maxParticles = self.maxParticleLimit
 
-    self.bobSpeed = 4
-    self.bobRange = 10
+    self.bobSpeed = 1
+    self.bobRange = 8
 
     self.pickedUpItem = false
     self.pickedUpGrace = 0
@@ -398,7 +398,7 @@ function Player:spawnTrailParticles()
 
         local particle = {
             x = self.x + dx,
-            y = self.y + (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed)) + dy,
+            y = self.y + 5 * scale + (self.bobRange * -math.abs(math.sin(love.timer.getTime() * self.bobSpeed))) + dy,
             size = self.particleSize,
             vx = math.cos(angle) * speed,
             vy = math.sin(angle) * speed,
@@ -435,7 +435,7 @@ function Player:draw()
         end
         local offset = 0
         if not paused then
-            offset = (self.bobRange * math.sin(love.timer.getTime() * self.bobSpeed))
+            offset = 5 * scale + (self.bobRange * -math.abs(math.sin(love.timer.getTime() * self.bobSpeed)))
         end
         -- LG.setColor(1, 1, 1, 0.01) -- light
         -- LG.circle("fill", self.x, self.y, 100 * scale)
