@@ -45,11 +45,15 @@ function Textbox:update(dt)
         self.time = self.time + 1 * dt
     end
 
-    if self.time < 1 then
-        self.r = math.rad(10) * math.sin(love.timer.getTime())
-    elseif self.time < 2 then
-        self.r = self.r + 0.9
+    if self.time < 2 then
+        self.r = math.rad(10) * math.sin(love.timer.getTime() * 5)
     elseif self.time < 3 then
+        if self.r < 0 then
+            self.r = math.min(0, self.r + 0.9 * dt)
+        else 
+            self.r = math.max(0, self.r - 0.9 * dt)
+        end
+    elseif self.time < 4 then
         self.r = 0
         self.visible = false
         self.playAnim = false
