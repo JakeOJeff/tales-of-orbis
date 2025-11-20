@@ -27,7 +27,7 @@ function GUI:load()
         self.relicsDisplay.baseY = self.relicsDisplay.y
 
     Textbox:clear()
-    self.msg = Textbox:new("text is what i would say if i had a choice!", wW/2 - 150, 200, 0, 300, 60)
+    self.msg = Textbox:new("Reached Checkpoint", wW/2 - 150, 200, 0, 300, 60)
     
     self.touches = love.touch.getTouches()
 end
