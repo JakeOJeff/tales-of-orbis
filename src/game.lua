@@ -20,7 +20,7 @@ game = {
 STI = require("src.libs.sti")
 -- REQUIRE LIBRARIES
 anim8 = require 'src.libs.anim8'
-Camera = require 'src.libs.camera'
+Camera = require 'src.libs.camera' 
 
 -- REQUIRE CLASSES
 require("src.classes.player")

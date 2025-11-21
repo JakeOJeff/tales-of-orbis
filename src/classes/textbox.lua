@@ -16,28 +16,8 @@ local imageset = {
     cen = LG.newImage("assets/vfx/textbox/center.png"),
 }
 
-------------------------------------------------------------
--- NEW EASING FUNCTIONS
-------------------------------------------------------------
-local function lerp(a,b,t)
-    return a + (b-a)*t
-end
 
-local function easeOutBack(t)
-    local c1 = 1.70158
-    local c3 = c1 + 1
-    return 1 + c3*(t-1)^3 + c1*(t-1)^2
-end
 
-local function easeInBack(t)
-    local c1 = 1.70158
-    local c3 = c1 + 1
-    return c3*(t)^3 - c1*(t)^2
-end
-
-------------------------------------------------------------
--- NEW Textbox:new
-------------------------------------------------------------
 function Textbox:new(text, x, y, r, width, height)
     local instance = setmetatable({}, Textbox)
 
@@ -66,10 +46,8 @@ function Textbox:new(text, x, y, r, width, height)
     return instance
 end
 
-------------------------------------------------------------
--- NEW Textbox:update(dt) with bounce + rotation wobble
-------------------------------------------------------------
 function Textbox:update(dt)
+    print(self.state)
     if self.state == "appearing" then
         self.time = self.time + dt * 2 -- speed factor
         local t = math.min(self.time, 1)
@@ -87,7 +65,15 @@ function Textbox:update(dt)
 
     elseif self.state == "visible" then
         -- idle micro-movement
+        self.time = self.time + dt * 2
+        local t = math.min(self.time, 3)
+
         self.r = math.sin(love.timer.getTime() * 2) * math.rad(1)
+
+        if t >= 3 then
+            self:hide()
+        end
+        
 
     elseif self.state == "disappearing" then
         self.time = self.time + dt * 2
@@ -112,9 +98,6 @@ function Textbox.updateAll(dt)
     end
 end
 
-------------------------------------------------------------
--- DRAW
-------------------------------------------------------------
 function Textbox:draw()
     if not self.visible then return end
 
@@ -172,9 +155,6 @@ function Textbox:draw()
     LG.pop()
 end
 
-------------------------------------------------------------
--- PUBLIC API
-------------------------------------------------------------
 function Textbox:project()
     self.visible = true
     self.state = "appearing"
