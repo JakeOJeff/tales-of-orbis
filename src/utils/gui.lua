@@ -28,7 +28,7 @@ function GUI:load()
 
     Textbox:clear()
     self.msg = Textbox:new("Reached Checkpoint", wW/2 - 150 * scale, 200 * scale, 0, 300, 60)
-    
+    self.respawnedMsg = Textbox:new("Respawned", wW/2 - 100 * scale, 200 * scale, 0, 200, 60)
     self.touches = love.touch.getTouches()
 end
 

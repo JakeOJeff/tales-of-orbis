@@ -168,7 +168,7 @@ function Player:respawn()
         self.alive = true
         deleteEntities()
         spawnEntities()
-
+        GUI.respawnedMsg:project()
     end
 end
 
