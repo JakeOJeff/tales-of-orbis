@@ -3,12 +3,12 @@ local loading = {
             LG.newImage("assets/vfx/loading/night_load.png")},
     loaded = 0, -- In percentages
     time = 0, -- text loading 
-    speed = 20,
+    speed = 10,
     assets = 0,
     alpha = 1,
     text = "loading.", -- loading text
     particles = {},
-    emissionRate = 50,
+    emissionRate = 5,
     timeSinceLastEmit = 0
 }
 
@@ -39,6 +39,8 @@ function loading:load()
 end
 
 function loading:update(dt)
+
+    -- self.emissionRate = 50 * dt
 
     self.loaded = self.loaded + (self.speed * dt)
     self.time = self.time + (1 * dt)
