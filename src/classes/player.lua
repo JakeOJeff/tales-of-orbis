@@ -429,9 +429,9 @@ function Player:draw()
         for _, p in ipairs(self.particles) do
             local alpha = p.life / p.maxLife
             -- LG.setColor(0.79, 0.5, 0.19, alpha)
-            LG.setColor(0.79, 0.5, 0.19, alpha)
+            LG.setColor(0.79, 0.5, 0.19)
 
-            LG.circle("fill", p.x, p.y, p.size)
+            LG.rectangle("fill", p.x, p.y, p.size, p.size)
         end
         local offset = 0
         if not paused then
