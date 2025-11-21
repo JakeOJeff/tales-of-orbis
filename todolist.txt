@@ -1,1 +1,3 @@
-Add Checkpoint reached notifs and respawn notifs
+Add Checkpoint reached notifs  - DONE
+    and respawn notifs
+Add Particles for regen on the GUI

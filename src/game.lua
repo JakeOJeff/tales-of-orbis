@@ -131,6 +131,7 @@ end
 
 function game:draw()
     self:drawGame()
+    LG.print(love.timer.getFPS())
 end
 function game:drawGame()
     
