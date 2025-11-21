@@ -48,9 +48,6 @@ end
 function normalizeCoords(x, y)
     return (x / scale) - cenW / scale, (y / scale) - cenH / scale
 end
-function lerp(a, b, t)
-    return a + (b - a) * t
-end
 function scaleGame()
     if game and camera then
         game.scale = scale * 3

@@ -36,6 +36,7 @@ utils.collisions = require("src.utils.collisions")
 require("src.utils.gui")
 require("src.utils.manager")
 require("src.utils.struct")
+require("src.utils.easings")
 
 -- Sounds and Tracks
 introTrack = love.audio.newSource("assets/sfx/intro.wav", "stream")
