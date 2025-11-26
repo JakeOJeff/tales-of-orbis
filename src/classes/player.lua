@@ -259,7 +259,7 @@ function Player:keyboardInput(key)
     if key == "e" then
         for i, v in ipairs(ActiveBlocks) do
             local distR = dist(self.x, self.y, v.x, v.y)
-            if distR < 30 and not self.isHoldingObject then
+            if distR < 45 and not self.isHoldingObject then
                 self.isHoldingObject = true
                 self.holdingObject = v
                 print(self.holdingObject.x, self.holdingObject.y)
