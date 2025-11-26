@@ -3,6 +3,7 @@ Player = {}
 function Player:load()
     self.x = 100
     self.y = 100
+    self.direction = 1
     self.checkpointX = self.x
     self.checkpointY = self.y
     self.radius = 14
@@ -78,6 +79,8 @@ function Player:load()
 
     self.isHoldingObject = false
     self.holdingObject = nil
+    self.holdingJoint = nil
+    
 
     -- self.lightCanvas = LG.newCanvas(LG.getWidth(), LG.getHeight())
     
@@ -195,8 +198,10 @@ function Player:move(dt)
 
     if Input:down 'right' or GUI.buttons.rightButton.holding then
         self.xVel = math.min(self.xVel + self.acceleration * dt, self.maxSpeed)
+        self.direction = 1
     elseif Input:down 'left' or GUI.buttons.leftButton.holding then
         self.xVel = math.max(self.xVel - self.acceleration * dt, -self.maxSpeed)
+        self.direction = -1
     else
         self:applyFriction(dt)
     end
@@ -347,7 +352,7 @@ end
 function Player:updateHolding(dt)
     for i, v in ipairs(ActiveBlocks) do
         if v == self.holdingObject then
-            v.y = self.y + 20
+            v.physics.body:setPosition(self.x + self.direction * 10, self.y - 10)
         end
     end
 end
