@@ -260,13 +260,15 @@ end
 
 function Player:keyboardInput(key)
     if key == "e" then
+        -- self.holdingJoint:destroy()
+        -- self.holdingJoint = nil
+        -- self.holdingObject = nil
         for i, v in ipairs(ActiveBlocks) do
             local distR = dist(self.x, self.y, v.x, v.y)
             if distR < 45 and not self.isHoldingObject then
                 self.isHoldingObject = true
                 self.holdingObject = v
-                self.holdingJoint = love.physics.newMouseJoint(self.holdingObject, self.x, self.y)
-                self.holdingJoint:setMaxForce(2000)
+                self.holdingJoint = love.physics.newDistanceJoint(self.holdingObject.physics.body, self.physics.body, self.x, self.y, self.x + self.direction * 10, self.y - 10)
                 print(self.holdingObject.x, self.holdingObject.y)
             end
         end
@@ -349,11 +351,7 @@ function Player:endContact(a, b, collision)
 end
 
 function Player:updateHolding(dt)
-    for i, v in ipairs(ActiveBlocks) do
-        if v == self.holdingObject then
-            v.physics.body:setPosition(self.x + self.direction * 10, self.y - 10)
-        end
-    end
+
 end
 
 function Player:updateTrail(dt)
