@@ -101,9 +101,6 @@ function Player:update(dt)
         self.pickedUpItem = true
     end
 
-
-
-
     self.touchJumpDebounce = math.max(0, (self.touchJumpDebounce - 1 * dt))
 
     local airborne = not self.grounded
@@ -268,6 +265,8 @@ function Player:keyboardInput(key)
             if distR < 45 and not self.isHoldingObject then
                 self.isHoldingObject = true
                 self.holdingObject = v
+                self.holdingJoint = love.physics.newMouseJoint(self.holdingObject, self.x, self.y)
+                self.holdingJoint:setMaxForce(2000)
                 print(self.holdingObject.x, self.holdingObject.y)
             end
         end
