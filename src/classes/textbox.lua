@@ -47,7 +47,6 @@ function Textbox:new(text, x, y, r, width, height)
 end
 
 function Textbox:update(dt)
-    print(self.state)
     if self.state == "appearing" then
         self.time = self.time + dt * 2 -- speed factor
         local t = math.min(self.time, 1)

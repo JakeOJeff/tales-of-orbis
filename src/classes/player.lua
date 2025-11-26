@@ -76,6 +76,9 @@ function Player:load()
     self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
     self.physics.body:setGravityScale(0)
 
+    self.isHoldingObject = false
+    self.holdingObject = nil
+
     -- self.lightCanvas = LG.newCanvas(LG.getWidth(), LG.getHeight())
     
 end
@@ -94,6 +97,8 @@ function Player:update(dt)
         self.pickedUpGrace = self.pickedUpGrace - 1 * dt
         self.pickedUpItem = true
     end
+
+
 
 
     self.touchJumpDebounce = math.max(0, (self.touchJumpDebounce - 1 * dt))
@@ -251,7 +256,16 @@ function Player:decreaseGraceTime(dt)
 end
 
 function Player:keyboardInput(key)
-
+    if key == "e" then
+        for i, v in ipairs(ActiveBlocks) do
+            local distR = dist(self.x, self.y, v.x, v.y)
+            if distR < 30 and not self.isHoldingObject then
+                self.isHoldingObject = true
+                self.holdingObject = v
+                print(self.holdingObject.x, self.holdingObject.y)
+            end
+        end
+    end
 end
 
 function Player:gamepadInput(button)
