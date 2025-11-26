@@ -400,6 +400,36 @@ function Player:updateTrail(dt)
             end
         end
 
+        if self.isHoldingObject then
+            local limit = 45
+            local particleDist = dist(self.holdingObject.x, self.holdingObject.y, p.x, p.y)
+
+            if particleDist < limit and particleDist > 0.001 then
+                -- self.maxParticles = math.max(self.maxParticles - 5 * dt, 0)
+
+                local dx = self.holdingObject.x - p.x
+                local dy = self.holdingObject.y - p.y
+
+                local t = 1 - (particleDist / limit)
+
+                local strength = t * 2000
+                local angle = math.atan2(dy, dx)
+
+                local tangentAngle = angle + math.pi / 2
+                local spinStrength = t * 500
+
+                p.vx = p.vx +
+                    (math.cos(angle) * strength + math.cos(tangentAngle) * spinStrength) * dt
+                p.vy = p.vy +
+                    (math.sin(angle) * strength + math.sin(tangentAngle) * spinStrength) * dt
+
+                local warp = 1 + 0.15 * math.sin(particleDist * 0.1 - love.timer.getTime() * 3)
+
+                p.x = p.x + (dx / particleDist) * warp * dt * 15
+                p.y = p.y + (dy / particleDist) * warp * dt * 15
+            end
+        end
+
         -- Update particle motion
         p.x = p.x + p.vx * dt
         p.y = p.y + p.vy * dt
