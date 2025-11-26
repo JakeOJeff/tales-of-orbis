@@ -141,6 +141,7 @@ function Player:update(dt)
     end
 
     Input:update()
+    self:updateHolding(dt)
     self.animations.idle:update(dt)
     self:updateTrail(dt)
     self:respawn()
@@ -339,6 +340,14 @@ function Player:endContact(a, b, collision)
         if self.currentGroundCollision == collision then
             self.currentGroundCollision = nil
             self.grounded = false
+        end
+    end
+end
+
+function Player:updateHolding(dt)
+    for i, v in ipairs(ActiveBlocks) do
+        if v == self.holdingObject then
+            v.y = self.y + 20
         end
     end
 end
