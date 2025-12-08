@@ -2,20 +2,20 @@ GUI = {}
 require("src.classes.textbox")
 
 function GUI:load()
-    local navW, navH = 100 * scale, 100 * scale -- left, right, jump 
-    local velW, velH = 70 * scale, 70 * scale -- boost, dive, 
+    local navW, navH = 125 * scale, 125 * scale -- left, right, jump 
+    local velW, velH = 90 * scale, 90 * scale -- boost, dive, 
     local setW, setH = 85 * scale, 80 * scale -- reset, pause
 
 
     self.buttons = {}
     self.buttons.leftButton = self:createButton("assets/vfx/icons/left.png", 50 * scale, wH - navH - (50 * scale), navW, navH )
     self.buttons.rightButton = self:createButton("assets/vfx/icons/right.png", navW + (50 + 10) * scale, wH - navH - (50 * scale), navW, navH )
-    self.buttons.jumpButton = self:createButton("assets/vfx/icons/jump.png", wW - navW - 100 * scale, wH - navH - 150 * scale, navW, navH)
+    self.buttons.jumpButton = self:createButton("assets/vfx/icons/jump.png", wW - navW - 100 * scale, wH - navH - 175 * scale, navW, navH)
 
-    self.buttons.diveButton = self:createButton("assets/vfx/icons/dive.png", wW - velW - (50 * scale), wH - velH - (70 * scale), velW, velH, function ()
+    self.buttons.diveButton = self:createButton("assets/vfx/icons/dive.png", wW - velW - (90 * scale), wH - velH - (60 * scale), velW, velH, function ()
         return not Player.grounded
     end)
-    self.buttons.boostButton = self:createButton("assets/vfx/icons/boost.png", wW - (velW * 2) - (100 * scale), wH - velH - (50 * scale), velW, velH)
+    self.buttons.boostButton = self:createButton("assets/vfx/icons/boost.png", wW - (velW * 2) - (125 * scale), wH - velH - (75 * scale), velW, velH)
     
     self.buttons.resetButton = self:createButton("assets/vfx/icons/reset.png", wW - setW*2 - 30 * scale, 20 * scale, setW, setH)
     self.buttons.pauseButton = self:createButton("assets/vfx/icons/pause.png", wW - setW - 20 * scale, 20 * scale, setW, setH)
