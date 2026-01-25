@@ -116,6 +116,11 @@ local scenery = SceneryInit({
 {
     path = "src.cutscenes.act1_scene1",
     key = "a1s1"
+},
+
+{
+    path = "src.loadScenes.end",
+    key = "endScene"
 }
 )
 
