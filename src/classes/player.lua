@@ -1,8 +1,8 @@
 Player = {}
 
 function Player:load()
-    self.x = 100
-    self.y = 100
+    self.x = 180 * 32
+    self.y = 32 * 32
     self.direction = 1
     self.checkpointX = self.x
     self.checkpointY = self.y
