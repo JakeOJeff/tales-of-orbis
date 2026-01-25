@@ -101,8 +101,7 @@ local scenery = SceneryInit({
 
 }, {
     path = "src.loadScenes.title",
-    key = "title",
-    default = true 
+    key = "title"
 
 }, {
     path = "src.cutscenes.intro",
@@ -110,7 +109,8 @@ local scenery = SceneryInit({
 
 }, {
     path = "src.game",
-    key = "game"
+    key = "game",
+    default = true 
 }, 
 
 {

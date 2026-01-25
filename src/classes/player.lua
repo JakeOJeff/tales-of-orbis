@@ -108,7 +108,7 @@ function Player:update(dt)
 
     game.shaking = boosting
 
-    movementSFX:setVolume(0.1)
+    movementSFX:setVolume(0.1 * self.health.current/self.health.max)
     if airborne or boosting then
         -- Particle properties
         self.particleMaxLife = airborne and 6 or 4
@@ -216,7 +216,7 @@ function Player:move(dt)
     local isBoostKeyDown = Input:down 'boost' or GUI.buttons.boostButton.holding
 
     if activeDevice == "kbm" or activeDevice == "joy" then
-        IsMobile = true
+        IsMobile = false 
     end
 
     if self.grounded then
@@ -488,6 +488,7 @@ function Player:draw()
 
             LG.rectangle("fill", p.x, p.y, p.size, p.size)
         end
+
         local offset = 0
         if not paused then
             offset = 5 * scale + (self.bobRange * -math.abs(math.sin(love.timer.getTime() * self.bobSpeed)))
@@ -501,7 +502,7 @@ function Player:draw()
 
         if self.pickedUpItem then
             self.fireShader:send("iTime", love.timer.getTime())
-            LG.setShader(self.fireShader)
+            -- LG.setShader(self.fireShader)
             LG.setColor(0.79, 0.5, 0.19, self.pickedUpGrace * 4)
             LG.circle("fill", pX, pY, 50 * (self.pickedUpGrace * 4))
             LG.setColor(0.79 + 0.1, 0.5 + 0.1, 0.19 + 0.1, self.pickedUpGrace * 4)

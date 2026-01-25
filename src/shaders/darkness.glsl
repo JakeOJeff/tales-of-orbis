@@ -28,17 +28,3 @@ vec4 effect(vec4 color, Image texture, vec2 texCoords, vec2 screenCoords) {
     vec3 litColor = texColor.rgb * tintedLight;
     return vec4(litColor, texColor.a);
 }
-    // uniform vec2 lightPos;    
-    // uniform float lightRadius;  
-
-    // vec4 effect(vec4 color, Image texture, vec2 texCoords, vec2 screenCoords) {
-    //     float dist = distance(screenCoords, lightPos);
-    //     vec4 texColor = texture2D(texture, texCoords);
-    //     if (dist < lightRadius) {
-    //         return vec4(texColor.rgb, 1);
-    //     }
-    //     else {
-    //         return vec4(0, 0, 0, 1);
-    //     }
-
-    // }
